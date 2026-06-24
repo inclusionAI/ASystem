@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en" data-accent-color="violet" data-content_root="../">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Build and installation - areno</title><link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Supported models" href="../models/supported.html" /><link rel="prev" title="areno" href="../index.html" /><script>
+    function setColorMode(t){let e=document.documentElement;e.setAttribute("data-color-mode",t);let a=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,s=t;"auto"===t&&(s=a?"dark":"light"),"light"===s?(e.classList.remove("dark"),e.classList.add("light")):(e.classList.remove("light"),e.classList.add("dark"))}
+    setColorMode(localStorage._theme||"auto");
+  </script><link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=e1a1ceaf" />
+    <link rel="stylesheet" type="text/css" href="../_static/shibuya.css?v=9454f7d5" />
+    <link media="print" rel="stylesheet" type="text/css" href="../_static/print.css?v=20ff2c19" />
+    <link rel="stylesheet" type="text/css" href="../_static/areno.css?v=933e02d6" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --sy-f-text: "Inter", var(--sy-f-sys), var(--sy-f-cjk), sans-serif;
+  --sy-f-heading: "Inter", var(--sy-f-sys), var(--sy-f-cjk), sans-serif;
+}
+</style>
+    
+  <meta property="og:type" content="website"/><meta property="og:title" content="Build and installation"/>
+    <meta name="twitter:card" content="summary"/>
+  </head>
+<body><div class="sy-head">
+  <div class="sy-head-blur"></div>
+  <div class="sy-head-inner sy-container mx-auto">
+    <a class="sy-head-brand" href="../index.html">
+      
+      
+      <strong>areno</strong>
+    </a>
+    <div class="sy-head-nav" id="head-nav">
+      <nav class="sy-head-links"><ul><li class="link"><a href="../cli/training.html">Training</a></li><li class="link"><a href="../cli/inference.html">Inference</a></li><li class="link"><a href="../sdk/trainer.html">SDK</a></li><li class="link"><a href="../models/supported.html">Models</a></li></ul></nav>
+      <div class="sy-head-extra flex items-center print:hidden"><form class="searchbox flex items-center" action="../search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <kbd>/</kbd>
+</form><div class="sy-head-socials"></div></div>
+    </div>
+    <div class="sy-head-actions flex items-center shrink-0 print:hidden"><button class="js-theme theme-switch flex items-center"
+data-aria-auto="Switch to light color mode"
+data-aria-light="Switch to dark color mode"
+data-aria-dark="Switch to auto color mode">
+<i class="i-lucide theme-icon"></i>
+</button><button class="md:hidden flex items-center js-menu" aria-label="Menu" type="button" aria-controls="head-nav" aria-expanded="false">
+        <div class="hamburger">
+          <span class="hamburger_1"></span>
+          <span class="hamburger_2"></span>
+          <span class="hamburger_3"></span>
+        </div>
+      </button>
+    </div>
+  </div>
+</div>
+<div class="sy-page sy-container flex mx-auto">
+  <aside id="lside" class="sy-lside md:w-72 md:shrink-0 print:hidden">
+    <div class="sy-lside-inner md:sticky">
+      <div class="sy-scrollbar p-6">
+        <div class="globaltoc" data-expand-depth="0"><p class="caption" role="heading" aria-level="3"><span class="caption-text">Guides</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Build and installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models/supported.html">Supported models</a></li>
+</ul>
+<p class="caption" role="heading" aria-level="3"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../cli/training.html">Training CLI reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cli/inference.html">Inference CLI reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cli/diagnostics.html">Diagnostics CLI reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sdk/trainer.html">Trainer SDK reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="lside-overlay js-menu" role="button" aria-label="Close left sidebar" aria-controls="lside" aria-expanded="false"></div>
+  <aside id="rside" class="sy-rside pb-3 w-64 shrink-0 order-last">
+    <button class="rside-close js-menu xl:hidden" aria-label="Close Table of Contents" type="button" aria-controls="rside" aria-expanded="false">
+      <i class="i-lucide close"></i>
+    </button>
+    <div class="sy-scrollbar sy-rside-inner px-6 xl:top-16 xl:sticky xl:pl-0 pt-6 pb-4"><div class="localtoc"><h3>On this page</h3><ul>
+<li><a class="reference internal" href="#compatibility-matrix">Compatibility matrix</a></li>
+<li><a class="reference internal" href="#docker">Docker</a></li>
+<li><a class="reference internal" href="#python-distributions">Python distributions</a></li>
+<li><a class="reference internal" href="#installation">Installation</a></li>
+<li><a class="reference internal" href="#post-install-checklist">Post-install checklist</a></li>
+</ul>
+</div><div id="ethical-ad-placement" data-ea-publisher="readthedocs"></div></div>
+  </aside>
+  <div class="rside-overlay js-menu" role="button" aria-label="Close Table of Contents" aria-controls="rside" aria-expanded="false"></div>
+  <main class="sy-main w-full max-sm:max-w-full print:pt-6">
+<div class="sy-breadcrumbs" role="navigation">
+  <div class="sy-breadcrumbs-inner flex items-center">
+    <div class="md:hidden mr-3">
+      <button class="js-menu" aria-label="Menu" type="button" aria-controls="lside" aria-expanded="false">
+        <i class="i-lucide menu"></i>
+      </button>
+    </div>
+    <ol class="flex-1" itemscope itemtype="https://schema.org/BreadcrumbList"><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <a itemprop="item" href="../index.html"><span itemprop="name">areno</span></a>
+        <span>/</span>
+        <meta itemprop="position" content="1" />
+      </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <strong itemprop="name">Build and installation</strong>
+        <meta itemprop="position" content="2" />
+      </li></ol>
+    <div class="xl:hidden ml-1">
+      <button class="js-menu" aria-label="Show table of contents" type="button" aria-controls="rside"
+        aria-expanded="false">
+        <i class="i-lucide outdent"></i>
+      </button>
+    </div>
+  </div>
+</div><div class="flex flex-col break-words justify-between">
+      <div class="relative min-w-0 max-w-6xl px-6 pb-6 pt-8 xl:px-12">
+  <article class="yue" role="main">
+          <section id="build-and-installation">
+<h1>Build and installation<a class="headerlink" href="#build-and-installation" title="Link to this heading">¶</a></h1>
+<p>This page covers the setup paths used by contributors and local operators:
+Docker images, editable installs, source/wheel distributions, and local
+installation.</p>
+<section id="compatibility-matrix">
+<h2>Compatibility matrix<a class="headerlink" href="#compatibility-matrix" title="Link to this heading">¶</a></h2>
+<div class="table-wrapper docutils container">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Environment</p></th>
+<th class="head"><p>Status</p></th>
+<th class="head"><p>Notes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Linux x86_64 + NVIDIA GPU</p></td>
+<td><p>Supported</p></td>
+<td><p>Primary training/serving target. Use CUDA-enabled PyTorch &gt;= 2.6 and build <code class="docutils literal notranslate"><span class="pre">areno_accel</span></code>.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Linux aarch64 / Grace-Blackwell</p></td>
+<td><p>Supported</p></td>
+<td><p>Install a matching <code class="docutils literal notranslate"><span class="pre">aarch64</span></code> CUDA PyTorch build first, then build AReno with <code class="docutils literal notranslate"><span class="pre">--no-build-isolation</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p>Windows WSL2 + NVIDIA GPU</p></td>
+<td><p>Supported</p></td>
+<td><p>Follow the Linux install path inside WSL2. Native Windows is not supported.</p></td>
+</tr>
+<tr class="row-odd"><td><p>macOS Apple Silicon</p></td>
+<td><p>Metadata/docs only</p></td>
+<td><p>Use <code class="docutils literal notranslate"><span class="pre">ARENO_BUILD_EXT=0</span></code> for docs or packaging checks. Training/serving is not supported.</p></td>
+</tr>
+<tr class="row-even"><td><p>CPU-only environments</p></td>
+<td><p>Metadata/docs/tests only</p></td>
+<td><p>CPU-only PyTorch can run lightweight docs/tests, but cannot train or serve AReno models.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="docker">
+<h2>Docker<a class="headerlink" href="#docker" title="Link to this heading">¶</a></h2>
+<p>Docker is the setup escape hatch when you want to verify AReno before
+debugging local Python, PyTorch, or CUDA build state. Build the CUDA runtime
+image from the repository root, then run the same readiness check used by local
+installs:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span data-line="1">docker<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>areno<span class="w"> </span>.
+</span><span data-line="2">docker<span class="w"> </span>run<span class="w"> </span>--gpus<span class="w"> </span>all<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span>areno<span class="w"> </span>areno<span class="w"> </span>check
+</span></pre></div>
+</div>
+<p>Use <code class="docutils literal notranslate"><span class="pre">--build-arg</span> <span class="pre">PIP_INDEX_URL=...</span></code> if your environment requires a package
+mirror.</p>
+<p>If you need local project files, model files, or a Hugging Face cache inside
+the container, mount them explicitly:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span data-line="1">docker<span class="w"> </span>run<span class="w"> </span>--gpus<span class="w"> </span>all<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span><span class="se">\</span>
+</span><span data-line="2"><span class="w">  </span>-v<span class="w"> </span><span class="nv">$PWD</span>:/workspace<span class="w"> </span><span class="se">\</span>
+</span><span data-line="3"><span class="w">  </span>-v<span class="w"> </span><span class="nv">$HOME</span>/.cache/huggingface:/root/.cache/huggingface<span class="w"> </span><span class="se">\</span>
+</span><span data-line="4"><span class="w">  </span>areno<span class="w"> </span><span class="se">\</span>
+</span><span data-line="5"><span class="w">  </span>areno<span class="w"> </span>check
+</span></pre></div>
+</div>
+<p>Host checklist:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span data-line="1">nvidia-smi
+</span><span data-line="2">docker<span class="w"> </span>run<span class="w"> </span>--gpus<span class="w"> </span>all<span class="w"> </span>--rm<span class="w"> </span>nvidia/cuda:12.4.1-base-ubuntu22.04<span class="w"> </span>nvidia-smi
+</span><span data-line="3">docker<span class="w"> </span>run<span class="w"> </span>--gpus<span class="w"> </span>all<span class="w"> </span>--rm<span class="w"> </span>areno<span class="w"> </span>areno<span class="w"> </span>check
+</span></pre></div>
+</div>
+<p>Docker gives you a known-good Python/PyTorch/CUDA user-space environment. It
+does not fix host-side requirements: the host still needs a working NVIDIA
+driver, NVIDIA Container Toolkit support for <code class="docutils literal notranslate"><span class="pre">--gpus</span> <span class="pre">all</span></code>, and a driver new
+enough for the container CUDA runtime. Model downloads, Hugging Face tokens,
+cache paths, network access, disk space, and multi-node or custom networking
+remain user environment concerns and are outside the first Docker setup path.</p>
+</section>
+<section id="python-distributions">
+<h2>Python distributions<a class="headerlink" href="#python-distributions" title="Link to this heading">¶</a></h2>
+<p>By default, package builds compile the <code class="docutils literal notranslate"><span class="pre">areno_accel</span></code> CUDA extension. Run the
+build in an environment with PyTorch extension tooling and <code class="docutils literal notranslate"><span class="pre">CUDA_HOME</span></code>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span data-line="1">python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>build
+</span><span data-line="2">python<span class="w"> </span>-m<span class="w"> </span>build<span class="w"> </span>--no-isolation
+</span></pre></div>
+</div>
+<p>The generated artifacts are written to <code class="docutils literal notranslate"><span class="pre">dist/</span></code>. That directory is ignored by
+git.</p>
+<p>For metadata or pure-Python packaging checks that should not require local
+PyTorch/CUDA, explicitly skip extension compilation:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="nv">ARENO_BUILD_EXT</span><span class="o">=</span><span class="m">0</span><span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>build<span class="w"> </span>--no-isolation
+</span></pre></div>
+</div>
+</section>
+<section id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Link to this heading">¶</a></h2>
+<p>Install a CUDA-enabled PyTorch environment first. Then install the project from
+the repository root:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span data-line="1">pip<span class="w"> </span>install<span class="w"> </span>psutil
+</span><span data-line="2">pip<span class="w"> </span>install<span class="w"> </span>flash-linear-attention
+</span><span data-line="3">pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.<span class="w"> </span>--no-build-isolation
+</span></pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code class="docutils literal notranslate"><span class="pre">--no-build-isolation</span></code> uses the packages already installed in your
+environment. Install <code class="docutils literal notranslate"><span class="pre">psutil</span></code> first because PyTorch’s CUDA extension
+builder imports it while sizing parallel compile jobs. CUDA and PyTorch
+must be ABI compatible. The editable install builds the <code class="docutils literal notranslate"><span class="pre">areno_accel</span></code>
+CUDA extension used by local kernels.
+Install <code class="docutils literal notranslate"><span class="pre">flash-attn</span></code> before AReno only if you use the default
+<code class="docutils literal notranslate"><span class="pre">--attn-backend</span> <span class="pre">flash</span></code> high-throughput path. <code class="docutils literal notranslate"><span class="pre">flash-attn</span></code> is optional
+when running with <code class="docutils literal notranslate"><span class="pre">--attn-backend</span> <span class="pre">native</span></code>; AReno automatically falls back
+to native attention on flash-attn-unsupported GPUs such as Tesla T4 and
+warns that native attention is a slower compatibility path. If building
+<code class="docutils literal notranslate"><span class="pre">flash-attn</span></code> from source is too slow for your environment, install a
+pre-built wheel from the
+<a class="reference external" href="https://github.com/Dao-AILab/flash-attention/releases">flash-attention releases</a>
+that matches your Python, PyTorch, CUDA, and platform.
+When <code class="docutils literal notranslate"><span class="pre">TORCH_CUDA_ARCH_LIST</span></code> is not set, AReno targets the visible GPU
+architectures. Set it explicitly when cross-building or narrowing the build
+target. Common values include <code class="docutils literal notranslate"><span class="pre">9.0</span></code> for H100/H200, <code class="docutils literal notranslate"><span class="pre">8.0</span></code> for A100, and
+<code class="docutils literal notranslate"><span class="pre">8.9</span></code> for L40/RTX 4090:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="nv">TORCH_CUDA_ARCH_LIST</span><span class="o">=</span><span class="s2">&quot;9.0&quot;</span><span class="w"> </span><span class="nv">MAX_JOBS</span><span class="o">=</span><span class="m">64</span><span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.<span class="w"> </span>--no-build-isolation
+</span></pre></div>
+</div>
+<p>For iterative CUDA work, configure <code class="docutils literal notranslate"><span class="pre">ccache</span></code> with <code class="docutils literal notranslate"><span class="pre">CC=&quot;ccache</span> <span class="pre">gcc&quot;</span></code> and
+<code class="docutils literal notranslate"><span class="pre">CXX=&quot;ccache</span> <span class="pre">g++&quot;</span></code> before rebuilding.</p>
+</div>
+</section>
+<section id="post-install-checklist">
+<h2>Post-install checklist<a class="headerlink" href="#post-install-checklist" title="Link to this heading">¶</a></h2>
+<p>Run the readiness check after every fresh install:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span data-line="1">areno<span class="w"> </span>check
+</span></pre></div>
+</div>
+<p>For setup reports, also collect a machine-readable environment bundle:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span data-line="1">areno<span class="w"> </span>env<span class="w"> </span>--json
+</span></pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">areno</span> <span class="pre">check</span></code> reports common build-time and runtime setup problems with next
+steps: missing or CPU-only PyTorch, unsupported PyTorch versions, missing
+<code class="docutils literal notranslate"><span class="pre">CUDA_HOME</span></code> or <code class="docutils literal notranslate"><span class="pre">nvcc</span></code>, missing build-time dependencies such as <code class="docutils literal notranslate"><span class="pre">psutil</span></code>,
+unsupported platforms, and <code class="docutils literal notranslate"><span class="pre">ARENO_BUILD_EXT=0</span></code> installs that try to train or
+serve without the compiled <code class="docutils literal notranslate"><span class="pre">areno_accel</span></code> extension.</p>
+</section>
+</section>
+
+        </article><button class="back-to-top" type="button">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+    <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+  </svg>
+  <span>Back to top</span>
+</button><div class="navigation flex print:hidden"><div class="navigation-prev">
+    <a href="../index.html">
+      <i class="i-lucide chevron-left"></i>
+      <div class="page-info">
+        <span>Previous</span><div class="title">Home</div></div>
+    </a>
+  </div><div class="navigation-next">
+    <a href="../models/supported.html">
+      <div class="page-info">
+        <span>Next</span>
+        <div class="title">Supported models</div>
+      </div>
+      <i class="i-lucide chevron-right"></i>
+    </a>
+  </div></div></div>
+    </div>
+  </main>
+</div>
+<footer class="sy-foot">
+  <div class="sy-foot-inner sy-container mx-auto">
+    <div class="sy-foot-reserved md:flex justify-between items-center">
+      
+      <div class="sy-foot-socials"></div>
+    </div>
+  </div>
+</footer>
+      <script src="../_static/documentation_options.js?v=7f41d439"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../_static/shibuya.js?v=50760d75"></script></body>
+</html>

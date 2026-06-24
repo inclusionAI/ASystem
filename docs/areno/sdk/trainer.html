@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="en" data-accent-color="violet" data-content_root="../">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Trainer SDK reference - areno</title><link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="prev" title="Diagnostics CLI reference" href="../cli/diagnostics.html" /><script>
+    function setColorMode(t){let e=document.documentElement;e.setAttribute("data-color-mode",t);let a=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,s=t;"auto"===t&&(s=a?"dark":"light"),"light"===s?(e.classList.remove("dark"),e.classList.add("light")):(e.classList.remove("light"),e.classList.add("dark"))}
+    setColorMode(localStorage._theme||"auto");
+  </script><link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=e1a1ceaf" />
+    <link rel="stylesheet" type="text/css" href="../_static/shibuya.css?v=9454f7d5" />
+    <link media="print" rel="stylesheet" type="text/css" href="../_static/print.css?v=20ff2c19" />
+    <link rel="stylesheet" type="text/css" href="../_static/areno.css?v=933e02d6" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --sy-f-text: "Inter", var(--sy-f-sys), var(--sy-f-cjk), sans-serif;
+  --sy-f-heading: "Inter", var(--sy-f-sys), var(--sy-f-cjk), sans-serif;
+}
+</style>
+    
+  <meta property="og:type" content="website"/><meta property="og:title" content="Trainer SDK reference"/>
+    <meta name="twitter:card" content="summary"/>
+  </head>
+<body><div class="sy-head">
+  <div class="sy-head-blur"></div>
+  <div class="sy-head-inner sy-container mx-auto">
+    <a class="sy-head-brand" href="../index.html">
+      
+      
+      <strong>areno</strong>
+    </a>
+    <div class="sy-head-nav" id="head-nav">
+      <nav class="sy-head-links"><ul><li class="link"><a href="../cli/training.html">Training</a></li><li class="link"><a href="../cli/inference.html">Inference</a></li><li class="link"><a href="#">SDK</a></li><li class="link"><a href="../models/supported.html">Models</a></li></ul></nav>
+      <div class="sy-head-extra flex items-center print:hidden"><form class="searchbox flex items-center" action="../search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <kbd>/</kbd>
+</form><div class="sy-head-socials"></div></div>
+    </div>
+    <div class="sy-head-actions flex items-center shrink-0 print:hidden"><button class="js-theme theme-switch flex items-center"
+data-aria-auto="Switch to light color mode"
+data-aria-light="Switch to dark color mode"
+data-aria-dark="Switch to auto color mode">
+<i class="i-lucide theme-icon"></i>
+</button><button class="md:hidden flex items-center js-menu" aria-label="Menu" type="button" aria-controls="head-nav" aria-expanded="false">
+        <div class="hamburger">
+          <span class="hamburger_1"></span>
+          <span class="hamburger_2"></span>
+          <span class="hamburger_3"></span>
+        </div>
+      </button>
+    </div>
+  </div>
+</div>
+<div class="sy-page sy-container flex mx-auto">
+  <aside id="lside" class="sy-lside md:w-72 md:shrink-0 print:hidden">
+    <div class="sy-lside-inner md:sticky">
+      <div class="sy-scrollbar p-6">
+        <div class="globaltoc" data-expand-depth="0"><p class="caption" role="heading" aria-level="3"><span class="caption-text">Guides</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../getting-started/build.html">Build and installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models/supported.html">Supported models</a></li>
+</ul>
+<p class="caption" role="heading" aria-level="3"><span class="caption-text">Reference</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../cli/training.html">Training CLI reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cli/inference.html">Inference CLI reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cli/diagnostics.html">Diagnostics CLI reference</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Trainer SDK reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="lside-overlay js-menu" role="button" aria-label="Close left sidebar" aria-controls="lside" aria-expanded="false"></div>
+  <aside id="rside" class="sy-rside pb-3 w-64 shrink-0 order-last">
+    <button class="rside-close js-menu xl:hidden" aria-label="Close Table of Contents" type="button" aria-controls="rside" aria-expanded="false">
+      <i class="i-lucide close"></i>
+    </button>
+    <div class="sy-scrollbar sy-rside-inner px-6 xl:top-16 xl:sticky xl:pl-0 pt-6 pb-4"><div class="localtoc"><h3>On this page</h3><ul>
+<li><a class="reference internal" href="#areno.Trainer"><code class="docutils literal notranslate">Trainer</span></code></a><ul>
+<li><a class="reference internal" href="#areno.Trainer.init"><code class="docutils literal notranslate">Trainer.init()</span></code></a></li>
+<li><a class="reference internal" href="#areno.Trainer.get_tokenizer"><code class="docutils literal notranslate">Trainer.get_tokenizer()</span></code></a></li>
+<li><a class="reference internal" href="#areno.Trainer.load_prompt_batches"><code class="docutils literal notranslate">Trainer.load_prompt_batches()</span></code></a></li>
+<li><a class="reference internal" href="#areno.Trainer.rollout_batch"><code class="docutils literal notranslate">Trainer.rollout_batch()</span></code></a></li>
+<li><a class="reference internal" href="#areno.Trainer.rollout_token_batch"><code class="docutils literal notranslate">Trainer.rollout_token_batch()</span></code></a></li>
+<li><a class="reference internal" href="#areno.Trainer.rollout_session"><code class="docutils literal notranslate">Trainer.rollout_session()</span></code></a></li>
+<li><a class="reference internal" href="#areno.Trainer.train"><code class="docutils literal notranslate">Trainer.train()</span></code></a></li>
+<li><a class="reference internal" href="#areno.Trainer.ensure_roles"><code class="docutils literal notranslate">Trainer.ensure_roles()</span></code></a></li>
+<li><a class="reference internal" href="#areno.Trainer.score_logprobs"><code class="docutils literal notranslate">Trainer.score_logprobs()</span></code></a></li>
+<li><a class="reference internal" href="#areno.Trainer.score_values"><code class="docutils literal notranslate">Trainer.score_values()</span></code></a></li>
+<li><a class="reference internal" href="#areno.Trainer.score_rewards"><code class="docutils literal notranslate">Trainer.score_rewards()</span></code></a></li>
+<li><a class="reference internal" href="#areno.Trainer.train_values"><code class="docutils literal notranslate">Trainer.train_values()</span></code></a></li>
+<li><a class="reference internal" href="#areno.Trainer.save_checkpoint"><code class="docutils literal notranslate">Trainer.save_checkpoint()</span></code></a></li>
+<li><a class="reference internal" href="#areno.Trainer.close"><code class="docutils literal notranslate">Trainer.close()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#data-classes">Data classes</a><ul>
+<li><a class="reference internal" href="#areno.SamplingParams"><code class="docutils literal notranslate">SamplingParams</span></code></a></li>
+<li><a class="reference internal" href="#areno.TrainSequence"><code class="docutils literal notranslate">TrainSequence</span></code></a></li>
+<li><a class="reference internal" href="#areno.ModelRole"><code class="docutils literal notranslate">ModelRole</span></code></a></li>
+<li><a class="reference internal" href="#areno.ArenoConfig"><code class="docutils literal notranslate">ArenoConfig</span></code></a></li>
+<li><a class="reference internal" href="#areno.api.agentic.AgentBatch"><code class="docutils literal notranslate">api.agentic.AgentBatch</span></code></a></li>
+<li><a class="reference internal" href="#areno.api.agentic.RewardRecord"><code class="docutils literal notranslate">api.agentic.RewardRecord</span></code></a></li>
+<li><a class="reference internal" href="#areno.api.agentic.LossMaskPolicy"><code class="docutils literal notranslate">api.agentic.LossMaskPolicy</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#one-gspo-style-rollout-train-step">One GSPO-style rollout/train step</a></li>
+<li><a class="reference internal" href="#agentic-rollout-with-tools">Agentic rollout with tools</a></li>
+</ul>
+</div><div id="ethical-ad-placement" data-ea-publisher="readthedocs"></div></div>
+  </aside>
+  <div class="rside-overlay js-menu" role="button" aria-label="Close Table of Contents" aria-controls="rside" aria-expanded="false"></div>
+  <main class="sy-main w-full max-sm:max-w-full print:pt-6">
+<div class="sy-breadcrumbs" role="navigation">
+  <div class="sy-breadcrumbs-inner flex items-center">
+    <div class="md:hidden mr-3">
+      <button class="js-menu" aria-label="Menu" type="button" aria-controls="lside" aria-expanded="false">
+        <i class="i-lucide menu"></i>
+      </button>
+    </div>
+    <ol class="flex-1" itemscope itemtype="https://schema.org/BreadcrumbList"><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <a itemprop="item" href="../index.html"><span itemprop="name">areno</span></a>
+        <span>/</span>
+        <meta itemprop="position" content="1" />
+      </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <strong itemprop="name">Trainer SDK reference</strong>
+        <meta itemprop="position" content="2" />
+      </li></ol>
+    <div class="xl:hidden ml-1">
+      <button class="js-menu" aria-label="Show table of contents" type="button" aria-controls="rside"
+        aria-expanded="false">
+        <i class="i-lucide outdent"></i>
+      </button>
+    </div>
+  </div>
+</div><div class="flex flex-col break-words justify-between">
+      <div class="relative min-w-0 max-w-6xl px-6 pb-6 pt-8 xl:px-12">
+  <article class="yue" role="main">
+          <section id="trainer-sdk-reference">
+<h1>Trainer SDK reference<a class="headerlink" href="#trainer-sdk-reference" title="Link to this heading">¶</a></h1>
+<p>The SDK is for custom training loops and algorithm experiments. Use it when the
+CLI is too high-level and you want to control rollout, reward calculation,
+advantage construction, loss selection, role scoring, or checkpoint cadence
+directly from Python.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="areno.Trainer">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">areno.</span></span><span class="sig-name descname"><span class="pre">Trainer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">world_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">backend_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">custom_config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metrics_log_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#areno.Trainer" title="Link to this definition">¶</a></dt>
+<dd><p>Main entry point for local Areno training workflows.</p>
+<p><code class="docutils literal notranslate"><span class="pre">Trainer</span></code> initializes tokenizer and backend workers, generates rollout
+batches, runs policy training steps, manages PPO/DPO auxiliary roles, scores
+logprobs/values/rewards, and saves Hugging Face-compatible checkpoints.</p>
+<p>It provides methods to:</p>
+<ul class="simple">
+<li><p>create a local tensor-parallel Areno backend</p></li>
+<li><p>load prompt batches from dataset-like objects</p></li>
+<li><p>generate text rollouts from string prompts or token ids</p></li>
+<li><p>run agentic rollouts through a local OpenAI-compatible proxy</p></li>
+<li><p>train policy batches with caller-provided loss functions</p></li>
+<li><p>prepare reference, reward, and critic roles for PPO/DPO workflows</p></li>
+<li><p>score logprobs, values, and rewards through backend-owned roles</p></li>
+<li><p>save Hugging Face-compatible checkpoints</p></li>
+</ul>
+<p>Direct rollout calls must run inside <code class="docutils literal notranslate"><span class="pre">async</span> <span class="pre">with</span>
+<span class="pre">trainer.rollout_session(...)</span></code>. The session is the lifecycle boundary for
+rollout state, actor onload/offload, and optional agentic proxy serving.</p>
+<p class="rubric">Typical flow</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="kn">import</span><span class="w"> </span><span class="nn">asyncio</span>
+</span><span data-line="2"><span class="kn">import</span><span class="w"> </span><span class="nn">areno</span>
+</span><span data-line="3"><span class="kn">from</span><span class="w"> </span><span class="nn">areno</span><span class="w"> </span><span class="kn">import</span> <span class="n">Trainer</span>
+</span><span data-line="4">
+</span><span data-line="5"><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
+</span><span data-line="6">    <span class="c1"># Near-instant: constructs the Python wrapper only.</span>
+</span><span data-line="7">    <span class="n">trainer</span> <span class="o">=</span> <span class="n">Trainer</span><span class="p">(</span>
+</span><span data-line="8">        <span class="n">world_size</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+</span><span data-line="9">        <span class="n">model_path</span><span class="o">=</span><span class="s2">&quot;Qwen/Qwen3.5-4B&quot;</span><span class="p">,</span>
+</span><span data-line="10">        <span class="n">backend_type</span><span class="o">=</span><span class="n">areno</span><span class="o">.</span><span class="n">Areno</span><span class="p">,</span>
+</span><span data-line="11">        <span class="n">custom_config</span><span class="o">=</span><span class="n">areno</span><span class="o">.</span><span class="n">ArenoConfig</span><span class="p">(</span><span class="n">tp_size</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+</span><span data-line="12">    <span class="p">)</span>
+</span><span data-line="13">
+</span><span data-line="14">    <span class="c1"># Takes a moment: loads tokenizer, starts workers, loads checkpoint.</span>
+</span><span data-line="15">    <span class="n">trainer</span><span class="o">.</span><span class="n">init</span><span class="p">()</span>
+</span><span data-line="16">
+</span><span data-line="17">    <span class="c1"># Rollout calls must run inside an explicit rollout session. The</span>
+</span><span data-line="18">    <span class="c1"># session owns actor onload/offload and rollout-state cleanup.</span>
+</span><span data-line="19">    <span class="n">sampling</span> <span class="o">=</span> <span class="n">areno</span><span class="o">.</span><span class="n">SamplingParams</span><span class="p">(</span><span class="n">max_new_tokens</span><span class="o">=</span><span class="mi">128</span><span class="p">)</span>
+</span><span data-line="20">    <span class="k">async</span> <span class="k">with</span> <span class="n">trainer</span><span class="o">.</span><span class="n">rollout_session</span><span class="p">(</span><span class="n">sampling_params</span><span class="o">=</span><span class="n">sampling</span><span class="p">,</span> <span class="n">proxy</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+</span><span data-line="21">        <span class="n">rollout</span> <span class="o">=</span> <span class="n">trainer</span><span class="o">.</span><span class="n">rollout_batch</span><span class="p">([</span><span class="s2">&quot;Solve 12 * 13.&quot;</span><span class="p">],</span> <span class="n">n_samples</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">sampling_params</span><span class="o">=</span><span class="n">sampling</span><span class="p">)</span>
+</span><span data-line="22">
+</span><span data-line="23">    <span class="c1"># Build TrainSequence rows and a loss function for your algorithm,</span>
+</span><span data-line="24">    <span class="c1"># then run one backend optimizer step.</span>
+</span><span data-line="25">    <span class="c1"># stats = trainer.train(batch_data, loss_fn, mini_bs=1)</span>
+</span><span data-line="26">
+</span><span data-line="27">    <span class="c1"># Release metric writers and local resources.</span>
+</span><span data-line="28">    <span class="n">trainer</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</span><span data-line="29">
+</span><span data-line="30"><span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">main</span><span class="p">())</span>
+</span></pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code class="docutils literal notranslate"><span class="pre">Trainer(...)</span></code> does not load the model. <code class="docutils literal notranslate"><span class="pre">init()</span></code> is the expensive
+boundary because it initializes workers and model weights. Rollout,
+scoring, and training calls then reuse the initialized backend.</p>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="kn">import</span><span class="w"> </span><span class="nn">areno</span>
+</span><span data-line="2"><span class="kn">from</span><span class="w"> </span><span class="nn">areno</span><span class="w"> </span><span class="kn">import</span> <span class="n">Trainer</span>
+</span><span data-line="3">
+</span><span data-line="4"><span class="n">trainer</span> <span class="o">=</span> <span class="n">Trainer</span><span class="p">(</span>
+</span><span data-line="5">    <span class="n">world_size</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+</span><span data-line="6">    <span class="n">model_path</span><span class="o">=</span><span class="s2">&quot;Qwen/Qwen3.5-4B&quot;</span><span class="p">,</span>
+</span><span data-line="7">    <span class="n">backend_type</span><span class="o">=</span><span class="n">areno</span><span class="o">.</span><span class="n">Areno</span><span class="p">,</span>
+</span><span data-line="8">    <span class="n">custom_config</span><span class="o">=</span><span class="n">areno</span><span class="o">.</span><span class="n">ArenoConfig</span><span class="p">(</span><span class="n">tp_size</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+</span><span data-line="9"><span class="p">)</span>
+</span><span data-line="10"><span class="n">trainer</span><span class="o">.</span><span class="n">init</span><span class="p">()</span>
+</span></pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>world_size</strong> (<em>int</em>) – Total number of devices or local worker ranks.</p></li>
+<li><p><strong>model_path</strong> (<em>str</em>) – Local checkpoint path or Hugging Face repo ID.</p></li>
+<li><p><strong>backend_type</strong> – Backend selector. Defaults to Areno when omitted.</p></li>
+<li><p><strong>custom_config</strong> – Backend-specific configuration, such as
+<code class="docutils literal notranslate"><span class="pre">areno.ArenoConfig(tp_size=1)</span></code>.</p></li>
+<li><p><strong>metrics_log_dir</strong> (<em>str</em><em> | </em><em>None</em>) – Optional TensorBoard metrics directory.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="areno.Trainer.init">
+<span class="sig-name descname"><span class="pre">init</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#areno.Trainer.init" title="Link to this definition">¶</a></dt>
+<dd><p>Load the tokenizer, create the backend context, and initialize backend
+workers.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="n">trainer</span><span class="o">.</span><span class="n">init</span><span class="p">()</span>
+</span></pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Call <code class="docutils literal notranslate"><span class="pre">init()</span></code> exactly once before rollout, scoring, training, or
+checkpoint saving.</p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="areno.Trainer.get_tokenizer">
+<span class="sig-name descname"><span class="pre">get_tokenizer</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#areno.Trainer.get_tokenizer" title="Link to this definition">¶</a></dt>
+<dd><p>Return the initialized tokenizer.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="n">tokenizer</span> <span class="o">=</span> <span class="n">trainer</span><span class="o">.</span><span class="n">get_tokenizer</span><span class="p">()</span>
+</span><span data-line="2"><span class="n">ids</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;Hello&quot;</span><span class="p">)</span>
+</span></pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tokenizer object from the selected model path.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="areno.Trainer.load_prompt_batches">
+<span class="sig-name descname"><span class="pre">load_prompt_batches</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_prompt_tokens</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prompt_key</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'prompt'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">solutions_key</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'solutions'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#areno.Trainer.load_prompt_batches" title="Link to this definition">¶</a></dt>
+<dd><p>Yield tokenized prompt batches from a dataset-like object.</p>
+<p>The dataset must already expose the normalized prompt schema. If your raw
+dataset has different field names, normalize it before calling this
+method or use the CLI <code class="docutils literal notranslate"><span class="pre">--dataset-loader-fn</span></code> path.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dataset</strong> – Object supporting <code class="docutils literal notranslate"><span class="pre">len(dataset)</span></code> and row indexing.</p></li>
+<li><p><strong>batch_size</strong> (<em>int</em>) – Number of accepted rows per prompt batch.</p></li>
+<li><p><strong>max_prompt_tokens</strong> (<em>int</em>) – Skip rows whose tokenized prompt is longer
+than this limit.</p></li>
+<li><p><strong>prompt_key</strong> (<em>str</em>) – Field containing the prompt text.</p></li>
+<li><p><strong>solutions_key</strong> (<em>str</em>) – Optional field containing reference answers.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>iterable of <code class="docutils literal notranslate"><span class="pre">PromptBatch</span></code>.</p>
+</dd>
+</dl>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="k">for</span> <span class="n">prompt_batch</span> <span class="ow">in</span> <span class="n">trainer</span><span class="o">.</span><span class="n">load_prompt_batches</span><span class="p">(</span>
+</span><span data-line="2">    <span class="n">dataset</span><span class="p">,</span>
+</span><span data-line="3">    <span class="n">batch_size</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>
+</span><span data-line="4">    <span class="n">max_prompt_tokens</span><span class="o">=</span><span class="mi">1024</span><span class="p">,</span>
+</span><span data-line="5"><span class="p">):</span>
+</span><span data-line="6">    <span class="n">prompts</span> <span class="o">=</span> <span class="p">[</span><span class="n">item</span><span class="o">.</span><span class="n">prompt</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">prompt_batch</span><span class="o">.</span><span class="n">items</span><span class="p">]</span>
+</span></pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="areno.Trainer.rollout_batch">
+<span class="sig-name descname"><span class="pre">rollout_batch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prompts</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_samples</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sampling_params</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#areno.Trainer.rollout_batch" title="Link to this definition">¶</a></dt>
+<dd><p>Generate completions from text prompts.</p>
+<p>Must be called inside <code class="docutils literal notranslate"><span class="pre">async</span> <span class="pre">with</span> <span class="pre">trainer.rollout_session(...,</span>
+<span class="pre">proxy=False)</span></code> for direct prompt rollouts. The explicit session defines
+the rollout lifecycle and prevents accidental consecutive rollouts from
+leaving stale rollout state.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>prompts</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – Prompt strings.</p></li>
+<li><p><strong>n_samples</strong> (<em>int</em>) – Number of completions per prompt.</p></li>
+<li><p><strong>sampling_params</strong> (<a class="reference internal" href="#areno.SamplingParams" title="areno.SamplingParams"><em>SamplingParams</em></a>) – Generation controls.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">list[RolloutResult]</span></code></p>
+</dd>
+</dl>
+<p>This method tokenizes prompts with <code class="docutils literal notranslate"><span class="pre">encode_generation_prompt</span></code> and then
+delegates to <a class="reference internal" href="#areno.Trainer.rollout_token_batch" title="areno.Trainer.rollout_token_batch"><code class="xref py py-meth docutils literal notranslate"><span class="pre">rollout_token_batch()</span></code></a>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="kn">from</span><span class="w"> </span><span class="nn">areno</span><span class="w"> </span><span class="kn">import</span> <span class="n">SamplingParams</span>
+</span><span data-line="2">
+</span><span data-line="3"><span class="n">sampling</span> <span class="o">=</span> <span class="n">SamplingParams</span><span class="p">(</span><span class="n">max_new_tokens</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span> <span class="n">temperature</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+</span><span data-line="4"><span class="k">async</span> <span class="k">with</span> <span class="n">trainer</span><span class="o">.</span><span class="n">rollout_session</span><span class="p">(</span><span class="n">sampling_params</span><span class="o">=</span><span class="n">sampling</span><span class="p">,</span> <span class="n">proxy</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+</span><span data-line="5">    <span class="n">rollouts</span> <span class="o">=</span> <span class="n">trainer</span><span class="o">.</span><span class="n">rollout_batch</span><span class="p">(</span>
+</span><span data-line="6">        <span class="p">[</span><span class="s2">&quot;Solve 12 * 13.&quot;</span><span class="p">],</span>
+</span><span data-line="7">        <span class="n">n_samples</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+</span><span data-line="8">        <span class="n">sampling_params</span><span class="o">=</span><span class="n">sampling</span><span class="p">,</span>
+</span><span data-line="9">    <span class="p">)</span>
+</span></pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="areno.Trainer.rollout_token_batch">
+<span class="sig-name descname"><span class="pre">rollout_token_batch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prompt_tokens</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_samples</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sampling_params</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#areno.Trainer.rollout_token_batch" title="Link to this definition">¶</a></dt>
+<dd><p>Generate completions from pre-tokenized prompts.</p>
+<p>Must be called inside an explicit rollout session, same as
+<a class="reference internal" href="#areno.Trainer.rollout_batch" title="areno.Trainer.rollout_batch"><code class="xref py py-meth docutils literal notranslate"><span class="pre">rollout_batch()</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>prompt_tokens</strong> (<em>list</em><em>[</em><em>list</em><em>[</em><em>int</em><em>]</em><em>]</em>) – Prompt token ids.</p></li>
+<li><p><strong>n_samples</strong> (<em>int</em>) – Number of completions per prompt.</p></li>
+<li><p><strong>sampling_params</strong> (<a class="reference internal" href="#areno.SamplingParams" title="areno.SamplingParams"><em>SamplingParams</em></a>) – Generation controls.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">list[RolloutResult]</span></code></p>
+</dd>
+</dl>
+<p>Use this method when your loop already tokenized prompts while building a
+dataset batch.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="n">tokenizer</span> <span class="o">=</span> <span class="n">trainer</span><span class="o">.</span><span class="n">get_tokenizer</span><span class="p">()</span>
+</span><span data-line="2"><span class="n">prompt_tokens</span> <span class="o">=</span> <span class="p">[</span><span class="n">tokenizer</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;Solve 12 * 13.&quot;</span><span class="p">)]</span>
+</span><span data-line="3"><span class="n">sampling</span> <span class="o">=</span> <span class="n">SamplingParams</span><span class="p">(</span><span class="n">max_new_tokens</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span> <span class="n">temperature</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+</span><span data-line="4"><span class="k">async</span> <span class="k">with</span> <span class="n">trainer</span><span class="o">.</span><span class="n">rollout_session</span><span class="p">(</span><span class="n">sampling_params</span><span class="o">=</span><span class="n">sampling</span><span class="p">,</span> <span class="n">proxy</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+</span><span data-line="5">    <span class="n">rollouts</span> <span class="o">=</span> <span class="n">trainer</span><span class="o">.</span><span class="n">rollout_token_batch</span><span class="p">(</span>
+</span><span data-line="6">        <span class="n">prompt_tokens</span><span class="p">,</span>
+</span><span data-line="7">        <span class="n">n_samples</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+</span><span data-line="8">        <span class="n">sampling_params</span><span class="o">=</span><span class="n">sampling</span><span class="p">,</span>
+</span><span data-line="9">    <span class="p">)</span>
+</span></pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="areno.Trainer.rollout_session">
+<span class="sig-name descname"><span class="pre">rollout_session</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">sampling_params</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loss_mask_policy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_running_prompts</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout_s</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">300.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">proxy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#areno.Trainer.rollout_session" title="Link to this definition">¶</a></dt>
+<dd><p>Create an async rollout session.</p>
+<p>The session is the required lifecycle boundary for rollout. On enter, it
+prepares actor rollout state. On exit, it finalizes rollout-only state
+and prepares the backend for scoring or training. For direct prompt
+rollout, pass <code class="docutils literal notranslate"><span class="pre">proxy=False</span></code>. For agentic rollout, keep the default
+<code class="docutils literal notranslate"><span class="pre">proxy=True</span></code> so the session starts a local OpenAI-compatible proxy.</p>
+<p>In proxy mode, agent code calls <code class="docutils literal notranslate"><span class="pre">ctx.get_base_url()</span></code> with a standard
+OpenAI client. The proxy returns OpenAI responses with Areno token and
+logprob metadata; <code class="docutils literal notranslate"><span class="pre">run_agent</span></code> returns explicit trajectory turns built
+from those responses. Assistant text and assistant tool-call spans are
+trainable by default; tool-result spans are masked unless enabled through
+<code class="docutils literal notranslate"><span class="pre">LossMaskPolicy</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sampling_params</strong> (<a class="reference internal" href="#areno.SamplingParams" title="areno.SamplingParams"><em>SamplingParams</em></a>) – Default generation controls.</p></li>
+<li><p><strong>loss_mask_policy</strong> (<a class="reference internal" href="#areno.api.agentic.LossMaskPolicy" title="areno.api.agentic.LossMaskPolicy"><em>LossMaskPolicy</em></a><em> | </em><em>None</em>) – Optional span-level loss
+mask policy.</p></li>
+<li><p><strong>max_running_prompts</strong> (<em>int</em><em> | </em><em>None</em>) – Global concurrent prompt budget.</p></li>
+<li><p><strong>timeout_s</strong> (<em>float</em>) – Proxy request and agent-function timeout.</p></li>
+<li><p><strong>proxy</strong> (<em>bool</em>) – Whether to start the local OpenAI-compatible proxy.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>async <code class="docutils literal notranslate"><span class="pre">RolloutSession</span></code> context manager.</p>
+</dd>
+</dl>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="k">async</span> <span class="k">with</span> <span class="n">trainer</span><span class="o">.</span><span class="n">rollout_session</span><span class="p">(</span>
+</span><span data-line="2">    <span class="n">sampling_params</span><span class="o">=</span><span class="n">SamplingParams</span><span class="p">(</span><span class="n">max_new_tokens</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">temperature</span><span class="o">=</span><span class="mf">0.7</span><span class="p">),</span>
+</span><span data-line="3">    <span class="n">max_running_prompts</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span>
+</span><span data-line="4"><span class="p">)</span> <span class="k">as</span> <span class="n">ctx</span><span class="p">:</span>
+</span><span data-line="5">    <span class="nb">print</span><span class="p">(</span><span class="n">ctx</span><span class="o">.</span><span class="n">get_base_url</span><span class="p">())</span>
+</span></pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="areno.Trainer.train">
+<span class="sig-name descname"><span class="pre">train</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loss_fn</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mini_bs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">8</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gradient_accumulation_steps</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#areno.Trainer.train" title="Link to this definition">¶</a></dt>
+<dd><p>Run one backend policy training step with a caller-provided loss
+function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>batch_data</strong> (<em>list</em><em>[</em><a class="reference internal" href="#areno.TrainSequence" title="areno.TrainSequence"><em>TrainSequence</em></a><em>]</em>) – Token, mask, logprob, reward, and
+advantage rows.</p></li>
+<li><p><strong>loss_fn</strong> (<em>Callable</em>) – Loss function called by the backend.</p></li>
+<li><p><strong>mini_bs</strong> (<em>int</em>) – Backend training microbatch size.</p></li>
+<li><p><strong>gradient_accumulation_steps</strong> (<em>int</em><em> | </em><em>None</em>) – Optimizer step interval in
+microbatches.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">dict[str,</span> <span class="pre">float]</span></code> with scalar training metrics.</p>
+</dd>
+</dl>
+<p><code class="docutils literal notranslate"><span class="pre">loss_fn</span></code> receives the backend data pack and current logprobs. Built-in
+loss functions live under <code class="docutils literal notranslate"><span class="pre">areno.loss_fns</span></code>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">partial</span>
+</span><span data-line="2"><span class="kn">from</span><span class="w"> </span><span class="nn">areno.loss_fns</span><span class="w"> </span><span class="kn">import</span> <span class="n">gspo_loss_fn</span>
+</span><span data-line="3">
+</span><span data-line="4"><span class="n">stats</span> <span class="o">=</span> <span class="n">trainer</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">batch</span><span class="p">,</span> <span class="n">partial</span><span class="p">(</span><span class="n">gspo_loss_fn</span><span class="p">,</span> <span class="n">clip_eps</span><span class="o">=</span><span class="mf">3.0e-4</span><span class="p">),</span> <span class="n">mini_bs</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+</span></pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="areno.Trainer.ensure_roles">
+<span class="sig-name descname"><span class="pre">ensure_roles</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">roles</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#areno.Trainer.ensure_roles" title="Link to this definition">¶</a></dt>
+<dd><p>Prepare backend-owned auxiliary model roles for algorithms like PPO and
+DPO.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>roles</strong> (<em>dict</em><em>[</em><em>str</em><em>, </em><a class="reference internal" href="#areno.ModelRole" title="areno.ModelRole"><em>ModelRole</em></a><em>]</em>) – Role name to model role configuration.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="kn">from</span><span class="w"> </span><span class="nn">areno</span><span class="w"> </span><span class="kn">import</span> <span class="n">ModelRole</span>
+</span><span data-line="2">
+</span><span data-line="3"><span class="n">trainer</span><span class="o">.</span><span class="n">ensure_roles</span><span class="p">({</span>
+</span><span data-line="4">    <span class="s2">&quot;ref&quot;</span><span class="p">:</span> <span class="n">ModelRole</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;ref&quot;</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="s2">&quot;/path/to/reference&quot;</span><span class="p">,</span> <span class="n">trainable</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+</span><span data-line="5">    <span class="s2">&quot;critic&quot;</span><span class="p">:</span> <span class="n">ModelRole</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;critic&quot;</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="s2">&quot;/path/to/critic&quot;</span><span class="p">,</span> <span class="n">trainable</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">optimizer_lr</span><span class="o">=</span><span class="mf">1e-5</span><span class="p">),</span>
+</span><span data-line="6"><span class="p">})</span>
+</span></pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="areno.Trainer.score_logprobs">
+<span class="sig-name descname"><span class="pre">score_logprobs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">role</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">token_rows</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#areno.Trainer.score_logprobs" title="Link to this definition">¶</a></dt>
+<dd><p>Score fixed token sequences with a backend-owned model role.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>role</strong> (<em>str</em>) – Role name, such as <code class="docutils literal notranslate"><span class="pre">ref</span></code> or <code class="docutils literal notranslate"><span class="pre">actor</span></code>.</p></li>
+<li><p><strong>token_rows</strong> (<em>list</em><em>[</em><em>list</em><em>[</em><em>int</em><em>]</em><em>]</em>) – Token rows to score.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">list[list[float]]</span></code></p>
+</dd>
+</dl>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="n">ref_logprobs</span> <span class="o">=</span> <span class="n">trainer</span><span class="o">.</span><span class="n">score_logprobs</span><span class="p">(</span><span class="s2">&quot;ref&quot;</span><span class="p">,</span> <span class="n">token_rows</span><span class="p">)</span>
+</span></pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="areno.Trainer.score_values">
+<span class="sig-name descname"><span class="pre">score_values</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">role</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">token_rows</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#areno.Trainer.score_values" title="Link to this definition">¶</a></dt>
+<dd><p>Score per-token critic values with a backend-owned model role.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>role</strong> (<em>str</em>) – Role name, such as <code class="docutils literal notranslate"><span class="pre">critic</span></code>.</p></li>
+<li><p><strong>token_rows</strong> (<em>list</em><em>[</em><em>list</em><em>[</em><em>int</em><em>]</em><em>]</em>) – Token rows to score.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">list[list[float]]</span></code></p>
+</dd>
+</dl>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="n">values</span> <span class="o">=</span> <span class="n">trainer</span><span class="o">.</span><span class="n">score_values</span><span class="p">(</span><span class="s2">&quot;critic&quot;</span><span class="p">,</span> <span class="n">token_rows</span><span class="p">)</span>
+</span></pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="areno.Trainer.score_rewards">
+<span class="sig-name descname"><span class="pre">score_rewards</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">role</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">token_rows</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#areno.Trainer.score_rewards" title="Link to this definition">¶</a></dt>
+<dd><p>Score sequence rewards with a backend-owned reward model role.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>role</strong> (<em>str</em>) – Role name, such as <code class="docutils literal notranslate"><span class="pre">reward</span></code>.</p></li>
+<li><p><strong>token_rows</strong> (<em>list</em><em>[</em><em>list</em><em>[</em><em>int</em><em>]</em><em>]</em>) – Token rows to score.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">list[float]</span></code></p>
+</dd>
+</dl>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="n">rewards</span> <span class="o">=</span> <span class="n">trainer</span><span class="o">.</span><span class="n">score_rewards</span><span class="p">(</span><span class="s2">&quot;reward&quot;</span><span class="p">,</span> <span class="n">token_rows</span><span class="p">)</span>
+</span></pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="areno.Trainer.train_values">
+<span class="sig-name descname"><span class="pre">train_values</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">role</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mini_bs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gradient_accumulation_steps</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">cliprange_value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value_loss_coef</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#areno.Trainer.train_values" title="Link to this definition">¶</a></dt>
+<dd><p>Train a backend-owned critic or value role.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>role</strong> (<em>str</em>) – Role name, such as <code class="docutils literal notranslate"><span class="pre">critic</span></code>.</p></li>
+<li><p><strong>batch_data</strong> (<em>list</em><em>[</em><a class="reference internal" href="#areno.TrainSequence" title="areno.TrainSequence"><em>TrainSequence</em></a><em>]</em>) – Training rows.</p></li>
+<li><p><strong>mini_bs</strong> (<em>int</em>) – Critic training microbatch size.</p></li>
+<li><p><strong>gradient_accumulation_steps</strong> (<em>int</em><em> | </em><em>None</em>) – Optimizer step interval in
+microbatches.</p></li>
+<li><p><strong>cliprange_value</strong> (<em>float</em>) – PPO value-function clipping range.</p></li>
+<li><p><strong>value_loss_coef</strong> (<em>float</em>) – Value loss coefficient.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">dict[str,</span> <span class="pre">float]</span></code></p>
+</dd>
+</dl>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="n">critic_stats</span> <span class="o">=</span> <span class="n">trainer</span><span class="o">.</span><span class="n">train_values</span><span class="p">(</span><span class="s2">&quot;critic&quot;</span><span class="p">,</span> <span class="n">batch_data</span><span class="p">,</span> <span class="n">mini_bs</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+</span></pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="areno.Trainer.save_checkpoint">
+<span class="sig-name descname"><span class="pre">save_checkpoint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#areno.Trainer.save_checkpoint" title="Link to this definition">¶</a></dt>
+<dd><p>Save a Hugging Face-compatible checkpoint when supported by the backend.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>path</strong> (<em>str</em>) – Output directory.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>saved checkpoint path as <code class="docutils literal notranslate"><span class="pre">str</span></code>.</p>
+</dd>
+</dl>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="n">saved_path</span> <span class="o">=</span> <span class="n">trainer</span><span class="o">.</span><span class="n">save_checkpoint</span><span class="p">(</span><span class="s2">&quot;/tmp/areno-step-10&quot;</span><span class="p">)</span>
+</span></pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="areno.Trainer.close">
+<span class="sig-name descname"><span class="pre">close</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#areno.Trainer.close" title="Link to this definition">¶</a></dt>
+<dd><p>Release local resources such as metric writers.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<section id="data-classes">
+<h2>Data classes<a class="headerlink" href="#data-classes" title="Link to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="areno.SamplingParams">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">areno.</span></span><span class="sig-name descname"><span class="pre">SamplingParams</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">greedy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">top_p</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">top_k</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_new_tokens</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">16</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_context_len</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">temperature</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stop</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stop_token_ids</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore_eos</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skip_special_tokens</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_prompt_len</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#areno.SamplingParams" title="Link to this definition">¶</a></dt>
+<dd><p>Generation controls used by rollout APIs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>greedy</strong> (<em>bool</em>) – Force greedy decoding. Overrides temperature in the
+backend.</p></li>
+<li><p><strong>top_p</strong> (<em>float</em>) – Nucleus sampling threshold.</p></li>
+<li><p><strong>top_k</strong> (<em>int</em>) – Top-k sampling threshold. <code class="docutils literal notranslate"><span class="pre">-1</span></code> disables top-k filtering.</p></li>
+<li><p><strong>max_new_tokens</strong> (<em>int</em>) – Maximum number of generated response tokens.</p></li>
+<li><p><strong>max_context_len</strong> (<em>int</em><em> | </em><em>None</em>) – Optional total context cap for agentic
+trajectories. The cap is applied to the prompt plus all generated turns
+concatenated into the trainable trajectory row.</p></li>
+<li><p><strong>temperature</strong> (<em>float</em>) – Sampling temperature.</p></li>
+<li><p><strong>stop</strong> (<em>list</em><em>[</em><em>str</em><em>] </em><em>| </em><em>None</em>) – Stop strings.</p></li>
+<li><p><strong>stop_token_ids</strong> (<em>list</em><em>[</em><em>int</em><em>] </em><em>| </em><em>None</em>) – Stop token ids.</p></li>
+<li><p><strong>ignore_eos</strong> (<em>bool</em>) – Continue generation without EOS stopping.</p></li>
+<li><p><strong>skip_special_tokens</strong> (<em>bool</em>) – Decode helper preference for completions.</p></li>
+<li><p><strong>max_prompt_len</strong> (<em>int</em><em> | </em><em>None</em>) – Optional prompt length cap.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="areno.TrainSequence">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">areno.</span></span><span class="sig-name descname"><span class="pre">TrainSequence</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prompt_mask</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tokens</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logprobs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">advantages</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">returns</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">values</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ref_logprobs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reward</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eos_token_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#areno.TrainSequence" title="Link to this definition">¶</a></dt>
+<dd><p>One rollout sequence converted into a policy-gradient training sample.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>prompt_mask</strong> (<em>list</em><em>[</em><em>bool</em><em>]</em>) – <code class="docutils literal notranslate"><span class="pre">True</span></code> for prompt or padded positions;
+losses train on response positions.</p></li>
+<li><p><strong>tokens</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>) – Prompt and response token ids.</p></li>
+<li><p><strong>logprobs</strong> (<em>list</em><em>[</em><em>float</em><em>]</em>) – Rollout-policy logprobs aligned with tokens.</p></li>
+<li><p><strong>advantages</strong> (<em>list</em><em>[</em><em>float</em><em>]</em>) – Per-token advantages.</p></li>
+<li><p><strong>returns</strong> (<em>list</em><em>[</em><em>float</em><em>]</em>) – Optional value targets for PPO.</p></li>
+<li><p><strong>values</strong> (<em>list</em><em>[</em><em>float</em><em>]</em>) – Optional old value predictions for PPO.</p></li>
+<li><p><strong>ref_logprobs</strong> (<em>list</em><em>[</em><em>float</em><em>]</em>) – Optional reference logprobs for KL.</p></li>
+<li><p><strong>reward</strong> (<em>float</em>) – Sequence-level reward.</p></li>
+<li><p><strong>eos_token_id</strong> (<em>int</em>) – EOS id used for padding backend packs.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="areno.ModelRole">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">areno.</span></span><span class="sig-name descname"><span class="pre">ModelRole</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trainable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">optimizer_lr</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#areno.ModelRole" title="Link to this definition">¶</a></dt>
+<dd><p>Auxiliary model role owned by the backend.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>) – Role name, for example <code class="docutils literal notranslate"><span class="pre">ref</span></code>, <code class="docutils literal notranslate"><span class="pre">reward</span></code>, or <code class="docutils literal notranslate"><span class="pre">critic</span></code>.</p></li>
+<li><p><strong>path</strong> (<em>str</em>) – Checkpoint path or Hugging Face repo ID.</p></li>
+<li><p><strong>trainable</strong> (<em>bool</em>) – Whether the role has an optimizer.</p></li>
+<li><p><strong>optimizer_lr</strong> (<em>float</em><em> | </em><em>None</em>) – Optimizer LR for trainable roles.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="areno.ArenoConfig">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">areno.</span></span><span class="sig-name descname"><span class="pre">ArenoConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tp_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dp_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">devices</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dummy_load</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">optimizer</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">runtime</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_running_prompts</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">64</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">decode_progress_interval_s</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10.0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#areno.ArenoConfig" title="Link to this definition">¶</a></dt>
+<dd><p>Backend configuration for the local Areno engine.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model_path</strong> (<em>str</em><em> | </em><em>None</em>) – Optional backend model path override.</p></li>
+<li><p><strong>tp_size</strong> (<em>int</em>) – Tensor-parallel size.</p></li>
+<li><p><strong>dp_size</strong> (<em>int</em><em> | </em><em>None</em>) – Data-parallel size. Defaults to
+<code class="docutils literal notranslate"><span class="pre">world_size</span> <span class="pre">//</span> <span class="pre">tp_size</span></code>.</p></li>
+<li><p><strong>devices</strong> (<em>list</em><em>[</em><em>int</em><em>] </em><em>| </em><em>None</em>) – Device ids for worker ranks.</p></li>
+<li><p><strong>dummy_load</strong> (<em>bool</em>) – Build model without loading checkpoint weights.</p></li>
+<li><p><strong>optimizer</strong> (<em>dict</em><em> | </em><em>None</em>) – Advanced optimizer config passed to the
+engine.</p></li>
+<li><p><strong>runtime</strong> (<em>dict</em><em> | </em><em>None</em>) – Advanced runtime config passed to the engine.
+Set <code class="docutils literal notranslate"><span class="pre">runtime={&quot;attn_backend&quot;:</span> <span class="pre">&quot;native&quot;}</span></code> to run without
+<code class="docutils literal notranslate"><span class="pre">flash-attn</span></code> on the areno_accel native compatibility path. AReno also
+falls back to native attention on flash-attn-unsupported GPUs such as
+Tesla T4 and prints a warning. The default is <code class="docutils literal notranslate"><span class="pre">&quot;flash&quot;</span></code> for normal
+high-throughput training on supported GPUs.</p></li>
+<li><p><strong>max_running_prompts</strong> (<em>int</em>) – Concurrent rollout prompt limit.</p></li>
+<li><p><strong>decode_progress_interval_s</strong> (<em>float</em>) – Worker decode progress log
+interval. Logs report per-DP scheduled decode throughput for the current
+window and include <code class="docutils literal notranslate"><span class="pre">cuda_graph=True</span></code> when CUDA graph replay was used in
+that window.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="areno.api.agentic.AgentBatch">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">areno.api.agentic.</span></span><span class="sig-name descname"><span class="pre">AgentBatch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">records</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prompts</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_tokens</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_samples</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#areno.api.agentic.AgentBatch" title="Link to this definition">¶</a></dt>
+<dd><p>Prompt batch expanded into one item per prompt/sample pair for agent
+execution.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>records</strong> (<em>list</em><em>[</em><em>dict</em><em>]</em>) – Source dataset records.</p></li>
+<li><p><strong>prompts</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – Prompt strings.</p></li>
+<li><p><strong>input_tokens</strong> (<em>list</em><em>[</em><em>list</em><em>[</em><em>int</em><em>]</em><em>]</em>) – Prompt token ids.</p></li>
+<li><p><strong>n_samples</strong> (<em>int</em>) – Samples per prompt.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="areno.api.agentic.RewardRecord">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">areno.api.agentic.</span></span><span class="sig-name descname"><span class="pre">RewardRecord</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">...</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#areno.api.agentic.RewardRecord" title="Link to this definition">¶</a></dt>
+<dd><p>Unified reward input for agentic rollouts.</p>
+<p>Reward functions receive one <code class="docutils literal notranslate"><span class="pre">RewardRecord</span></code> per completed trajectory. For
+multi-turn agents, the record represents one prompt/sample pair, not one HTTP
+request.</p>
+<p><code class="docutils literal notranslate"><span class="pre">completion</span></code> contains concatenated assistant response spans for backwards
+compatibility. <code class="docutils literal notranslate"><span class="pre">final_answer</span></code> contains the last assistant response.
+<code class="docutils literal notranslate"><span class="pre">messages</span></code> is the full OpenAI-style message list, including tool-result
+messages. <code class="docutils literal notranslate"><span class="pre">rendered_completion</span></code> is the same trajectory rendered through the
+tokenizer chat template when available. <code class="docutils literal notranslate"><span class="pre">tool_calls</span></code> and <code class="docutils literal notranslate"><span class="pre">tool_results</span></code>
+expose parsed tool calls and environment observations. <code class="docutils literal notranslate"><span class="pre">tokens</span></code>,
+<code class="docutils literal notranslate"><span class="pre">logprobs</span></code>, and <code class="docutils literal notranslate"><span class="pre">loss_mask</span></code> describe the model-generated response spans.</p>
+<p>Tool-result/context spans are included in train rows so logprob scoring sees
+the same context as rollout, but they are masked from policy loss by default.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="areno.api.agentic.LossMaskPolicy">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">areno.api.agentic.</span></span><span class="sig-name descname"><span class="pre">LossMaskPolicy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">assistant_text</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assistant_tool_calls</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tool_results</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">final_assistant_text</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">system_prompt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user_prompt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#areno.api.agentic.LossMaskPolicy" title="Link to this definition">¶</a></dt>
+<dd><p>Span-level policy-loss controls for agentic trajectories.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>assistant_text</strong> (<em>bool</em>) – Train assistant text spans.</p></li>
+<li><p><strong>assistant_tool_calls</strong> (<em>bool</em>) – Train assistant tool-call spans.</p></li>
+<li><p><strong>tool_results</strong> (<em>bool</em>) – Train tool-result spans. Defaults to <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p></li>
+<li><p><strong>final_assistant_text</strong> (<em>bool</em>) – Reserved for final-response text spans.</p></li>
+<li><p><strong>system_prompt</strong> (<em>bool</em>) – Reserved for system prompt spans.</p></li>
+<li><p><strong>user_prompt</strong> (<em>bool</em>) – Reserved for user prompt spans.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="one-gspo-style-rollout-train-step">
+<h2>One GSPO-style rollout/train step<a class="headerlink" href="#one-gspo-style-rollout-train-step" title="Link to this heading">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="kn">import</span><span class="w"> </span><span class="nn">asyncio</span>
+</span><span data-line="2"><span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">partial</span>
+</span><span data-line="3">
+</span><span data-line="4"><span class="kn">from</span><span class="w"> </span><span class="nn">datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_dataset</span>
+</span><span data-line="5">
+</span><span data-line="6"><span class="kn">import</span><span class="w"> </span><span class="nn">areno</span>
+</span><span data-line="7"><span class="kn">from</span><span class="w"> </span><span class="nn">areno</span><span class="w"> </span><span class="kn">import</span> <span class="n">SamplingParams</span><span class="p">,</span> <span class="n">TrainSequence</span><span class="p">,</span> <span class="n">Trainer</span>
+</span><span data-line="8"><span class="kn">from</span><span class="w"> </span><span class="nn">areno.loss_fns</span><span class="w"> </span><span class="kn">import</span> <span class="n">gspo_loss_fn</span>
+</span><span data-line="9">
+</span><span data-line="10">
+</span><span data-line="11"><span class="k">def</span><span class="w"> </span><span class="nf">normalize_rewards</span><span class="p">(</span><span class="n">rewards</span><span class="p">):</span>
+</span><span data-line="12">    <span class="n">mean</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">rewards</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">rewards</span><span class="p">)</span>
+</span><span data-line="13">    <span class="n">var</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">((</span><span class="n">reward</span> <span class="o">-</span> <span class="n">mean</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> <span class="k">for</span> <span class="n">reward</span> <span class="ow">in</span> <span class="n">rewards</span><span class="p">)</span> <span class="o">/</span> <span class="nb">max</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">rewards</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span>
+</span><span data-line="14">    <span class="n">std</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">var</span> <span class="o">**</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">1e-6</span><span class="p">)</span>
+</span><span data-line="15">    <span class="k">return</span> <span class="p">[(</span><span class="n">reward</span> <span class="o">-</span> <span class="n">mean</span><span class="p">)</span> <span class="o">/</span> <span class="n">std</span> <span class="k">for</span> <span class="n">reward</span> <span class="ow">in</span> <span class="n">rewards</span><span class="p">]</span>
+</span><span data-line="16">
+</span><span data-line="17">
+</span><span data-line="18"><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
+</span><span data-line="19">    <span class="n">trainer</span> <span class="o">=</span> <span class="n">Trainer</span><span class="p">(</span>
+</span><span data-line="20">        <span class="n">world_size</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+</span><span data-line="21">        <span class="n">model_path</span><span class="o">=</span><span class="s2">&quot;Qwen/Qwen3.5-4B&quot;</span><span class="p">,</span>
+</span><span data-line="22">        <span class="n">backend_type</span><span class="o">=</span><span class="n">areno</span><span class="o">.</span><span class="n">Areno</span><span class="p">,</span>
+</span><span data-line="23">        <span class="n">custom_config</span><span class="o">=</span><span class="n">areno</span><span class="o">.</span><span class="n">ArenoConfig</span><span class="p">(</span><span class="n">tp_size</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+</span><span data-line="24">    <span class="p">)</span>
+</span><span data-line="25">    <span class="n">trainer</span><span class="o">.</span><span class="n">init</span><span class="p">()</span>
+</span><span data-line="26">
+</span><span data-line="27">    <span class="n">row</span> <span class="o">=</span> <span class="n">load_dataset</span><span class="p">(</span><span class="s2">&quot;gsm8k&quot;</span><span class="p">,</span> <span class="s2">&quot;main&quot;</span><span class="p">,</span> <span class="n">split</span><span class="o">=</span><span class="s2">&quot;train[0:1]&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+</span><span data-line="28">    <span class="n">target</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s2">&quot;answer&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">rsplit</span><span class="p">(</span><span class="s2">&quot;####&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+</span><span data-line="29">    <span class="n">prompt</span> <span class="o">=</span> <span class="p">(</span>
+</span><span data-line="30">        <span class="s2">&quot;Solve the problem and put the final answer in </span><span class="se">\\</span><span class="s2">boxed</span><span class="si">{}</span><span class="s2">.</span><span class="se">\n\n</span><span class="s2">&quot;</span>
+</span><span data-line="31">        <span class="sa">f</span><span class="s2">&quot;Problem: </span><span class="si">{</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;question&#39;</span><span class="p">]</span><span class="si">}</span><span class="se">\n</span><span class="s2">Solution:&quot;</span>
+</span><span data-line="32">    <span class="p">)</span>
+</span><span data-line="33">    <span class="n">prompt_tokens</span> <span class="o">=</span> <span class="n">trainer</span><span class="o">.</span><span class="n">get_tokenizer</span><span class="p">()</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">prompt</span><span class="p">)</span>
+</span><span data-line="34">    <span class="n">sampling</span> <span class="o">=</span> <span class="n">SamplingParams</span><span class="p">(</span><span class="n">max_new_tokens</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span> <span class="n">temperature</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+</span><span data-line="35">
+</span><span data-line="36">    <span class="k">async</span> <span class="k">with</span> <span class="n">trainer</span><span class="o">.</span><span class="n">rollout_session</span><span class="p">(</span><span class="n">sampling_params</span><span class="o">=</span><span class="n">sampling</span><span class="p">,</span> <span class="n">proxy</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+</span><span data-line="37">        <span class="n">rollout</span> <span class="o">=</span> <span class="n">trainer</span><span class="o">.</span><span class="n">rollout_token_batch</span><span class="p">([</span><span class="n">prompt_tokens</span><span class="p">],</span> <span class="n">n_samples</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">sampling_params</span><span class="o">=</span><span class="n">sampling</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+</span><span data-line="38">
+</span><span data-line="39">    <span class="n">completions</span> <span class="o">=</span> <span class="p">[</span><span class="n">trainer</span><span class="o">.</span><span class="n">get_tokenizer</span><span class="p">()</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">seq</span><span class="o">.</span><span class="n">resp_tokens</span><span class="p">)</span> <span class="k">for</span> <span class="n">seq</span> <span class="ow">in</span> <span class="n">rollout</span><span class="o">.</span><span class="n">sequences</span><span class="p">]</span>
+</span><span data-line="40">    <span class="n">rewards</span> <span class="o">=</span> <span class="p">[</span><span class="mf">1.0</span> <span class="k">if</span> <span class="n">target</span> <span class="ow">in</span> <span class="n">completion</span> <span class="k">else</span> <span class="mf">0.0</span> <span class="k">for</span> <span class="n">completion</span> <span class="ow">in</span> <span class="n">completions</span><span class="p">]</span>
+</span><span data-line="41">    <span class="n">advantages</span> <span class="o">=</span> <span class="n">normalize_rewards</span><span class="p">(</span><span class="n">rewards</span><span class="p">)</span>
+</span><span data-line="42">
+</span><span data-line="43">    <span class="n">batch</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span data-line="44">    <span class="k">for</span> <span class="n">seq</span><span class="p">,</span> <span class="n">reward</span><span class="p">,</span> <span class="n">advantage</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">rollout</span><span class="o">.</span><span class="n">sequences</span><span class="p">,</span> <span class="n">rewards</span><span class="p">,</span> <span class="n">advantages</span><span class="p">,</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+</span><span data-line="45">        <span class="n">response_len</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">seq</span><span class="o">.</span><span class="n">resp_tokens</span><span class="p">)</span>
+</span><span data-line="46">        <span class="n">batch</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+</span><span data-line="47">            <span class="n">TrainSequence</span><span class="p">(</span>
+</span><span data-line="48">                <span class="n">prompt_mask</span><span class="o">=</span><span class="p">[</span><span class="kc">True</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">prompt_tokens</span><span class="p">)</span> <span class="o">+</span> <span class="p">[</span><span class="kc">False</span><span class="p">]</span> <span class="o">*</span> <span class="n">response_len</span><span class="p">,</span>
+</span><span data-line="49">                <span class="n">tokens</span><span class="o">=</span><span class="n">prompt_tokens</span> <span class="o">+</span> <span class="n">seq</span><span class="o">.</span><span class="n">resp_tokens</span><span class="p">,</span>
+</span><span data-line="50">                <span class="n">logprobs</span><span class="o">=</span><span class="p">[</span><span class="mf">0.0</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">prompt_tokens</span><span class="p">)</span> <span class="o">+</span> <span class="n">seq</span><span class="o">.</span><span class="n">resp_logprobs</span><span class="p">,</span>
+</span><span data-line="51">                <span class="n">advantages</span><span class="o">=</span><span class="p">[</span><span class="mf">0.0</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">prompt_tokens</span><span class="p">)</span> <span class="o">+</span> <span class="p">[</span><span class="n">advantage</span><span class="p">]</span> <span class="o">*</span> <span class="n">response_len</span><span class="p">,</span>
+</span><span data-line="52">                <span class="n">reward</span><span class="o">=</span><span class="n">reward</span><span class="p">,</span>
+</span><span data-line="53">                <span class="n">eos_token_id</span><span class="o">=</span><span class="n">trainer</span><span class="o">.</span><span class="n">get_tokenizer</span><span class="p">()</span><span class="o">.</span><span class="n">eos_token_id</span><span class="p">,</span>
+</span><span data-line="54">            <span class="p">)</span>
+</span><span data-line="55">        <span class="p">)</span>
+</span><span data-line="56">    <span class="p">)</span>
+</span><span data-line="57">
+</span><span data-line="58">    <span class="n">stats</span> <span class="o">=</span> <span class="n">trainer</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">batch</span><span class="p">,</span> <span class="n">partial</span><span class="p">(</span><span class="n">gspo_loss_fn</span><span class="p">,</span> <span class="n">clip_eps</span><span class="o">=</span><span class="mf">3.0e-4</span><span class="p">),</span> <span class="n">mini_bs</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+</span><span data-line="59">    <span class="nb">print</span><span class="p">(</span><span class="n">stats</span><span class="p">)</span>
+</span><span data-line="60">    <span class="n">trainer</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</span><span data-line="61">
+</span><span data-line="62"><span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">main</span><span class="p">())</span>
+</span></pre></div>
+</div>
+</section>
+<section id="agentic-rollout-with-tools">
+<h2>Agentic rollout with tools<a class="headerlink" href="#agentic-rollout-with-tools" title="Link to this heading">¶</a></h2>
+<p>This example shows the SDK pieces used by <code class="docutils literal notranslate"><span class="pre">--agent-fn</span></code>. The agent calls a
+local OpenAI-compatible proxy with Chat Completions <code class="docutils literal notranslate"><span class="pre">tools</span></code> and returns
+explicit trajectories. Areno parses supported model-native tool-call output
+from those responses, then the trainer converts trajectories into the same
+token, logprob, reward, and loss-mask rows used by regular rollouts.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="kn">import</span><span class="w"> </span><span class="nn">asyncio</span>
+</span><span data-line="2">
+</span><span data-line="3"><span class="kn">import</span><span class="w"> </span><span class="nn">areno</span>
+</span><span data-line="4"><span class="kn">from</span><span class="w"> </span><span class="nn">areno</span><span class="w"> </span><span class="kn">import</span> <span class="n">SamplingParams</span><span class="p">,</span> <span class="n">Trainer</span>
+</span><span data-line="5"><span class="kn">from</span><span class="w"> </span><span class="nn">areno.api.agentic</span><span class="w"> </span><span class="kn">import</span> <span class="n">AgentBatch</span><span class="p">,</span> <span class="n">AgentTrajectory</span><span class="p">,</span> <span class="n">AgentTrajectoryTurn</span>
+</span><span data-line="6"><span class="kn">from</span><span class="w"> </span><span class="nn">openai</span><span class="w"> </span><span class="kn">import</span> <span class="n">AsyncOpenAI</span>
+</span><span data-line="7">
+</span><span data-line="8">
+</span><span data-line="9"><span class="n">tools</span> <span class="o">=</span> <span class="p">[</span>
+</span><span data-line="10">    <span class="p">{</span>
+</span><span data-line="11">        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;function&quot;</span><span class="p">,</span>
+</span><span data-line="12">        <span class="s2">&quot;function&quot;</span><span class="p">:</span> <span class="p">{</span>
+</span><span data-line="13">            <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;choose_move&quot;</span><span class="p">,</span>
+</span><span data-line="14">            <span class="s2">&quot;parameters&quot;</span><span class="p">:</span> <span class="p">{</span>
+</span><span data-line="15">                <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
+</span><span data-line="16">                <span class="s2">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span>
+</span><span data-line="17">                    <span class="s2">&quot;direction&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span> <span class="s2">&quot;enum&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;up&quot;</span><span class="p">,</span> <span class="s2">&quot;down&quot;</span><span class="p">,</span> <span class="s2">&quot;left&quot;</span><span class="p">,</span> <span class="s2">&quot;right&quot;</span><span class="p">]},</span>
+</span><span data-line="18">                <span class="p">},</span>
+</span><span data-line="19">                <span class="s2">&quot;required&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;direction&quot;</span><span class="p">],</span>
+</span><span data-line="20">            <span class="p">},</span>
+</span><span data-line="21">        <span class="p">},</span>
+</span><span data-line="22">    <span class="p">}</span>
+</span><span data-line="23"><span class="p">]</span>
+</span><span data-line="24">
+</span><span data-line="25">
+</span><span data-line="26"><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">run_agent</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="n">batch</span><span class="p">):</span>
+</span><span data-line="27">    <span class="n">client</span> <span class="o">=</span> <span class="n">AsyncOpenAI</span><span class="p">(</span><span class="n">base_url</span><span class="o">=</span><span class="n">ctx</span><span class="o">.</span><span class="n">get_base_url</span><span class="p">(),</span> <span class="n">api_key</span><span class="o">=</span><span class="n">ctx</span><span class="o">.</span><span class="n">api_key</span><span class="p">,</span> <span class="n">max_retries</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</span><span data-line="28">
+</span><span data-line="29">    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">run_one</span><span class="p">(</span><span class="n">item</span><span class="p">):</span>
+</span><span data-line="30">        <span class="n">messages</span> <span class="o">=</span> <span class="p">[</span>
+</span><span data-line="31">            <span class="p">{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;system&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;Call choose_move with the selected direction.&quot;</span><span class="p">},</span>
+</span><span data-line="32">            <span class="p">{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="n">item</span><span class="o">.</span><span class="n">prompt</span><span class="p">},</span>
+</span><span data-line="33">        <span class="p">]</span>
+</span><span data-line="34">        <span class="n">tool_choice</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;function&quot;</span><span class="p">,</span> <span class="s2">&quot;function&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;choose_move&quot;</span><span class="p">}}</span>
+</span><span data-line="35">        <span class="n">response</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">completions</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+</span><span data-line="36">            <span class="n">model</span><span class="o">=</span><span class="s2">&quot;policy&quot;</span><span class="p">,</span>
+</span><span data-line="37">            <span class="n">messages</span><span class="o">=</span><span class="n">messages</span><span class="p">,</span>
+</span><span data-line="38">            <span class="n">tools</span><span class="o">=</span><span class="n">tools</span><span class="p">,</span>
+</span><span data-line="39">            <span class="n">tool_choice</span><span class="o">=</span><span class="n">tool_choice</span><span class="p">,</span>
+</span><span data-line="40">            <span class="n">max_tokens</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span>
+</span><span data-line="41">            <span class="n">temperature</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span>
+</span><span data-line="42">        <span class="p">)</span>
+</span><span data-line="43">        <span class="k">return</span> <span class="n">AgentTrajectoryTurn</span><span class="p">(</span>
+</span><span data-line="44">            <span class="n">item</span><span class="o">=</span><span class="n">item</span><span class="p">,</span>
+</span><span data-line="45">            <span class="n">messages</span><span class="o">=</span><span class="n">messages</span><span class="p">,</span>
+</span><span data-line="46">            <span class="n">response</span><span class="o">=</span><span class="n">response</span><span class="p">,</span>
+</span><span data-line="47">            <span class="n">tools</span><span class="o">=</span><span class="n">tools</span><span class="p">,</span>
+</span><span data-line="48">            <span class="n">tool_choice</span><span class="o">=</span><span class="n">tool_choice</span><span class="p">,</span>
+</span><span data-line="49">        <span class="p">)</span>
+</span><span data-line="50">
+</span><span data-line="51">    <span class="k">try</span><span class="p">:</span>
+</span><span data-line="52">        <span class="n">turns</span> <span class="o">=</span> <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">gather</span><span class="p">(</span><span class="o">*</span><span class="p">(</span><span class="n">run_one</span><span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">batch</span><span class="o">.</span><span class="n">iter_samples</span><span class="p">()))</span>
+</span><span data-line="53">        <span class="k">return</span> <span class="p">[</span><span class="n">AgentTrajectory</span><span class="p">(</span><span class="n">turns</span><span class="o">=</span><span class="p">[</span><span class="n">turn</span><span class="p">])</span> <span class="k">for</span> <span class="n">turn</span> <span class="ow">in</span> <span class="n">turns</span><span class="p">]</span>
+</span><span data-line="54">    <span class="k">finally</span><span class="p">:</span>
+</span><span data-line="55">        <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</span><span data-line="56">
+</span><span data-line="57">
+</span><span data-line="58"><span class="k">def</span><span class="w"> </span><span class="nf">reward_fn</span><span class="p">(</span><span class="n">record</span><span class="p">):</span>
+</span><span data-line="59">    <span class="k">if</span> <span class="ow">not</span> <span class="n">record</span><span class="o">.</span><span class="n">tool_calls</span><span class="p">:</span>
+</span><span data-line="60">        <span class="k">return</span> <span class="o">-</span><span class="mf">1.0</span>
+</span><span data-line="61">    <span class="k">return</span> <span class="mf">1.0</span>
+</span><span data-line="62">
+</span><span data-line="63">
+</span><span data-line="64"><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">collect_agentic_trajectories</span><span class="p">(</span><span class="n">trainer</span><span class="p">,</span> <span class="n">prompt_batch</span><span class="p">):</span>
+</span><span data-line="65">    <span class="n">agent_batch</span> <span class="o">=</span> <span class="n">AgentBatch</span><span class="o">.</span><span class="n">from_prompt_batch</span><span class="p">(</span><span class="n">prompt_batch</span><span class="p">,</span> <span class="n">n_samples</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+</span><span data-line="66">    <span class="k">async</span> <span class="k">with</span> <span class="n">trainer</span><span class="o">.</span><span class="n">rollout_session</span><span class="p">(</span>
+</span><span data-line="67">        <span class="n">sampling_params</span><span class="o">=</span><span class="n">SamplingParams</span><span class="p">(</span><span class="n">max_new_tokens</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">temperature</span><span class="o">=</span><span class="mf">0.7</span><span class="p">),</span>
+</span><span data-line="68">        <span class="n">max_running_prompts</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">agent_batch</span><span class="p">),</span>
+</span><span data-line="69">    <span class="p">)</span> <span class="k">as</span> <span class="n">ctx</span><span class="p">:</span>
+</span><span data-line="70">        <span class="k">return</span> <span class="k">await</span> <span class="n">run_agent</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="n">agent_batch</span><span class="p">)</span>
+</span><span data-line="71">
+</span><span data-line="72">
+</span><span data-line="73"><span class="n">trainer</span> <span class="o">=</span> <span class="n">Trainer</span><span class="p">(</span>
+</span><span data-line="74">    <span class="n">world_size</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+</span><span data-line="75">    <span class="n">model_path</span><span class="o">=</span><span class="s2">&quot;Qwen/Qwen3-0.6B&quot;</span><span class="p">,</span>
+</span><span data-line="76">    <span class="n">backend_type</span><span class="o">=</span><span class="n">areno</span><span class="o">.</span><span class="n">Areno</span><span class="p">,</span>
+</span><span data-line="77">    <span class="n">custom_config</span><span class="o">=</span><span class="n">areno</span><span class="o">.</span><span class="n">ArenoConfig</span><span class="p">(</span><span class="n">tp_size</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+</span><span data-line="78"><span class="p">)</span>
+</span><span data-line="79"><span class="n">trainer</span><span class="o">.</span><span class="n">init</span><span class="p">()</span>
+</span><span data-line="80">
+</span><span data-line="81"><span class="c1"># In CLI training, --agent-fn returns these trajectories to the trainer.</span>
+</span><span data-line="82"><span class="c1"># In a custom loop, load a PromptBatch and call:</span>
+</span><span data-line="83"><span class="c1"># trajectories = asyncio.run(collect_agentic_trajectories(trainer, prompt_batch))</span>
+</span></pre></div>
+</div>
+</section>
+</section>
+
+        </article><button class="back-to-top" type="button">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+    <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+  </svg>
+  <span>Back to top</span>
+</button><div class="navigation flex print:hidden"><div class="navigation-prev">
+    <a href="../cli/diagnostics.html">
+      <i class="i-lucide chevron-left"></i>
+      <div class="page-info">
+        <span>Previous</span><div class="title">Diagnostics CLI reference</div></div>
+    </a>
+  </div></div></div>
+    </div>
+  </main>
+</div>
+<footer class="sy-foot">
+  <div class="sy-foot-inner sy-container mx-auto">
+    <div class="sy-foot-reserved md:flex justify-between items-center">
+      
+      <div class="sy-foot-socials"></div>
+    </div>
+  </div>
+</footer>
+      <script src="../_static/documentation_options.js?v=7f41d439"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../_static/shibuya.js?v=50760d75"></script></body>
+</html>
