@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en" data-accent-color="gray" data-content_root="../">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Observability - AReno docs</title><link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Inference CLI reference" href="inference.html" /><link rel="prev" title="Dataset loaders" href="dataset_loaders.html" /><script>
+    function setColorMode(t){let e=document.documentElement;e.setAttribute("data-color-mode",t);let a=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,s=t;"auto"===t&&(s=a?"dark":"light"),"light"===s?(e.classList.remove("dark"),e.classList.add("light")):(e.classList.remove("light"),e.classList.add("dark"))}
+    setColorMode(localStorage._theme||"auto");
+  </script><link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=e1a1ceaf" />
+    <link rel="stylesheet" type="text/css" href="../_static/shibuya.css?v=9454f7d5" />
+    <link media="print" rel="stylesheet" type="text/css" href="../_static/print.css?v=20ff2c19" />
+    <link rel="stylesheet" type="text/css" href="../_static/areno.css?v=b56e5b49" />
+    <style>
+:root {
+  --sy-f-text: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --sy-f-heading: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+</style>
+    
+  <meta property="og:type" content="website"/><meta property="og:title" content="Observability"/>
+    <meta name="twitter:card" content="summary"/>
+  </head>
+<body><div class="sy-head">
+  <div class="sy-head-blur"></div>
+  <div class="sy-head-inner sy-container mx-auto">
+    <a class="sy-head-brand sy-head-brand-mobile" href="../index.html">
+      <img class="light-logo" src="../_static/areno-logo.svg" alt="AReno" height="28" loading="lazy" />
+      <img class="dark-logo" src="../_static/areno-logo-dark.svg" alt="AReno" height="28" loading="lazy" />
+      <strong>AReno</strong>
+    </a>
+    <div class="sy-head-nav" id="head-nav">
+      <nav class="sy-head-links"><ul><li class="link"><a href="../getting-started/build.html">Quickstart</a></li><li class="link"><a href="training.html">Training</a></li><li class="link"><a href="inference.html">Serving</a></li><li class="link"><a href="../sdk/trainer.html">SDK</a></li></ul></nav>
+      <div class="sy-head-extra flex items-center print:hidden"><div class="sy-head-socials"></div></div>
+    </div>
+    <div class="sy-head-actions flex items-center shrink-0 print:hidden">
+      <button class="md:hidden flex items-center js-menu" aria-label="Menu" type="button" aria-controls="head-nav" aria-expanded="false">
+        <div class="hamburger">
+          <span class="hamburger_1"></span>
+          <span class="hamburger_2"></span>
+          <span class="hamburger_3"></span>
+        </div>
+      </button>
+    </div>
+  </div>
+</div>
+<div class="sy-page sy-container flex mx-auto">
+  <aside id="lside" class="sy-lside md:w-72 md:shrink-0 print:hidden">
+    <div class="sy-lside-inner md:sticky">
+      <div class="sy-scrollbar p-6"><div class="sidebar-chrome">
+  <div class="sidebar-brand-row">
+    <a class="sidebar-brand" href="../index.html">
+      <img class="light-logo" src="../_static/areno-logo.svg" alt="AReno" height="28" loading="lazy" />
+      <img class="dark-logo" src="../_static/areno-logo-dark.svg" alt="AReno" height="28" loading="lazy" />
+      <strong>AReno</strong>
+    </a>
+    <div class="sidebar-theme"><button class="js-theme theme-switch flex items-center"
+data-aria-auto="Switch to light color mode"
+data-aria-light="Switch to dark color mode"
+data-aria-dark="Switch to auto color mode">
+<i class="i-lucide theme-icon"></i>
+</button></div>
+  </div><form class="searchbox sidebar-searchbox flex items-center" action="../search.html" method="get" role="search" aria-label="Search documentation">
+    <svg class="sidebar-search-icon" aria-hidden="true" focusable="false" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="11" cy="11" r="8"></circle>
+      <path d="m21 21-4.3-4.3"></path>
+    </svg>
+    <input type="search" name="q" placeholder="Search documentation" autocomplete="off" />
+    <kbd aria-hidden="true">⌘K</kbd>
+  </form></div>
+        <div class="globaltoc" data-expand-depth="0"><p class="caption" role="heading" aria-level="3"><span class="caption-text">Get started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../getting-started/build.html">Build and installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models/supported.html">Supported models</a></li>
+</ul>
+<p class="caption" role="heading" aria-level="3"><span class="caption-text">Reference</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="training.html">Training CLI reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dataset_loaders.html">Dataset loaders</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Observability</a></li>
+<li class="toctree-l1"><a class="reference internal" href="inference.html">Inference CLI reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="diagnostics.html">Diagnostics CLI reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sdk/trainer.html">Trainer SDK reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="lside-overlay js-menu" role="button" aria-label="Close left sidebar" aria-controls="lside" aria-expanded="false"></div>
+  <aside id="rside" class="sy-rside pb-3 w-64 shrink-0 order-last">
+    <button class="rside-close js-menu xl:hidden" aria-label="Close Table of Contents" type="button" aria-controls="rside" aria-expanded="false">
+      <i class="i-lucide close"></i>
+    </button>
+    <div class="sy-scrollbar sy-rside-inner px-6 xl:top-16 xl:sticky xl:pl-0 pt-6 pb-4"><div class="localtoc"><h3>On this page</h3><ul>
+<li><a class="reference internal" href="#console-logs">Console logs</a></li>
+<li><a class="reference internal" href="#train-stats"><code class="docutils literal notranslate"><span class="pre">train_stats</span></code></a></li>
+<li><a class="reference internal" href="#tensorboard-metrics">TensorBoard metrics</a></li>
+<li><a class="reference internal" href="#agentic-diagnostics">Agentic diagnostics</a></li>
+</ul>
+</div></div>
+  </aside>
+  <div class="rside-overlay js-menu" role="button" aria-label="Close Table of Contents" aria-controls="rside" aria-expanded="false"></div>
+  <main class="sy-main w-full max-sm:max-w-full print:pt-6">
+<div class="sy-breadcrumbs" role="navigation">
+  <div class="sy-breadcrumbs-inner flex items-center">
+    <div class="md:hidden mr-3">
+      <button class="js-menu" aria-label="Menu" type="button" aria-controls="lside" aria-expanded="false">
+        <i class="i-lucide menu"></i>
+      </button>
+    </div>
+    <ol class="flex-1" itemscope itemtype="https://schema.org/BreadcrumbList"><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <a itemprop="item" href="../index.html"><span itemprop="name">AReno</span></a>
+        <span>/</span>
+        <meta itemprop="position" content="1" />
+      </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <strong itemprop="name">Observability</strong>
+        <meta itemprop="position" content="2" />
+      </li></ol>
+    <div class="xl:hidden ml-1">
+      <button class="js-menu" aria-label="Show table of contents" type="button" aria-controls="rside"
+        aria-expanded="false">
+        <i class="i-lucide outdent"></i>
+      </button>
+    </div>
+  </div>
+</div><div class="flex flex-col break-words justify-between">
+      <div class="relative min-w-0 max-w-6xl px-6 pb-6 pt-8 xl:px-12">
+  <article class="yue" role="main">
+          <section id="observability">
+<h1>Observability<a class="headerlink" href="#observability" title="Link to this heading">¶</a></h1>
+<p>AReno exposes training state through plain logs, the per-step <code class="docutils literal notranslate"><span class="pre">train_stats</span></code>
+dictionary, TensorBoard scalar metrics, and optional agentic trajectory
+diagnostics. The implementation is intentionally local and lightweight:
+metrics are recorded by <code class="docutils literal notranslate"><span class="pre">areno.api.metrics</span></code> and the CLI exposes the output
+directory through <code class="docutils literal notranslate"><span class="pre">--metrics-log-dir</span></code>. AReno does not currently provide a
+built-in wandb integration.</p>
+<section id="console-logs">
+<h2>Console logs<a class="headerlink" href="#console-logs" title="Link to this heading">¶</a></h2>
+<p>The trainer logs a compact lifecycle for every epoch and step. For rollout
+algorithms, <code class="docutils literal notranslate"><span class="pre">areno.api.trainers.policy_only.PolicyOnlyTrainer</span></code> emits:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">epoch=&lt;n&gt;</span> <span class="pre">stage=epoch_start</span></code> and <code class="docutils literal notranslate"><span class="pre">epoch=&lt;n&gt;</span> <span class="pre">stage=epoch_end</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">role=policy</span> <span class="pre">stage=rollout_start</span></code> and <code class="docutils literal notranslate"><span class="pre">stage=rollout_end</span></code> around
+sampling or agentic execution.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">metric=reward_mean</span></code> after rewards are computed.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">metric=rollout_logprob_mean</span></code> when rollout logprobs are available.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">role=policy</span> <span class="pre">stage=train_start</span></code> and <code class="docutils literal notranslate"><span class="pre">stage=train_end</span></code> around the
+optimizer step.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">train_stats={...}</span></code> with the scalar dictionary returned by the backend and
+loss function.</p></li>
+</ul>
+<p>The local AReno backend also logs step timing from
+<code class="docutils literal notranslate"><span class="pre">areno.api.backend.areno.backend</span></code>:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span><span data-line="1">time rollout=213.929721 train=17.327612 total=231.297132
+</span></pre></div>
+</div>
+<p>Those numbers mean the backend measured roughly 214 seconds in rollout work,
+17 seconds in the training step, and 231 seconds end-to-end for that step. The
+same values are copied into <code class="docutils literal notranslate"><span class="pre">train_stats</span></code> as <code class="docutils literal notranslate"><span class="pre">step_rollout_time_s</span></code>,
+<code class="docutils literal notranslate"><span class="pre">step_train_time_s</span></code>, and <code class="docutils literal notranslate"><span class="pre">step_e2e_time_s</span></code>.</p>
+<p>During rollout, <code class="docutils literal notranslate"><span class="pre">areno.engine.inference</span></code> logs decode progress per data
+parallel shard:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span><span data-line="1">rollout decode progress: dp=0/2 active=6 cuda_graph=True tokens_per_second=60.8
+</span></pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">active</span></code> is the number of currently scheduled decode requests on that shard
+at the time of the progress log. In agentic runs it can dip to zero while the
+external agent code is executing tools, tests, sleeps, background commands, or
+other non-model work before asking the OpenAI-compatible proxy for the next
+model response.</p>
+</section>
+<section id="train-stats">
+<h2><code class="docutils literal notranslate"><span class="pre">train_stats</span></code><a class="headerlink" href="#train-stats" title="Link to this heading">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">train_stats</span></code> is the easiest place to inspect one completed optimizer step.
+It is logged as a Python dictionary and also passed to TensorBoard by
+<code class="docutils literal notranslate"><span class="pre">areno.api.metrics.MetricsRecorder</span></code> when metrics recording is enabled.</p>
+<p>Common fields include:</p>
+<div class="table-wrapper colwidths-given docutils container">
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 28.0%" />
+<col style="width: 72.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Field</p></th>
+<th class="head"><p>Meaning</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">loss</span></code> / <code class="docutils literal notranslate"><span class="pre">policy_loss</span></code> / <code class="docutils literal notranslate"><span class="pre">total_loss</span></code></p></td>
+<td><p>Loss scalars returned by the selected loss function.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">advantage_mean</span></code></p></td>
+<td><p>Mean policy advantage over trainable response tokens.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">response_len</span></code></p></td>
+<td><p>Mean response-token count for rows used in the step.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">rollout_logprobs_mean</span></code></p></td>
+<td><p>Mean rollout-time logprob over trainable response tokens.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">train_logprobs_mean</span></code></p></td>
+<td><p>Mean current-policy logprob during the training forward pass.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">logp_diff_mean</span></code> / <code class="docutils literal notranslate"><span class="pre">logp_abs_diff_mean</span></code></p></td>
+<td><p>Difference between rollout and train logprobs, useful for stale-policy
+or masking debugging.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ratio_mean</span></code> / <code class="docutils literal notranslate"><span class="pre">ratio_std</span></code></p></td>
+<td><p>Policy-ratio diagnostics used by rollout policy losses such as GSPO,
+GRPO, and PPO.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">grad_norm</span></code></p></td>
+<td><p>Global gradient norm after clipping/accounting.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">grad_zero_ratio</span></code> / <code class="docutils literal notranslate"><span class="pre">grad_nonzero_ratio</span></code></p></td>
+<td><p>Fraction of parameter-gradient entries that are zero/non-zero.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">lr</span></code></p></td>
+<td><p>Current optimizer learning rate.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">step_rollout_time_s</span></code> / <code class="docutils literal notranslate"><span class="pre">step_train_time_s</span></code> / <code class="docutils literal notranslate"><span class="pre">step_e2e_time_s</span></code></p></td>
+<td><p>Per-step wall-clock timing from the local backend.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>For example, if a debugging log shows:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span><span data-line="1">metric=reward_mean value=0.125000
+</span><span data-line="2">train_stats={&#39;loss&#39;: 0.0, &#39;advantage_mean&#39;: 0.0, &#39;response_len&#39;: 912.5625,
+</span><span data-line="3">             &#39;rollout_logprobs_mean&#39;: -0.17456013709306717,
+</span><span data-line="4">             &#39;train_logprobs_mean&#39;: -0.2500366196036339,
+</span><span data-line="5">             &#39;logp_diff_mean&#39;: 0.07547648251056671,
+</span><span data-line="6">             &#39;step_rollout_time_s&#39;: 213.92972119152546,
+</span><span data-line="7">             &#39;step_train_time_s&#39;: 17.327912725508213}
+</span></pre></div>
+</div>
+<p>read it as: the sampled batch achieved low positive reward on average, the
+training rows were long, rollout dominated wall time, and the current policy
+assigned lower logprob than the rollout policy on average. <code class="docutils literal notranslate"><span class="pre">loss</span></code> can print
+as <code class="docutils literal notranslate"><span class="pre">0.0</span></code> for some policy-gradient batches when normalized advantages cancel
+in the scalar value at the current ratio, while gradients can still be non-zero
+because the derivative depends on the logprob term.</p>
+</section>
+<section id="tensorboard-metrics">
+<h2>TensorBoard metrics<a class="headerlink" href="#tensorboard-metrics" title="Link to this heading">¶</a></h2>
+<p>Pass <code class="docutils literal notranslate"><span class="pre">--metrics-log-dir</span></code> to control where TensorBoard event files are written.
+The default is shown by <code class="docutils literal notranslate"><span class="pre">areno</span> <span class="pre">train</span> <span class="pre">--help</span></code> and is also surfaced in the
+training config printout.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span data-line="1">areno<span class="w"> </span>train<span class="w"> </span>...<span class="w"> </span>--metrics-log-dir<span class="w"> </span>/tmp/areno/tfevent
+</span><span data-line="2">tensorboard<span class="w"> </span>--logdir<span class="w"> </span>/tmp/areno/tfevent
+</span></pre></div>
+</div>
+<p>The writer lives in <code class="docutils literal notranslate"><span class="pre">areno.api.metrics</span></code>. It records three namespaces:</p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">rollout/*</span></code></dt><dd><p>Sample-side statistics computed from the train batch, including
+<code class="docutils literal notranslate"><span class="pre">rollout/rewards_mean</span></code>, <code class="docutils literal notranslate"><span class="pre">rollout/rewards_std</span></code>,
+<code class="docutils literal notranslate"><span class="pre">rollout/rewards_max</span></code>, <code class="docutils literal notranslate"><span class="pre">rollout/rewards_min</span></code>,
+<code class="docutils literal notranslate"><span class="pre">rollout/accuracy</span></code>, <code class="docutils literal notranslate"><span class="pre">rollout/advantages_mean</span></code>,
+<code class="docutils literal notranslate"><span class="pre">rollout/advantages_std</span></code>, <code class="docutils literal notranslate"><span class="pre">rollout/logprobs_mean</span></code>,
+<code class="docutils literal notranslate"><span class="pre">rollout/seq_len_mean</span></code>, <code class="docutils literal notranslate"><span class="pre">rollout/prompt_len_mean</span></code>,
+<code class="docutils literal notranslate"><span class="pre">rollout/response_len_mean</span></code>, <code class="docutils literal notranslate"><span class="pre">rollout/num_sequences</span></code>,
+<code class="docutils literal notranslate"><span class="pre">rollout/skipped_long</span></code>, and <code class="docutils literal notranslate"><span class="pre">rollout/total_skipped_long</span></code>.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">train/*</span></code></dt><dd><p>Every scalar returned in <code class="docutils literal notranslate"><span class="pre">train_stats</span></code>. Typical examples are
+<code class="docutils literal notranslate"><span class="pre">train/loss</span></code>, <code class="docutils literal notranslate"><span class="pre">train/policy_loss</span></code>, <code class="docutils literal notranslate"><span class="pre">train/total_loss</span></code>,
+<code class="docutils literal notranslate"><span class="pre">train/ratio_mean</span></code>, <code class="docutils literal notranslate"><span class="pre">train/ratio_std</span></code>, <code class="docutils literal notranslate"><span class="pre">train/grad_norm</span></code>,
+<code class="docutils literal notranslate"><span class="pre">train/lr</span></code>, <code class="docutils literal notranslate"><span class="pre">train/rollout_logprobs_mean</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">train/train_logprobs_mean</span></code>.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">time/*</span></code></dt><dd><p>Stage timings when available: <code class="docutils literal notranslate"><span class="pre">time/rollout</span></code>, <code class="docutils literal notranslate"><span class="pre">time/reward</span></code>,
+<code class="docutils literal notranslate"><span class="pre">time/advantage</span></code>, and <code class="docutils literal notranslate"><span class="pre">time/train</span></code>.</p>
+</dd>
+</dl>
+</section>
+<section id="agentic-diagnostics">
+<h2>Agentic diagnostics<a class="headerlink" href="#agentic-diagnostics" title="Link to this heading">¶</a></h2>
+<p>Agentic rollout adds two diagnostic surfaces.</p>
+<p>First, the trainer logs batch-level information before and after agent
+execution:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span><span data-line="1">agentic rollout batch prompts=2 n_samples=8 expected_requests=16 max_running_prompts=16
+</span><span data-line="2">agentic train batch built samples=16 tokens=223308 messages=242 tool_calls=133 tool_results=97
+</span></pre></div>
+</div>
+<p>These lines are useful for checking whether the configured concurrency,
+trajectory length, and tool-call volume match expectations.</p>
+<p>Second, set <code class="docutils literal notranslate"><span class="pre">ARENO_LOG_COMPLETIONS</span></code> to a positive integer to log a bounded
+number of prompt/sample trajectories. For agentic rollouts this includes the
+rendered prompt, message list, final answer, parsed tool calls, sampled tool
+results, token row prefix, and loss-mask summary:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="nv">ARENO_LOG_COMPLETIONS</span><span class="o">=</span><span class="m">2</span><span class="w"> </span>areno<span class="w"> </span>train<span class="w"> </span>...
+</span></pre></div>
+</div>
+<p>When a trajectory is dropped for exceeding the model context window,
+<code class="docutils literal notranslate"><span class="pre">PolicyOnlyTrainer</span></code> logs <code class="docutils literal notranslate"><span class="pre">agentic</span> <span class="pre">trajectory</span> <span class="pre">filtered:</span> <span class="pre">...</span></code> with token
+counts, message counts, assistant turn counts, tool-result counts, and a short
+prompt preview. This is the fastest way to debug overlong agentic examples
+without dumping every token in every trajectory.</p>
+</section>
+</section>
+
+        </article><button class="back-to-top" type="button">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+    <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+  </svg>
+  <span>Back to top</span>
+</button><div class="navigation flex print:hidden"><div class="navigation-prev">
+    <a href="dataset_loaders.html">
+      <i class="i-lucide chevron-left"></i>
+      <div class="page-info">
+        <span>Previous</span><div class="title">Dataset loaders</div></div>
+    </a>
+  </div><div class="navigation-next">
+    <a href="inference.html">
+      <div class="page-info">
+        <span>Next</span>
+        <div class="title">Inference CLI reference</div>
+      </div>
+      <i class="i-lucide chevron-right"></i>
+    </a>
+  </div></div></div>
+    </div>
+  </main>
+</div>
+<footer class="sy-foot">
+  <div class="sy-foot-inner sy-container mx-auto">
+    <div class="sy-foot-reserved md:flex justify-between items-center">
+      
+      <div class="sy-foot-socials"></div>
+    </div>
+  </div>
+</footer>
+      <script src="../_static/documentation_options.js?v=7f41d439"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../_static/shibuya.js?v=50760d75"></script></body>
+</html>

@@ -1,48 +1,38 @@
 <!DOCTYPE html>
-<html lang="en" data-accent-color="violet" data-content_root="./">
+<html lang="en" data-accent-color="gray" data-content_root="./">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>areno</title><link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="Build and installation" href="getting-started/build.html" /><script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>AReno docs</title><link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="Build and installation" href="getting-started/build.html" /><script>
     function setColorMode(t){let e=document.documentElement;e.setAttribute("data-color-mode",t);let a=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,s=t;"auto"===t&&(s=a?"dark":"light"),"light"===s?(e.classList.remove("dark"),e.classList.add("light")):(e.classList.remove("light"),e.classList.add("dark"))}
     setColorMode(localStorage._theme||"auto");
   </script><link rel="stylesheet" type="text/css" href="_static/pygments.css?v=e1a1ceaf" />
     <link rel="stylesheet" type="text/css" href="_static/shibuya.css?v=9454f7d5" />
     <link media="print" rel="stylesheet" type="text/css" href="_static/print.css?v=20ff2c19" />
-    <link rel="stylesheet" type="text/css" href="_static/areno.css?v=933e02d6" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<style>
+    <link rel="stylesheet" type="text/css" href="_static/areno.css?v=b56e5b49" />
+    <style>
 :root {
-  --sy-f-text: "Inter", var(--sy-f-sys), var(--sy-f-cjk), sans-serif;
-  --sy-f-heading: "Inter", var(--sy-f-sys), var(--sy-f-cjk), sans-serif;
+  --sy-f-text: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --sy-f-heading: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 </style>
     
-  <meta property="og:type" content="website"/><meta property="og:title" content="areno"/>
+  <meta property="og:type" content="website"/><meta property="og:title" content="AReno documentation"/>
     <meta name="twitter:card" content="summary"/>
   </head>
 <body><div class="sy-head">
   <div class="sy-head-blur"></div>
   <div class="sy-head-inner sy-container mx-auto">
-    <a class="sy-head-brand" href="#">
-      
-      
-      <strong>areno</strong>
+    <a class="sy-head-brand sy-head-brand-mobile" href="#">
+      <img class="light-logo" src="_static/areno-logo.svg" alt="AReno" height="28" loading="lazy" />
+      <img class="dark-logo" src="_static/areno-logo-dark.svg" alt="AReno" height="28" loading="lazy" />
+      <strong>AReno</strong>
     </a>
     <div class="sy-head-nav" id="head-nav">
-      <nav class="sy-head-links"><ul><li class="link"><a href="cli/training.html">Training</a></li><li class="link"><a href="cli/inference.html">Inference</a></li><li class="link"><a href="sdk/trainer.html">SDK</a></li><li class="link"><a href="models/supported.html">Models</a></li></ul></nav>
-      <div class="sy-head-extra flex items-center print:hidden"><form class="searchbox flex items-center" action="search.html" method="get">
-  <input type="text" name="q" placeholder="Search" />
-  <kbd>/</kbd>
-</form><div class="sy-head-socials"></div></div>
+      <nav class="sy-head-links"><ul><li class="link"><a href="getting-started/build.html">Quickstart</a></li><li class="link"><a href="cli/training.html">Training</a></li><li class="link"><a href="cli/inference.html">Serving</a></li><li class="link"><a href="sdk/trainer.html">SDK</a></li></ul></nav>
+      <div class="sy-head-extra flex items-center print:hidden"><div class="sy-head-socials"></div></div>
     </div>
-    <div class="sy-head-actions flex items-center shrink-0 print:hidden"><button class="js-theme theme-switch flex items-center"
-data-aria-auto="Switch to light color mode"
-data-aria-light="Switch to dark color mode"
-data-aria-dark="Switch to auto color mode">
-<i class="i-lucide theme-icon"></i>
-</button><button class="md:hidden flex items-center js-menu" aria-label="Menu" type="button" aria-controls="head-nav" aria-expanded="false">
+    <div class="sy-head-actions flex items-center shrink-0 print:hidden">
+      <button class="md:hidden flex items-center js-menu" aria-label="Menu" type="button" aria-controls="head-nav" aria-expanded="false">
         <div class="hamburger">
           <span class="hamburger_1"></span>
           <span class="hamburger_2"></span>
@@ -55,8 +45,28 @@ data-aria-dark="Switch to auto color mode">
 <div class="sy-page sy-container flex mx-auto">
   <aside id="lside" class="sy-lside md:w-72 md:shrink-0 print:hidden">
     <div class="sy-lside-inner md:sticky">
-      <div class="sy-scrollbar p-6">
-        <div class="globaltoc" data-expand-depth="0"><p class="caption" role="heading" aria-level="3"><span class="caption-text">Guides</span></p>
+      <div class="sy-scrollbar p-6"><div class="sidebar-chrome">
+  <div class="sidebar-brand-row">
+    <a class="sidebar-brand" href="#">
+      <img class="light-logo" src="_static/areno-logo.svg" alt="AReno" height="28" loading="lazy" />
+      <img class="dark-logo" src="_static/areno-logo-dark.svg" alt="AReno" height="28" loading="lazy" />
+      <strong>AReno</strong>
+    </a>
+    <div class="sidebar-theme"><button class="js-theme theme-switch flex items-center"
+data-aria-auto="Switch to light color mode"
+data-aria-light="Switch to dark color mode"
+data-aria-dark="Switch to auto color mode">
+<i class="i-lucide theme-icon"></i>
+</button></div>
+  </div><form class="searchbox sidebar-searchbox flex items-center" action="search.html" method="get" role="search" aria-label="Search documentation">
+    <svg class="sidebar-search-icon" aria-hidden="true" focusable="false" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="11" cy="11" r="8"></circle>
+      <path d="m21 21-4.3-4.3"></path>
+    </svg>
+    <input type="search" name="q" placeholder="Search documentation" autocomplete="off" />
+    <kbd aria-hidden="true">⌘K</kbd>
+  </form></div>
+        <div class="globaltoc" data-expand-depth="0"><p class="caption" role="heading" aria-level="3"><span class="caption-text">Get started</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="getting-started/build.html">Build and installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="models/supported.html">Supported models</a></li>
@@ -64,6 +74,8 @@ data-aria-dark="Switch to auto color mode">
 <p class="caption" role="heading" aria-level="3"><span class="caption-text">Reference</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="cli/training.html">Training CLI reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cli/dataset_loaders.html">Dataset loaders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cli/observability.html">Observability</a></li>
 <li class="toctree-l1"><a class="reference internal" href="cli/inference.html">Inference CLI reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="cli/diagnostics.html">Diagnostics CLI reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="sdk/trainer.html">Trainer SDK reference</a></li>
@@ -79,12 +91,14 @@ data-aria-dark="Switch to auto color mode">
       <i class="i-lucide close"></i>
     </button>
     <div class="sy-scrollbar sy-rside-inner px-6 xl:top-16 xl:sticky xl:pl-0 pt-6 pb-4"><div class="localtoc"><h3>On this page</h3><ul>
-<li><a class="reference internal" href="#quick-start">Quick start</a></li>
-<li><a class="reference internal" href="#what-areno-owns">What areno owns</a><ul>
+<li><a class="reference internal" href="#start">Start</a></li>
+<li><a class="reference internal" href="#core-workflows">Core workflows</a></li>
+<li><a class="reference internal" href="#agentic-rollout">Agentic rollout</a></li>
+<li><a class="reference internal" href="#what-areno-owns">What AReno owns</a><ul>
 </ul>
 </li>
 </ul>
-</div><div id="ethical-ad-placement" data-ea-publisher="readthedocs"></div></div>
+</div></div>
   </aside>
   <div class="rside-overlay js-menu" role="button" aria-label="Close Table of Contents" aria-controls="rside" aria-expanded="false"></div>
   <main class="sy-main w-full max-sm:max-w-full print:pt-6">
@@ -96,8 +110,12 @@ data-aria-dark="Switch to auto color mode">
       </button>
     </div>
     <ol class="flex-1" itemscope itemtype="https://schema.org/BreadcrumbList"><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-        <a itemprop="item" href="#"><span itemprop="name">areno</span></a>
+        <a itemprop="item" href="#"><span itemprop="name">AReno</span></a>
+        <span>/</span>
         <meta itemprop="position" content="1" />
+      </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <strong itemprop="name">AReno documentation</strong>
+        <meta itemprop="position" content="2" />
       </li></ol>
     <div class="xl:hidden ml-1">
       <button class="js-menu" aria-label="Show table of contents" type="button" aria-controls="rside"
@@ -109,98 +127,111 @@ data-aria-dark="Switch to auto color mode">
 </div><div class="flex flex-col break-words justify-between">
       <div class="relative min-w-0 max-w-6xl px-6 pb-6 pt-8 xl:px-12">
   <article class="yue" role="main">
-          <section class="landing-page" id="areno">
-<h1>areno<a class="headerlink" href="#areno" title="Link to this heading">¶</a></h1>
-<div class="hero">
-  <h1>areno</h1>
-  <p>A lightweight CUDA-native stack for local LLM post-training and serving, including agentic RL. areno brings rollout, scoring, inference, and optimizer steps into one engine, so post-training loops stay compact and fast.</p>
-  <div class="badges">
-    <span class="badge">Lightweight runtime</span>
-    <span class="badge">Unified train-infer engine</span>
-    <span class="badge">Agentic rollouts</span>
-    <span class="badge">Minimal dependencies</span>
-    <span class="badge">SFT / DPO / GSPO / GRPO / PPO</span>
+          <section class="landing-page" id="areno-documentation">
+<h1>AReno documentation<a class="headerlink" href="#areno-documentation" title="Link to this heading">¶</a></h1>
+<div class="areno-hero">
+  <div class="areno-hero-copy">
+    <p class="areno-eyebrow">Local post-training and serving</p>
+    <h1>Train and serve local LLMs with one CUDA-native loop.</h1>
+    <p class="areno-lede">AReno keeps rollout, reward scoring, inference, optimizer steps, and checkpoint I/O in one compact engine for SFT, DPO, GSPO, GRPO, PPO, and agentic RL workflows.</p>
+    <div class="areno-hero-actions" aria-label="Primary documentation links">
+      <a class="areno-button areno-button-primary" href="getting-started/build.html">Get started</a>
+      <a class="areno-button" href="cli/training.html">Train a model</a>
+    </div>
   </div>
-</div><div class="areno-feature-grid">
-  <div class="areno-feature-card"><strong>Lightweight by design</strong><p>The core stack stays small: PyTorch plus focused CUDA/attention dependencies, without a separate serving framework or trainer framework in the hot path.</p></div>
-  <div class="areno-feature-card"><strong>Train and infer together</strong><p>Rollout, scoring, optimizer steps, CUDA graph handling, agentic proxying, and checkpoint I/O live in one local engine for a direct post-training loop.</p></div>
-  <div class="areno-feature-card"><strong>Kernel-first runtime</strong><p>Fused CUDA paths cover routing, token movement, top-k, embedding, activation, normalization, and MoE hot paths.</p></div>
-  <div class="areno-feature-card"><strong>Agentic by default</strong><p>Agent functions call a local OpenAI-compatible proxy and return explicit trajectories; areno converts model responses to completions, tokens, logprobs, rewards, and loss masks for training.</p></div>
-</div><section id="quick-start">
-<h2>Quick start<a class="headerlink" href="#quick-start" title="Link to this heading">¶</a></h2>
-<p>Install in an existing CUDA + PyTorch environment:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span data-line="1">pip<span class="w"> </span>install<span class="w"> </span>psutil
-</span><span data-line="2">pip<span class="w"> </span>install<span class="w"> </span>flash-linear-attention
-</span><span data-line="3">pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.<span class="w"> </span>--no-build-isolation
-</span></pre></div>
-</div>
-<p>Install <code class="docutils literal notranslate"><span class="pre">flash-attn</span></code> as an optional extra only when using the default
-<code class="docutils literal notranslate"><span class="pre">--attn-backend</span> <span class="pre">flash</span></code> path. <code class="docutils literal notranslate"><span class="pre">flash-attn</span></code> is not required for
-<code class="docutils literal notranslate"><span class="pre">--attn-backend</span> <span class="pre">native</span></code> or for GPUs such as Tesla T4 where AReno falls back
-to native attention.</p>
-<p>Check whether the environment is ready:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span data-line="1">areno<span class="w"> </span>check
-</span></pre></div>
-</div>
-<p>Use <code class="docutils literal notranslate"><span class="pre">areno</span> <span class="pre">env</span> <span class="pre">--json</span></code> when filing setup issues.</p>
-<p>Run a tiny training smoke test when you only want to verify the wiring:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span data-line="1">areno<span class="w"> </span>train<span class="w"> </span><span class="se">\</span>
-</span><span data-line="2"><span class="w">  </span>--ckpt<span class="w"> </span>Qwen/Qwen3-0.6B<span class="w"> </span><span class="se">\</span>
-</span><span data-line="3"><span class="w">  </span>--dataset-path<span class="w"> </span>gsm8k:main<span class="w"> </span><span class="se">\</span>
-</span><span data-line="4"><span class="w">  </span>--dataset-loader-fn<span class="w"> </span>examples/math/dataset_loader.py<span class="w"> </span><span class="se">\</span>
-</span><span data-line="5"><span class="w">  </span>--reward-fn-path<span class="w"> </span>examples/math/math_verify_reward.py<span class="w"> </span><span class="se">\</span>
-</span><span data-line="6"><span class="w">  </span>--algo<span class="w"> </span>gspo<span class="w"> </span><span class="se">\</span>
-</span><span data-line="7"><span class="w">  </span>--tp-size<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
-</span><span data-line="8"><span class="w">  </span>--world-size<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
-</span><span data-line="9"><span class="w">  </span>--batch-size<span class="w"> </span><span class="m">1</span>
-</span></pre></div>
-</div>
-<p>This is a smoke/sanity task for wiring, not a quality benchmark. It requires a
-CUDA-capable NVIDIA GPU; CPU-only machines cannot run the AReno training
-engine.</p>
-<p>Run GSPO on a GSM8K-style dataset:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span data-line="1">areno<span class="w"> </span>train<span class="w"> </span><span class="se">\</span>
-</span><span data-line="2"><span class="w">  </span>--ckpt<span class="w"> </span>Qwen/Qwen3-0.6B<span class="w"> </span><span class="se">\</span>
-</span><span data-line="3"><span class="w">  </span>--dataset-path<span class="w"> </span>gsm8k:main<span class="w"> </span><span class="se">\</span>
-</span><span data-line="4"><span class="w">  </span>--dataset-loader-fn<span class="w"> </span>examples/math/dataset_loader.py<span class="w"> </span><span class="se">\</span>
-</span><span data-line="5"><span class="w">  </span>--reward-fn-path<span class="w"> </span>examples/math/math_verify_reward.py<span class="w"> </span><span class="se">\</span>
-</span><span data-line="6"><span class="w">  </span>--algo<span class="w"> </span>gspo<span class="w"> </span><span class="se">\</span>
-</span><span data-line="7"><span class="w">  </span>--tp-size<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
-</span><span data-line="8"><span class="w">  </span>--world-size<span class="w"> </span><span class="m">1</span>
-</span></pre></div>
-</div>
-<p>Start an OpenAI-compatible server:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span data-line="1">areno<span class="w"> </span>serve<span class="w"> </span><span class="se">\</span>
-</span><span data-line="2"><span class="w">  </span>--model-path<span class="w"> </span>/path/to/model<span class="w"> </span><span class="se">\</span>
-</span><span data-line="3"><span class="w">  </span>--tp-size<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
-</span><span data-line="4"><span class="w">  </span>--world-size<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
-</span><span data-line="5"><span class="w">  </span>--port<span class="w"> </span><span class="m">8000</span>
-</span></pre></div>
-</div>
-<p>Run an agentic rollout task:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span data-line="1">python<span class="w"> </span>examples/agentic/tictactoe/dataset_generator.py<span class="w"> </span><span class="se">\</span>
-</span><span data-line="2"><span class="w">  </span>--output<span class="w"> </span>/tmp/areno-tictactoe.jsonl<span class="w"> </span><span class="se">\</span>
-</span><span data-line="3"><span class="w">  </span>--count<span class="w"> </span><span class="m">2048</span><span class="w"> </span><span class="se">\</span>
-</span><span data-line="4"><span class="w">  </span>--seed<span class="w"> </span><span class="m">2026</span>
-</span></pre></div>
-</div>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span data-line="1">areno<span class="w"> </span>train<span class="w"> </span><span class="se">\</span>
-</span><span data-line="2"><span class="w">  </span>--ckpt<span class="w"> </span>Qwen/Qwen3-0.6B<span class="w"> </span><span class="se">\</span>
-</span><span data-line="3"><span class="w">  </span>--dataset-path<span class="w"> </span>/tmp/areno-tictactoe.jsonl<span class="w"> </span><span class="se">\</span>
-</span><span data-line="4"><span class="w">  </span>--dataset-loader-fn<span class="w"> </span>examples/agentic/tictactoe/dataset_loader.py<span class="w"> </span><span class="se">\</span>
-</span><span data-line="5"><span class="w">  </span>--reward-fn-path<span class="w"> </span>examples/agentic/tictactoe/reward.py<span class="w"> </span><span class="se">\</span>
-</span><span data-line="6"><span class="w">  </span>--agent-fn<span class="w"> </span>examples/agentic/tictactoe/run_agent.py<span class="w"> </span><span class="se">\</span>
-</span><span data-line="7"><span class="w">  </span>--algo<span class="w"> </span>gspo<span class="w"> </span><span class="se">\</span>
-</span><span data-line="8"><span class="w">  </span>--tp-size<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
-</span><span data-line="9"><span class="w">  </span>--world-size<span class="w"> </span><span class="m">1</span>
-</span></pre></div>
-</div>
-<p>DuelGrid is a larger agentic demo with a browser game UI and multi-action
-turns. Before GSPO/RLVR post-training, Gemma-E2B-it often moves back and forth
-without progress. After training, it learns to collect pickups, chase the user,
-attack when in range, and avoid trap tiles.</p>
-<div class="table-wrapper colwidths-given docutils container">
-<table class="docutils align-default">
+</div><section id="start">
+<h2>Start<a class="headerlink" href="#start" title="Link to this heading">¶</a></h2>
+<div class="areno-command-grid">
+  <div class="areno-command-card">
+    <p class="areno-card-kicker">Install</p>
+    <h3>Build against your CUDA PyTorch environment.</h3>
+   <pre><code>pip install psutil
+pip install flash-linear-attention
+pip install -e . --no-build-isolation</code></pre>
+    <p>Use <code>ARENO_BUILD_EXT=0</code> for metadata-only docs or package checks on CPU-only machines.</p>
+  </div>
+  <div class="areno-command-card">
+    <p class="areno-card-kicker">Check</p>
+    <h3>Verify the local runtime before training.</h3>
+   <pre><code>areno check
+areno env --json</code></pre>
+    <p><code>areno check</code> reports common CUDA, PyTorch, extension, and platform setup issues with next steps.</p>
+  </div>
+</div><p><code class="docutils literal notranslate"><span class="pre">flash-attn</span></code> is optional unless you use the default <code class="docutils literal notranslate"><span class="pre">--attn-backend</span> <span class="pre">flash</span></code>
+path. Use <code class="docutils literal notranslate"><span class="pre">--attn-backend</span> <span class="pre">native</span></code> when you want to run without FlashAttention
+or when the local GPU is unsupported by FlashAttention.</p>
+</section>
+<section id="core-workflows">
+<h2>Core workflows<a class="headerlink" href="#core-workflows" title="Link to this heading">¶</a></h2>
+<div class="areno-doc-grid">
+  <a class="areno-doc-card" href="cli/training.html">
+    <span class="areno-icon">01</span>
+    <strong>Train</strong>
+    <p>Run SFT, DPO, GSPO, GRPO, or PPO from the CLI with dataset loading, rollout, reward scoring, and checkpoint saving in one loop.</p>
+  </a>
+  <a class="areno-doc-card" href="cli/inference.html">
+    <span class="areno-icon">02</span>
+    <strong>Serve</strong>
+    <p>Start an OpenAI-compatible chat-completions server backed by the local AReno inference engine.</p>
+  </a>
+  <a class="areno-doc-card" href="sdk/trainer.html">
+    <span class="areno-icon">03</span>
+    <strong>Customize</strong>
+    <p>Use <code>from areno import Trainer</code> for custom rollout, reward, loss, and checkpoint loops.</p>
+  </a>
+  <a class="areno-doc-card" href="models/supported.html">
+    <span class="areno-icon">04</span>
+    <strong>Load models</strong>
+    <p>Review the checkpoint families currently supported by AReno model adapters.</p>
+  </a>
+</div><div class="areno-command-grid areno-command-grid-wide">
+  <div class="areno-command-card">
+    <p class="areno-card-kicker">Training</p>
+    <h3>Run a small GSPO smoke task.</h3>
+   <pre><code>areno train \
+  --ckpt Qwen/Qwen3-0.6B \
+  --dataset-path gsm8k:main \
+  --dataset-loader-fn examples/math/dataset_loader.py \
+  --reward-fn-path examples/math/math_verify_reward.py \
+  --algo gspo \
+  --tp-size 1 \
+  --world-size 1 \
+  --batch-size 1</code></pre>
+  </div>
+  <div class="areno-command-card">
+    <p class="areno-card-kicker">Serving</p>
+    <h3>Open a local chat-completions endpoint.</h3>
+   <pre><code>areno serve \
+  --model-path /path/to/model \
+  --tp-size 1 \
+  --world-size 1 \
+  --port 8000</code></pre>
+  </div>
+</div><p>Training and serving require a CUDA-capable NVIDIA GPU. CPU-only machines can
+run docs, packaging checks, and lightweight CPU tests, but cannot run the AReno
+training or serving engine.</p>
+</section>
+<section id="agentic-rollout">
+<h2>Agentic rollout<a class="headerlink" href="#agentic-rollout" title="Link to this heading">¶</a></h2>
+<div class="areno-split">
+  <div>
+    <p class="areno-eyebrow">Agentic RL</p>
+    <h3>Collect trajectories through a local OpenAI-compatible proxy.</h3>
+    <p>Agent functions call the local server, return explicit trajectory turns, and let AReno convert responses into completions, tokens, logprobs, rewards, and loss masks.</p>
+  </div>
+  <div class="areno-terminal areno-terminal-compact" aria-label="Agentic rollout command">
+    <div class="areno-terminal-bar"><span></span><span></span><span></span></div>
+   <pre><code>areno train \
+  --agent-fn examples/agentic/tictactoe/run_agent.py \
+  --reward-fn-path examples/agentic/tictactoe/reward.py \
+  --algo gspo</code></pre>
+  </div>
+</div><p>DuelGrid is a browser-game demo with multi-action turns. Before GSPO/RLVR
+post-training, Gemma-E2B-it often moves back and forth without progress. After
+training, it learns to collect pickups, chase the user, attack when in range,
+and avoid trap tiles.</p>
+<div class="table-wrapper colwidths-given areno-showcase-table docutils container">
+<table class="areno-showcase-table docutils align-default">
 <colgroup>
 <col style="width: 33.3%" />
 <col style="width: 33.3%" />
@@ -230,49 +261,15 @@ attack when in range, and avoid trap tiles.</p>
 loader, reward function, OpenAI-compatible agent, and browser UI.</p>
 </section>
 <section id="what-areno-owns">
-<h2>What areno owns<a class="headerlink" href="#what-areno-owns" title="Link to this heading">¶</a></h2>
-<div class="table-wrapper colwidths-given docutils container">
-<table class="docutils align-default">
-<colgroup>
-<col style="width: 24.0%" />
-<col style="width: 76.0%" />
-</colgroup>
-<thead>
-<tr class="row-odd"><th class="head"><p>Layer</p></th>
-<th class="head"><p>Scope</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>Kernels</p></td>
-<td><p>Fused CUDA paths in <code class="docutils literal notranslate"><span class="pre">areno_accel</span></code> for runtime hot paths.</p></td>
-</tr>
-<tr class="row-odd"><td><p>Engine</p></td>
-<td><p>Tensor-parallel workers, KV/cache layout, CUDA graph support, rollout state, scoring, optimizer steps, and checkpoint I/O.</p></td>
-</tr>
-<tr class="row-even"><td><p>Algorithms</p></td>
-<td><p>SFT, DPO, GSPO, GRPO, PPO, and agentic rollouts are implemented inside the project rather than delegated to a separate trainer framework.</p></td>
-</tr>
-<tr class="row-odd"><td><p>Checkpoints</p></td>
-<td><p>Hugging Face-compatible load/save adapters for supported model families.</p></td>
-</tr>
-</tbody>
-</table>
+<h2>What AReno owns<a class="headerlink" href="#what-areno-owns" title="Link to this heading">¶</a></h2>
+<div class="areno-layer-list">
+  <div><span>Kernels</span><p>Fused CUDA paths in <code>areno_accel</code> for runtime hot paths.</p></div>
+  <div><span>Engine</span><p>Tensor-parallel workers, KV/cache layout, CUDA graph support, rollout state, scoring, optimizer steps, and checkpoint I/O.</p></div>
+  <div><span>Algorithms</span><p>SFT, DPO, GSPO, GRPO, PPO, and agentic rollouts implemented inside the project rather than delegated to a separate trainer framework.</p></div>
+  <div><span>Checkpoints</span><p>Hugging Face-compatible load/save adapters for supported model families.</p></div>
+</div><div class="toctree-wrapper compound">
 </div>
 <div class="toctree-wrapper compound">
-<p class="caption" role="heading"><span class="caption-text">Guides</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="getting-started/build.html">Build and installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="models/supported.html">Supported models</a></li>
-</ul>
-</div>
-<div class="toctree-wrapper compound">
-<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="cli/training.html">Training CLI reference</a></li>
-<li class="toctree-l1"><a class="reference internal" href="cli/inference.html">Inference CLI reference</a></li>
-<li class="toctree-l1"><a class="reference internal" href="cli/diagnostics.html">Diagnostics CLI reference</a></li>
-<li class="toctree-l1"><a class="reference internal" href="sdk/trainer.html">Trainer SDK reference</a></li>
-</ul>
 </div>
 </section>
 </section>

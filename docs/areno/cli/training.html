@@ -1,21 +1,18 @@
 <!DOCTYPE html>
-<html lang="en" data-accent-color="violet" data-content_root="../">
+<html lang="en" data-accent-color="gray" data-content_root="../">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Training CLI reference - areno</title><link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Inference CLI reference" href="inference.html" /><link rel="prev" title="Supported models" href="../models/supported.html" /><script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Training CLI reference - AReno docs</title><link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Dataset loaders" href="dataset_loaders.html" /><link rel="prev" title="Supported models" href="../models/supported.html" /><script>
     function setColorMode(t){let e=document.documentElement;e.setAttribute("data-color-mode",t);let a=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,s=t;"auto"===t&&(s=a?"dark":"light"),"light"===s?(e.classList.remove("dark"),e.classList.add("light")):(e.classList.remove("light"),e.classList.add("dark"))}
     setColorMode(localStorage._theme||"auto");
   </script><link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=e1a1ceaf" />
     <link rel="stylesheet" type="text/css" href="../_static/shibuya.css?v=9454f7d5" />
     <link media="print" rel="stylesheet" type="text/css" href="../_static/print.css?v=20ff2c19" />
-    <link rel="stylesheet" type="text/css" href="../_static/areno.css?v=933e02d6" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<style>
+    <link rel="stylesheet" type="text/css" href="../_static/areno.css?v=b56e5b49" />
+    <style>
 :root {
-  --sy-f-text: "Inter", var(--sy-f-sys), var(--sy-f-cjk), sans-serif;
-  --sy-f-heading: "Inter", var(--sy-f-sys), var(--sy-f-cjk), sans-serif;
+  --sy-f-text: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --sy-f-heading: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 </style>
     
@@ -25,24 +22,17 @@
 <body><div class="sy-head">
   <div class="sy-head-blur"></div>
   <div class="sy-head-inner sy-container mx-auto">
-    <a class="sy-head-brand" href="../index.html">
-      
-      
-      <strong>areno</strong>
+    <a class="sy-head-brand sy-head-brand-mobile" href="../index.html">
+      <img class="light-logo" src="../_static/areno-logo.svg" alt="AReno" height="28" loading="lazy" />
+      <img class="dark-logo" src="../_static/areno-logo-dark.svg" alt="AReno" height="28" loading="lazy" />
+      <strong>AReno</strong>
     </a>
     <div class="sy-head-nav" id="head-nav">
-      <nav class="sy-head-links"><ul><li class="link"><a href="#">Training</a></li><li class="link"><a href="inference.html">Inference</a></li><li class="link"><a href="../sdk/trainer.html">SDK</a></li><li class="link"><a href="../models/supported.html">Models</a></li></ul></nav>
-      <div class="sy-head-extra flex items-center print:hidden"><form class="searchbox flex items-center" action="../search.html" method="get">
-  <input type="text" name="q" placeholder="Search" />
-  <kbd>/</kbd>
-</form><div class="sy-head-socials"></div></div>
+      <nav class="sy-head-links"><ul><li class="link"><a href="../getting-started/build.html">Quickstart</a></li><li class="link"><a href="#">Training</a></li><li class="link"><a href="inference.html">Serving</a></li><li class="link"><a href="../sdk/trainer.html">SDK</a></li></ul></nav>
+      <div class="sy-head-extra flex items-center print:hidden"><div class="sy-head-socials"></div></div>
     </div>
-    <div class="sy-head-actions flex items-center shrink-0 print:hidden"><button class="js-theme theme-switch flex items-center"
-data-aria-auto="Switch to light color mode"
-data-aria-light="Switch to dark color mode"
-data-aria-dark="Switch to auto color mode">
-<i class="i-lucide theme-icon"></i>
-</button><button class="md:hidden flex items-center js-menu" aria-label="Menu" type="button" aria-controls="head-nav" aria-expanded="false">
+    <div class="sy-head-actions flex items-center shrink-0 print:hidden">
+      <button class="md:hidden flex items-center js-menu" aria-label="Menu" type="button" aria-controls="head-nav" aria-expanded="false">
         <div class="hamburger">
           <span class="hamburger_1"></span>
           <span class="hamburger_2"></span>
@@ -55,8 +45,28 @@ data-aria-dark="Switch to auto color mode">
 <div class="sy-page sy-container flex mx-auto">
   <aside id="lside" class="sy-lside md:w-72 md:shrink-0 print:hidden">
     <div class="sy-lside-inner md:sticky">
-      <div class="sy-scrollbar p-6">
-        <div class="globaltoc" data-expand-depth="0"><p class="caption" role="heading" aria-level="3"><span class="caption-text">Guides</span></p>
+      <div class="sy-scrollbar p-6"><div class="sidebar-chrome">
+  <div class="sidebar-brand-row">
+    <a class="sidebar-brand" href="../index.html">
+      <img class="light-logo" src="../_static/areno-logo.svg" alt="AReno" height="28" loading="lazy" />
+      <img class="dark-logo" src="../_static/areno-logo-dark.svg" alt="AReno" height="28" loading="lazy" />
+      <strong>AReno</strong>
+    </a>
+    <div class="sidebar-theme"><button class="js-theme theme-switch flex items-center"
+data-aria-auto="Switch to light color mode"
+data-aria-light="Switch to dark color mode"
+data-aria-dark="Switch to auto color mode">
+<i class="i-lucide theme-icon"></i>
+</button></div>
+  </div><form class="searchbox sidebar-searchbox flex items-center" action="../search.html" method="get" role="search" aria-label="Search documentation">
+    <svg class="sidebar-search-icon" aria-hidden="true" focusable="false" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="11" cy="11" r="8"></circle>
+      <path d="m21 21-4.3-4.3"></path>
+    </svg>
+    <input type="search" name="q" placeholder="Search documentation" autocomplete="off" />
+    <kbd aria-hidden="true">⌘K</kbd>
+  </form></div>
+        <div class="globaltoc" data-expand-depth="0"><p class="caption" role="heading" aria-level="3"><span class="caption-text">Get started</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../getting-started/build.html">Build and installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../models/supported.html">Supported models</a></li>
@@ -64,6 +74,8 @@ data-aria-dark="Switch to auto color mode">
 <p class="caption" role="heading" aria-level="3"><span class="caption-text">Reference</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Training CLI reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dataset_loaders.html">Dataset loaders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="observability.html">Observability</a></li>
 <li class="toctree-l1"><a class="reference internal" href="inference.html">Inference CLI reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="diagnostics.html">Diagnostics CLI reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../sdk/trainer.html">Trainer SDK reference</a></li>
@@ -82,6 +94,7 @@ data-aria-dark="Switch to auto color mode">
 <li><a class="reference internal" href="#areno-train">areno train</a><ul>
 <li><a class="reference internal" href="#basic">Basic</a></li>
 <li><a class="reference internal" href="#rollout">Rollout</a></li>
+<li><a class="reference internal" href="#parameter-tuning">Parameter tuning</a></li>
 <li><a class="reference internal" href="#train">Train</a></li>
 <li><a class="reference internal" href="#checkpoint">Checkpoint</a></li>
 <li><a class="reference internal" href="#observability">Observability</a></li>
@@ -90,6 +103,7 @@ data-aria-dark="Switch to auto color mode">
 <li><a class="reference internal" href="#examples">Examples</a><ul>
 <li><a class="reference internal" href="#tiny-training-smoke-test">Tiny training smoke test</a></li>
 <li><a class="reference internal" href="#gspo-math-training">GSPO math training</a></li>
+<li><a class="reference internal" href="#sft-instruction-tuning">SFT instruction tuning</a></li>
 <li><a class="reference internal" href="#dpo-preference-training">DPO preference training</a></li>
 <li><a class="reference internal" href="#ppo-with-reward-and-critic-roles">PPO with reward and critic roles</a></li>
 <li><a class="reference internal" href="#agentic-tic-tac-toe">Agentic Tic-Tac-Toe</a></li>
@@ -98,7 +112,7 @@ data-aria-dark="Switch to auto color mode">
 </li>
 <li><a class="reference internal" href="#help">Help</a></li>
 </ul>
-</div><div id="ethical-ad-placement" data-ea-publisher="readthedocs"></div></div>
+</div></div>
   </aside>
   <div class="rside-overlay js-menu" role="button" aria-label="Close Table of Contents" aria-controls="rside" aria-expanded="false"></div>
   <main class="sy-main w-full max-sm:max-w-full print:pt-6">
@@ -110,7 +124,7 @@ data-aria-dark="Switch to auto color mode">
       </button>
     </div>
     <ol class="flex-1" itemscope itemtype="https://schema.org/BreadcrumbList"><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-        <a itemprop="item" href="../index.html"><span itemprop="name">areno</span></a>
+        <a itemprop="item" href="../index.html"><span itemprop="name">AReno</span></a>
         <span>/</span>
         <meta itemprop="position" content="1" />
       </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
@@ -175,7 +189,9 @@ Face dataset reference.</p>
 </dd>
 </dl>
 <p>Use <code class="docutils literal notranslate"><span class="pre">--dataset-loader-fn</span></code> when the raw dataset does not already match the
-trainer schema. Without a loader, Areno passes dataset rows through unchanged.</p>
+trainer schema. Without a loader, Areno passes dataset rows through unchanged,
+except for SFT where a loader is required. See <a class="reference internal" href="dataset_loaders.html"><span class="doc">Dataset loaders</span></a> for the
+per-algorithm loader contracts.</p>
 <dl class="simple">
 <dt><code class="docutils literal notranslate"><span class="pre">--algo</span> <span class="pre">TEXT</span></code></dt><dd><p>Training algorithm registered in <code class="docutils literal notranslate"><span class="pre">areno.api</span></code>. Default: <code class="docutils literal notranslate"><span class="pre">gspo</span></code>.</p>
 </dd>
@@ -183,6 +199,9 @@ trainer schema. Without a loader, Areno passes dataset rows through unchanged.</
 <p>Built-in algorithms: <code class="docutils literal notranslate"><span class="pre">sft</span></code>, <code class="docutils literal notranslate"><span class="pre">dpo</span></code>, <code class="docutils literal notranslate"><span class="pre">gspo</span></code>, <code class="docutils literal notranslate"><span class="pre">grpo</span></code>, <code class="docutils literal notranslate"><span class="pre">ppo</span></code>.</p>
 <dl class="simple">
 <dt><code class="docutils literal notranslate"><span class="pre">--epochs</span> <span class="pre">INTEGER</span></code></dt><dd><p>Number of dataset epochs to train. Default: <code class="docutils literal notranslate"><span class="pre">10</span></code>.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">--max-steps</span> <span class="pre">INTEGER</span></code></dt><dd><p>Optional global trainer step cap. Training stops after this many step
+indices have completed, even if the current epoch still has more batches.</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">--world-size</span> <span class="pre">INTEGER</span></code></dt><dd><p>Total device count for the backend. Default: <code class="docutils literal notranslate"><span class="pre">8</span></code>.</p>
 </dd>
@@ -284,6 +303,63 @@ row for the whole agentic trajectory, not only the latest chat-completion turn.<
 </dd>
 </dl>
 </section>
+<section id="parameter-tuning">
+<h3>Parameter tuning<a class="headerlink" href="#parameter-tuning" title="Link to this heading">¶</a></h3>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">--tune-params</span></code></dt><dd><p>Probe rollout and training memory before starting the real run, then fill
+safe values for <code class="docutils literal notranslate"><span class="pre">--max-running-prompts</span></code>, <code class="docutils literal notranslate"><span class="pre">--batch-size</span></code> and
+<code class="docutils literal notranslate"><span class="pre">--mini-bs</span></code>. This is intended for rollout-based algorithms such as GSPO,
+GRPO and PPO, including agentic rollouts where the right concurrency is
+hard to estimate by hand.</p>
+</dd>
+</dl>
+<p>The tuner uses dummy-loaded model weights and synthetic token rows, so it
+measures the selected model architecture, <code class="docutils literal notranslate"><span class="pre">--world-size</span></code>/<code class="docutils literal notranslate"><span class="pre">--tp-size</span></code>,
+sequence lengths, CUDA graph setup, optimizer state, and train microbatch
+memory without consuming a real dataset row or writing checkpoints. It keeps
+the user-provided <code class="docutils literal notranslate"><span class="pre">--tp-size</span></code>, <code class="docutils literal notranslate"><span class="pre">--n-samples</span></code>, <code class="docutils literal notranslate"><span class="pre">--adam-8bit</span></code>, sequence
+limits, model path, algorithm, and backend settings.</p>
+<p>Search is deliberately conservative:</p>
+<ul class="simple">
+<li><p>rollout candidates are tried from larger to smaller
+<code class="docutils literal notranslate"><span class="pre">--max-running-prompts</span></code> values;</p></li>
+<li><p>if <code class="docutils literal notranslate"><span class="pre">--max-running-prompts</span></code> is explicitly provided, rollout probing is
+skipped and that concurrency is used directly for training-parameter tuning;</p></li>
+<li><p>training uses the rollout-selected concurrency to derive a batch size, then
+tries larger to smaller <code class="docutils literal notranslate"><span class="pre">--mini-bs</span></code> values;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--drop-rollout-state</span></code> is enabled for the tuned run so rollout memory does
+not remain resident during the training probe or optimizer step.</p></li>
+</ul>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">--mem-frac</span> <span class="pre">FLOAT</span></code></dt><dd><p>Target maximum GPU memory fraction for tuning. Default: <code class="docutils literal notranslate"><span class="pre">0.9</span></code>. Lower this
+when sharing a node or when the real reward/agent path has additional GPU
+users.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">--tune-max-samples</span> <span class="pre">INTEGER</span></code></dt><dd><p>Upper bound for sampled rollout/train rows considered during tuning.
+Default: <code class="docutils literal notranslate"><span class="pre">256</span></code>. The rollout search does not try
+<code class="docutils literal notranslate"><span class="pre">--max-running-prompts</span></code> above this value, and the derived train batch size
+is capped by <code class="docutils literal notranslate"><span class="pre">tune-max-samples</span> <span class="pre">/</span> <span class="pre">n-samples</span></code>.</p>
+</dd>
+</dl>
+<p>Example:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span data-line="1">areno<span class="w"> </span>train<span class="w"> </span><span class="se">\</span>
+</span><span data-line="2"><span class="w">  </span>--ckpt<span class="w"> </span>/path/to/Qwen3.5-4B<span class="w"> </span><span class="se">\</span>
+</span><span data-line="3"><span class="w">  </span>--dataset-path<span class="w"> </span>examples/agentic/coding/dataset.jsonl<span class="w"> </span><span class="se">\</span>
+</span><span data-line="4"><span class="w">  </span>--dataset-loader-fn<span class="w"> </span>examples/agentic/coding/dataset_loader.py<span class="w"> </span><span class="se">\</span>
+</span><span data-line="5"><span class="w">  </span>--reward-fn-path<span class="w"> </span>examples/agentic/coding/reward.py<span class="w"> </span><span class="se">\</span>
+</span><span data-line="6"><span class="w">  </span>--agent-fn<span class="w"> </span>examples/agentic/coding/run_agent.py<span class="w"> </span><span class="se">\</span>
+</span><span data-line="7"><span class="w">  </span>--algo<span class="w"> </span>gspo<span class="w"> </span><span class="se">\</span>
+</span><span data-line="8"><span class="w">  </span>--world-size<span class="w"> </span><span class="m">8</span><span class="w"> </span><span class="se">\</span>
+</span><span data-line="9"><span class="w">  </span>--tp-size<span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="se">\</span>
+</span><span data-line="10"><span class="w">  </span>--n-samples<span class="w"> </span><span class="m">8</span><span class="w"> </span><span class="se">\</span>
+</span><span data-line="11"><span class="w">  </span>--max-new-tokens<span class="w"> </span><span class="m">2048</span><span class="w"> </span><span class="se">\</span>
+</span><span data-line="12"><span class="w">  </span>--max-context-len<span class="w"> </span><span class="m">32768</span><span class="w"> </span><span class="se">\</span>
+</span><span data-line="13"><span class="w">  </span>--tune-params<span class="w"> </span><span class="se">\</span>
+</span><span data-line="14"><span class="w">  </span>--mem-frac<span class="w"> </span><span class="m">0</span>.9<span class="w"> </span><span class="se">\</span>
+</span><span data-line="15"><span class="w">  </span>--tune-max-samples<span class="w"> </span><span class="m">256</span>
+</span></pre></div>
+</div>
+</section>
 <section id="train">
 <h3>Train<a class="headerlink" href="#train" title="Link to this heading">¶</a></h3>
 <p>Everything that consumes rollouts and updates weights: training batching and
@@ -363,7 +439,9 @@ enabled.</p>
 <section id="observability">
 <h3>Observability<a class="headerlink" href="#observability" title="Link to this heading">¶</a></h3>
 <dl class="simple">
-<dt><code class="docutils literal notranslate"><span class="pre">--metrics-log-dir</span> <span class="pre">TEXT</span></code></dt><dd><p>TensorBoard metrics log directory.</p>
+<dt><code class="docutils literal notranslate"><span class="pre">--metrics-log-dir</span> <span class="pre">TEXT</span></code></dt><dd><p>TensorBoard metrics log directory. See <a class="reference internal" href="observability.html"><span class="doc">Observability</span></a> for the
+<code class="docutils literal notranslate"><span class="pre">rollout/*</span></code>, <code class="docutils literal notranslate"><span class="pre">train/*</span></code>, and <code class="docutils literal notranslate"><span class="pre">time/*</span></code> metric namespaces and debugging
+log examples.</p>
 </dd>
 </dl>
 </section>
@@ -403,6 +481,22 @@ quality.</p>
 </span><span data-line="11"><span class="w">  </span>--mini-bs<span class="w"> </span><span class="m">1</span>
 </span></pre></div>
 </div>
+</section>
+<section id="sft-instruction-tuning">
+<h3>SFT instruction tuning<a class="headerlink" href="#sft-instruction-tuning" title="Link to this heading">¶</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span data-line="1">areno<span class="w"> </span>train<span class="w"> </span><span class="se">\</span>
+</span><span data-line="2"><span class="w">  </span>--ckpt<span class="w"> </span>Qwen/Qwen3-0.6B<span class="w"> </span><span class="se">\</span>
+</span><span data-line="3"><span class="w">  </span>--dataset-path<span class="w"> </span>yahma/alpaca-cleaned<span class="w"> </span><span class="se">\</span>
+</span><span data-line="4"><span class="w">  </span>--dataset-loader-fn<span class="w"> </span>examples/sft/alpaca/dataset_loader.py<span class="w"> </span><span class="se">\</span>
+</span><span data-line="5"><span class="w">  </span>--algo<span class="w"> </span>sft<span class="w"> </span><span class="se">\</span>
+</span><span data-line="6"><span class="w">  </span>--tp-size<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+</span><span data-line="7"><span class="w">  </span>--world-size<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+</span><span data-line="8"><span class="w">  </span>--batch-size<span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="se">\</span>
+</span><span data-line="9"><span class="w">  </span>--mini-bs<span class="w"> </span><span class="m">1</span>
+</span></pre></div>
+</div>
+<p>SFT loaders must normalize raw rows to <code class="docutils literal notranslate"><span class="pre">prompt</span></code> and <code class="docutils literal notranslate"><span class="pre">response</span></code> dictionaries.
+The trainer performs tokenization and trains on the response suffix.</p>
 </section>
 <section id="dpo-preference-training">
 <h3>DPO preference training<a class="headerlink" href="#dpo-preference-training" title="Link to this heading">¶</a></h3>
@@ -543,10 +637,10 @@ game loop.</p>
         <span>Previous</span><div class="title">Supported models</div></div>
     </a>
   </div><div class="navigation-next">
-    <a href="inference.html">
+    <a href="dataset_loaders.html">
       <div class="page-info">
         <span>Next</span>
-        <div class="title">Inference CLI reference</div>
+        <div class="title">Dataset loaders</div>
       </div>
       <i class="i-lucide chevron-right"></i>
     </a>
