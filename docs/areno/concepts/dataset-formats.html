@@ -2,7 +2,7 @@
 <html lang="en" data-accent-color="gray" data-content_root="../">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Supported models - AReno docs</title><link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Troubleshooting" href="../troubleshooting/index.html" /><link rel="prev" title="Trainer SDK reference" href="../sdk/trainer.html" /><script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Dataset formats - AReno docs</title><link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Reward functions" href="reward-functions.html" /><link rel="prev" title="Chat templates" href="chat-templates.html" /><script>
     function setColorMode(t){let e=document.documentElement;e.setAttribute("data-color-mode",t);let a=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,s=t;"auto"===t&&(s=a?"dark":"light"),"light"===s?(e.classList.remove("dark"),e.classList.add("light")):(e.classList.remove("light"),e.classList.add("dark"))}
     setColorMode(localStorage._theme||"auto");
   </script><link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=e1a1ceaf" />
@@ -16,7 +16,7 @@
 }
 </style>
     
-  <meta property="og:type" content="website"/><meta property="og:title" content="Supported models"/>
+  <meta property="og:type" content="website"/><meta property="og:title" content="Dataset formats"/>
     <meta name="twitter:card" content="summary"/>
   </head>
 <body><div class="sy-head">
@@ -28,7 +28,7 @@
       <strong>AReno</strong>
     </a>
     <div class="sy-head-nav" id="head-nav">
-      <nav class="sy-head-links"><ul><li class="link"><a href="../getting-started/welcome.html">Get Started</a></li><li class="link"><a href="../concepts/training-loop.html">Concepts</a></li><li class="link"><a href="../cookbook/math-rlvr.html">Cookbook</a></li><li class="link"><a href="../reference/cli.html">Reference</a></li><li class="link"><a href="../troubleshooting/index.html">Troubleshooting</a></li></ul></nav>
+      <nav class="sy-head-links"><ul><li class="link"><a href="../getting-started/welcome.html">Get Started</a></li><li class="link"><a href="training-loop.html">Concepts</a></li><li class="link"><a href="../cookbook/math-rlvr.html">Cookbook</a></li><li class="link"><a href="../reference/cli.html">Reference</a></li><li class="link"><a href="../troubleshooting/index.html">Troubleshooting</a></li></ul></nav>
       <div class="sy-head-extra flex items-center print:hidden"><div class="sy-head-socials"></div></div>
     </div>
     <div class="sy-head-actions flex items-center shrink-0 print:hidden">
@@ -73,11 +73,11 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l1"><a class="reference internal" href="../getting-started/quickstart.html">Quickstart</a></li>
 </ul>
 <p class="caption" role="heading" aria-level="3"><span class="caption-text">Conceptual Guides</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../concepts/training-loop.html">Training Loop</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../concepts/chat-templates.html">Chat Templates</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../concepts/dataset-formats.html">Dataset Formats</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../concepts/reward-functions.html">Reward Functions</a></li>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="training-loop.html">Training Loop</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chat-templates.html">Chat Templates</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Dataset Formats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reward-functions.html">Reward Functions</a></li>
 </ul>
 <p class="caption" role="heading" aria-level="3"><span class="caption-text">Cookbook</span></p>
 <ul>
@@ -86,10 +86,10 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l1"><a class="reference internal" href="../cookbook/duelgrid-visual-agent.html">DuelGrid visual agent</a></li>
 </ul>
 <p class="caption" role="heading" aria-level="3"><span class="caption-text">Reference</span></p>
-<ul class="current">
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="../reference/cli.html">CLI Reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../sdk/trainer.html">SDK Reference</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Supported Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models/supported.html">Supported Models</a></li>
 </ul>
 <p class="caption" role="heading" aria-level="3"><span class="caption-text">Troubleshooting &amp; FAQ</span></p>
 <ul>
@@ -107,7 +107,14 @@ data-aria-dark="Switch to auto color mode">
     <button class="rside-close js-menu xl:hidden" aria-label="Close Table of Contents" type="button" aria-controls="rside" aria-expanded="false">
       <i class="i-lucide close"></i>
     </button>
-    <div class="sy-scrollbar sy-rside-inner px-6 xl:top-16 xl:sticky xl:pl-0 pt-6 pb-4"></div>
+    <div class="sy-scrollbar sy-rside-inner px-6 xl:top-16 xl:sticky xl:pl-0 pt-6 pb-4"><div class="localtoc"><h3>On this page</h3><ul>
+<li><a class="reference internal" href="#sft-rows">SFT rows</a></li>
+<li><a class="reference internal" href="#dpo-rows">DPO rows</a></li>
+<li><a class="reference internal" href="#prompt-based-rl-rows">Prompt-based RL rows</a></li>
+<li><a class="reference internal" href="#agentic-rows">Agentic rows</a></li>
+<li><a class="reference internal" href="#where-to-go-next">Where to go next</a></li>
+</ul>
+</div></div>
   </aside>
   <div class="rside-overlay js-menu" role="button" aria-label="Close Table of Contents" aria-controls="rside" aria-expanded="false"></div>
   <main class="sy-main w-full max-sm:max-w-full print:pt-6">
@@ -123,7 +130,7 @@ data-aria-dark="Switch to auto color mode">
         <span>/</span>
         <meta itemprop="position" content="1" />
       </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-        <strong itemprop="name">Supported models</strong>
+        <strong itemprop="name">Dataset formats</strong>
         <meta itemprop="position" content="2" />
       </li></ol>
     <div class="xl:hidden ml-1">
@@ -136,54 +143,42 @@ data-aria-dark="Switch to auto color mode">
 </div><div class="flex flex-col break-words justify-between">
       <div class="relative min-w-0 max-w-6xl px-6 pb-6 pt-8 xl:px-12">
   <article class="yue" role="main">
-          <section id="supported-models">
-<h1>Supported models<a class="headerlink" href="#supported-models" title="Link to this heading">¶</a></h1>
-<p>areno currently supports the following checkpoint families:</p>
-<div class="table-wrapper colwidths-given docutils container">
-<table class="docutils align-default">
-<colgroup>
-<col style="width: 32.0%" />
-<col style="width: 68.0%" />
-</colgroup>
-<thead>
-<tr class="row-odd"><th class="head"><p>Family</p></th>
-<th class="head"><p>Notes</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>Llama-style dense decoder models</p></td>
-<td><p>Dense causal decoder checkpoints with Llama-compatible layouts.</p></td>
-</tr>
-<tr class="row-odd"><td><p>Qwen3 dense</p></td>
-<td><p>Qwen3 text checkpoints.</p></td>
-</tr>
-<tr class="row-even"><td><p>Qwen3-MoE</p></td>
-<td><p>Routed expert checkpoints with Areno MoE kernels.</p></td>
-</tr>
-<tr class="row-odd"><td><p>Qwen3.5</p></td>
-<td><p>Dense Qwen3.5 text checkpoints.</p></td>
-</tr>
-<tr class="row-even"><td><p>Qwen3.5-MoE</p></td>
-<td><p>Qwen3.5 routed expert checkpoints, including <code class="docutils literal notranslate"><span class="pre">qwen3_5_moe</span></code> text/MoE layouts, with Areno MoE kernels.</p></td>
-</tr>
-<tr class="row-odd"><td><p>Bailing MoE Linear v2</p></td>
-<td><p>Local model adapter for Bailing MoE Linear v2 checkpoints.</p></td>
-</tr>
-<tr class="row-even"><td><p>Gemma4 text models</p></td>
-<td><p>Gemma4 text-only checkpoints used by the local training stack.</p></td>
-</tr>
-<tr class="row-odd"><td><p>MiniCPM-family adapters</p></td>
-<td><p>MiniCPM-family adapters used by the local training stack.</p></td>
-</tr>
-</tbody>
-</table>
+          <section id="dataset-formats">
+<h1>Dataset formats<a class="headerlink" href="#dataset-formats" title="Link to this heading">¶</a></h1>
+<p>AReno loaders normalize external datasets into small dictionaries consumed by
+the selected algorithm. Keep tokenization out of the dataset layer; trainers
+own tokenizer rendering, sequence limits, and chat-template behavior.</p>
+<section id="sft-rows">
+<h2>SFT rows<a class="headerlink" href="#sft-rows" title="Link to this heading">¶</a></h2>
+<p>SFT rows provide a supervised prompt and target response:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="p">{</span><span class="s2">&quot;prompt&quot;</span><span class="p">:</span> <span class="s2">&quot;Instruction: ...&quot;</span><span class="p">,</span> <span class="s2">&quot;response&quot;</span><span class="p">:</span> <span class="s2">&quot;...&quot;</span><span class="p">}</span>
+</span></pre></div>
 </div>
-<div class="admonition important">
-<p class="admonition-title">Important</p>
-<p>Model support means the checkpoint can be loaded through an Areno model
-adapter. Some model families may support inference before every training or
-save path is fully optimized.</p>
+</section>
+<section id="dpo-rows">
+<h2>DPO rows<a class="headerlink" href="#dpo-rows" title="Link to this heading">¶</a></h2>
+<p>DPO rows provide one shared prompt and two ranked answers:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="p">{</span><span class="s2">&quot;prompt&quot;</span><span class="p">:</span> <span class="s2">&quot;...&quot;</span><span class="p">,</span> <span class="s2">&quot;chosen&quot;</span><span class="p">:</span> <span class="s2">&quot;...&quot;</span><span class="p">,</span> <span class="s2">&quot;rejected&quot;</span><span class="p">:</span> <span class="s2">&quot;...&quot;</span><span class="p">}</span>
+</span></pre></div>
 </div>
+</section>
+<section id="prompt-based-rl-rows">
+<h2>Prompt-based RL rows<a class="headerlink" href="#prompt-based-rl-rows" title="Link to this heading">¶</a></h2>
+<p>GSPO, GRPO, and PPO prompt datasets provide <code class="docutils literal notranslate"><span class="pre">prompt</span></code>. They can also preserve
+task metadata such as <code class="docutils literal notranslate"><span class="pre">solutions</span></code> for reward functions.</p>
+</section>
+<section id="agentic-rows">
+<h2>Agentic rows<a class="headerlink" href="#agentic-rows" title="Link to this heading">¶</a></h2>
+<p>Agentic datasets provide <code class="docutils literal notranslate"><span class="pre">prompt</span></code> plus any task metadata consumed by the agent
+and reward files.</p>
+</section>
+<section id="where-to-go-next">
+<h2>Where to go next<a class="headerlink" href="#where-to-go-next" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="../cli/dataset_loaders.html"><span class="doc">Dataset loaders</span></a> documents loader shapes and examples.</p></li>
+<li><p><a class="reference internal" href="reward-functions.html"><span class="doc">Reward functions</span></a> explains how preserved metadata is used for scoring.</p></li>
+</ul>
+</section>
 </section>
 
         </article><button class="back-to-top" type="button">
@@ -192,16 +187,16 @@ save path is fully optimized.</p>
   </svg>
   <span>Back to top</span>
 </button><div class="navigation flex print:hidden"><div class="navigation-prev">
-    <a href="../sdk/trainer.html">
+    <a href="chat-templates.html">
       <i class="i-lucide chevron-left"></i>
       <div class="page-info">
-        <span>Previous</span><div class="title">Trainer SDK reference</div></div>
+        <span>Previous</span><div class="title">Chat templates</div></div>
     </a>
   </div><div class="navigation-next">
-    <a href="../troubleshooting/index.html">
+    <a href="reward-functions.html">
       <div class="page-info">
         <span>Next</span>
-        <div class="title">Troubleshooting</div>
+        <div class="title">Reward functions</div>
       </div>
       <i class="i-lucide chevron-right"></i>
     </a>

@@ -2,7 +2,7 @@
 <html lang="en" data-accent-color="gray" data-content_root="../">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Dataset loaders - AReno docs</title><link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Experimental and auxiliary APIs - AReno docs</title><link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><script>
     function setColorMode(t){let e=document.documentElement;e.setAttribute("data-color-mode",t);let a=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,s=t;"auto"===t&&(s=a?"dark":"light"),"light"===s?(e.classList.remove("dark"),e.classList.add("light")):(e.classList.remove("light"),e.classList.add("dark"))}
     setColorMode(localStorage._theme||"auto");
   </script><link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=e1a1ceaf" />
@@ -16,7 +16,7 @@
 }
 </style>
     
-  <meta property="og:type" content="website"/><meta property="og:title" content="Dataset loaders"/>
+  <meta property="og:type" content="website"/><meta property="og:title" content="Experimental and auxiliary APIs"/>
     <meta name="twitter:card" content="summary"/>
   </head>
 <body><div class="sy-head">
@@ -28,7 +28,7 @@
       <strong>AReno</strong>
     </a>
     <div class="sy-head-nav" id="head-nav">
-      <nav class="sy-head-links"><ul><li class="link"><a href="../getting-started/welcome.html">Get Started</a></li><li class="link"><a href="../concepts/training-loop.html">Concepts</a></li><li class="link"><a href="../cookbook/math-rlvr.html">Cookbook</a></li><li class="link"><a href="../reference/cli.html">Reference</a></li><li class="link"><a href="../troubleshooting/index.html">Troubleshooting</a></li></ul></nav>
+      <nav class="sy-head-links"><ul><li class="link"><a href="../getting-started/welcome.html">Get Started</a></li><li class="link"><a href="../concepts/training-loop.html">Concepts</a></li><li class="link"><a href="../cookbook/math-rlvr.html">Cookbook</a></li><li class="link"><a href="cli.html">Reference</a></li><li class="link"><a href="../troubleshooting/index.html">Troubleshooting</a></li></ul></nav>
       <div class="sy-head-extra flex items-center print:hidden"><div class="sy-head-socials"></div></div>
     </div>
     <div class="sy-head-actions flex items-center shrink-0 print:hidden">
@@ -87,7 +87,7 @@ data-aria-dark="Switch to auto color mode">
 </ul>
 <p class="caption" role="heading" aria-level="3"><span class="caption-text">Reference</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../reference/cli.html">CLI Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cli.html">CLI Reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../sdk/trainer.html">SDK Reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../models/supported.html">Supported Models</a></li>
 </ul>
@@ -107,13 +107,7 @@ data-aria-dark="Switch to auto color mode">
     <button class="rside-close js-menu xl:hidden" aria-label="Close Table of Contents" type="button" aria-controls="rside" aria-expanded="false">
       <i class="i-lucide close"></i>
     </button>
-    <div class="sy-scrollbar sy-rside-inner px-6 xl:top-16 xl:sticky xl:pl-0 pt-6 pb-4"><div class="localtoc"><h3>On this page</h3><ul>
-<li><a class="reference internal" href="#sft">SFT</a></li>
-<li><a class="reference internal" href="#dpo">DPO</a></li>
-<li><a class="reference internal" href="#prompt-based-rl">Prompt-based RL</a></li>
-<li><a class="reference internal" href="#agentic-rl">Agentic RL</a></li>
-</ul>
-</div></div>
+    <div class="sy-scrollbar sy-rside-inner px-6 xl:top-16 xl:sticky xl:pl-0 pt-6 pb-4"></div>
   </aside>
   <div class="rside-overlay js-menu" role="button" aria-label="Close Table of Contents" aria-controls="rside" aria-expanded="false"></div>
   <main class="sy-main w-full max-sm:max-w-full print:pt-6">
@@ -129,7 +123,7 @@ data-aria-dark="Switch to auto color mode">
         <span>/</span>
         <meta itemprop="position" content="1" />
       </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-        <strong itemprop="name">Dataset loaders</strong>
+        <strong itemprop="name">Experimental and auxiliary APIs</strong>
         <meta itemprop="position" content="2" />
       </li></ol>
     <div class="xl:hidden ml-1">
@@ -142,62 +136,19 @@ data-aria-dark="Switch to auto color mode">
 </div><div class="flex flex-col break-words justify-between">
       <div class="relative min-w-0 max-w-6xl px-6 pb-6 pt-8 xl:px-12">
   <article class="yue" role="main">
-          <section id="dataset-loaders">
-<h1>Dataset loaders<a class="headerlink" href="#dataset-loaders" title="Link to this heading">¶</a></h1>
-<p><code class="docutils literal notranslate"><span class="pre">--dataset-loader-fn</span></code> points to a Python function that normalizes raw dataset
-rows before the trainer sees them. The function shape is the same across
-examples:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="k">def</span><span class="w"> </span><span class="nf">load_training_dataset</span><span class="p">(</span><span class="n">dataset_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">default_loader</span><span class="p">,</span> <span class="o">**</span><span class="n">_</span><span class="p">:</span> <span class="nb">object</span><span class="p">):</span>
-</span><span data-line="2">    <span class="n">dataset</span> <span class="o">=</span> <span class="n">default_loader</span><span class="p">(</span><span class="n">dataset_path</span><span class="p">)</span>
-</span><span data-line="3">    <span class="o">...</span>
-</span><span data-line="4">    <span class="k">return</span> <span class="n">normalized_rows</span>
-</span></pre></div>
-</div>
-<p><code class="docutils literal notranslate"><span class="pre">default_loader</span></code> understands the same <code class="docutils literal notranslate"><span class="pre">--dataset-path</span></code> values as the CLI:
-JSON/JSONL, Parquet, CSV/TSV, Arrow, <code class="docutils literal notranslate"><span class="pre">datasets.save_to_disk(...)</span></code> directories,
-and Hugging Face dataset references. Loaders should keep tokenization out of the
-dataset layer; trainers own tokenizer-specific rendering and token limits.</p>
-<section id="sft">
-<h2>SFT<a class="headerlink" href="#sft" title="Link to this heading">¶</a></h2>
-<p>SFT always requires <code class="docutils literal notranslate"><span class="pre">--dataset-loader-fn</span></code>. The loader must return rows with
-<code class="docutils literal notranslate"><span class="pre">prompt</span></code> and <code class="docutils literal notranslate"><span class="pre">response</span></code> keys:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="k">def</span><span class="w"> </span><span class="nf">load_training_dataset</span><span class="p">(</span><span class="n">dataset_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">default_loader</span><span class="p">,</span> <span class="o">**</span><span class="n">_</span><span class="p">:</span> <span class="nb">object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">]:</span>
-</span><span data-line="2">    <span class="n">rows</span> <span class="o">=</span> <span class="n">default_loader</span><span class="p">(</span><span class="n">dataset_path</span><span class="p">)</span>
-</span><span data-line="3">    <span class="n">records</span> <span class="o">=</span> <span class="p">[]</span>
-</span><span data-line="4">    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">rows</span><span class="p">:</span>
-</span><span data-line="5">        <span class="n">record</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
-</span><span data-line="6">        <span class="n">records</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
-</span><span data-line="7">            <span class="p">{</span>
-</span><span data-line="8">                <span class="s2">&quot;prompt&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;Instruction: </span><span class="si">{</span><span class="n">record</span><span class="p">[</span><span class="s1">&#39;instruction&#39;</span><span class="p">]</span><span class="si">}</span><span class="se">\n</span><span class="s2">Answer:&quot;</span><span class="p">,</span>
-</span><span data-line="9">                <span class="s2">&quot;response&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">record</span><span class="p">[</span><span class="s2">&quot;answer&quot;</span><span class="p">]),</span>
-</span><span data-line="10">            <span class="p">}</span>
-</span><span data-line="11">        <span class="p">)</span>
-</span><span data-line="12">    <span class="k">return</span> <span class="n">records</span>
-</span></pre></div>
-</div>
-<p>For a concrete example, use <code class="docutils literal notranslate"><span class="pre">--dataset-path</span> <span class="pre">yahma/alpaca-cleaned</span></code> with
-<code class="docutils literal notranslate"><span class="pre">examples/sft/alpaca/dataset_loader.py</span></code>.</p>
-</section>
-<section id="dpo">
-<h2>DPO<a class="headerlink" href="#dpo" title="Link to this heading">¶</a></h2>
-<p>DPO loaders should return <code class="docutils literal notranslate"><span class="pre">prompt</span></code>, <code class="docutils literal notranslate"><span class="pre">chosen</span></code>, and <code class="docutils literal notranslate"><span class="pre">rejected</span></code>. <code class="docutils literal notranslate"><span class="pre">prompt</span></code>
-is the shared context, <code class="docutils literal notranslate"><span class="pre">chosen</span></code> is the preferred answer, and <code class="docutils literal notranslate"><span class="pre">rejected</span></code> is
-the lower-ranked answer.</p>
-</section>
-<section id="prompt-based-rl">
-<h2>Prompt-based RL<a class="headerlink" href="#prompt-based-rl" title="Link to this heading">¶</a></h2>
-<p>GSPO, GRPO, and PPO prompt datasets should return <code class="docutils literal notranslate"><span class="pre">prompt</span></code>. Reward functions
-may require additional fields such as <code class="docutils literal notranslate"><span class="pre">solutions</span></code> or task metadata, so loaders
-usually preserve those fields while adding the canonical prompt. The math loader
-in <code class="docutils literal notranslate"><span class="pre">examples/math/dataset_loader.py</span></code> follows this pattern.</p>
-</section>
-<section id="agentic-rl">
-<h2>Agentic RL<a class="headerlink" href="#agentic-rl" title="Link to this heading">¶</a></h2>
-<p>Agentic loaders also return <code class="docutils literal notranslate"><span class="pre">prompt</span></code> plus task metadata consumed by
-<code class="docutils literal notranslate"><span class="pre">run_agent.py</span></code> and <code class="docutils literal notranslate"><span class="pre">reward.py</span></code>. Examples include
-<code class="docutils literal notranslate"><span class="pre">examples/agentic/coding/dataset_loader.py</span></code> and
-<code class="docutils literal notranslate"><span class="pre">examples/agentic/shopping/dataset_loader.py</span></code>.</p>
-</section>
+          <section id="experimental-and-auxiliary-apis">
+<h1>Experimental and auxiliary APIs<a class="headerlink" href="#experimental-and-auxiliary-apis" title="Link to this heading">¶</a></h1>
+<p>Experimental or auxiliary APIs should stay out of the new-user path until
+their contracts are stable.</p>
+<p>When documenting an experimental surface:</p>
+<ul class="simple">
+<li><p>Say which AReno version or branch it applies to.</p></li>
+<li><p>Link to the owning module or example.</p></li>
+<li><p>Mark the expected stability level.</p></li>
+<li><p>Keep migration notes close to the page that users will find by search.</p></li>
+</ul>
+<p>Stable public surfaces should graduate into the relevant Reference page once
+the contract is ready.</p>
 </section>
 
         </article><button class="back-to-top" type="button">
