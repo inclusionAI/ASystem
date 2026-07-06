@@ -189,10 +189,14 @@ weights), <strong>Checkpoint</strong> (produced artifacts), and <strong>Observab
 <h3>Basic<a class="headerlink" href="#basic" title="Link to this heading">¶</a></h3>
 <p>Inputs, dataset loader, the algorithm and run length, and device counts.</p>
 <dl class="simple">
-<dt><code class="docutils literal notranslate"><span class="pre">--ckpt</span> <span class="pre">TEXT</span></code></dt><dd><p>Actor model/tokenizer checkpoint path or Hugging Face repo ID.</p>
+<dt><code class="docutils literal notranslate"><span class="pre">--ckpt</span> <span class="pre">TEXT</span></code></dt><dd><p>Actor model/tokenizer checkpoint path or remote model repo ID.</p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">--dataset-path</span> <span class="pre">TEXT</span></code></dt><dd><p>Training dataset path, Hugging Face <code class="docutils literal notranslate"><span class="pre">save_to_disk</span></code> directory, or Hugging
-Face dataset reference.</p>
+<dt><code class="docutils literal notranslate"><span class="pre">--dataset-path</span> <span class="pre">TEXT</span></code></dt><dd><p>Training dataset path, Hugging Face <code class="docutils literal notranslate"><span class="pre">save_to_disk</span></code> directory, or remote
+dataset reference.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">--model-hub</span> <span class="pre">[hf|modelscope]</span></code></dt><dd><p>Remote hub used when <code class="docutils literal notranslate"><span class="pre">--ckpt</span></code>, role checkpoints, or <code class="docutils literal notranslate"><span class="pre">--dataset-path</span></code> are
+not local paths. Use <code class="docutils literal notranslate"><span class="pre">--model-hub</span> <span class="pre">hf</span></code> for Hugging Face and
+<code class="docutils literal notranslate"><span class="pre">--model-hub</span> <span class="pre">modelscope</span></code> for ModelScope. Default: <code class="docutils literal notranslate"><span class="pre">hf</span></code>.</p>
 </dd>
 </dl>
 <p>Dataset references use <code class="docutils literal notranslate"><span class="pre">repo/name</span></code>, <code class="docutils literal notranslate"><span class="pre">repo/name:config</span></code>, or
@@ -316,7 +320,7 @@ row for the whole agentic trajectory, not only the latest chat-completion turn.<
 </span></pre></div>
 </div>
 <dl class="simple">
-<dt><code class="docutils literal notranslate"><span class="pre">--reward-ckpt</span> <span class="pre">TEXT</span></code></dt><dd><p>Optional PPO reward model checkpoint path or Hugging Face repo ID.</p>
+<dt><code class="docutils literal notranslate"><span class="pre">--reward-ckpt</span> <span class="pre">TEXT</span></code></dt><dd><p>Optional PPO reward model checkpoint path or remote model repo ID.</p>
 </dd>
 </dl>
 </section>
@@ -410,9 +414,9 @@ enabled.</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">--grad-clip-norm</span> <span class="pre">FLOAT</span></code></dt><dd><p>Policy gradient clipping norm. Default: <code class="docutils literal notranslate"><span class="pre">1.0</span></code>.</p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">--ref-ckpt</span> <span class="pre">TEXT</span></code></dt><dd><p>Optional PPO/DPO reference model checkpoint path or Hugging Face repo ID.</p>
+<dt><code class="docutils literal notranslate"><span class="pre">--ref-ckpt</span> <span class="pre">TEXT</span></code></dt><dd><p>Optional PPO/DPO reference model checkpoint path or remote model repo ID.</p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">--critic-ckpt</span> <span class="pre">TEXT</span></code></dt><dd><p>Optional PPO critic model checkpoint path or Hugging Face repo ID.</p>
+<dt><code class="docutils literal notranslate"><span class="pre">--critic-ckpt</span> <span class="pre">TEXT</span></code></dt><dd><p>Optional PPO critic model checkpoint path or remote model repo ID.</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">--critic-lr</span> <span class="pre">FLOAT</span></code></dt><dd><p>PPO critic optimizer learning rate. Default: <code class="docutils literal notranslate"><span class="pre">1.0e-5</span></code>.</p>
 </dd>
