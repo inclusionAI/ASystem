@@ -6,7 +6,7 @@
     function setColorMode(t){let e=document.documentElement;e.setAttribute("data-color-mode",t);let a=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,s=t;"auto"===t&&(s=a?"dark":"light"),"light"===s?(e.classList.remove("dark"),e.classList.add("light")):(e.classList.remove("light"),e.classList.add("dark"))}
     setColorMode(localStorage._theme||"auto");
   </script><link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=e1a1ceaf" />
-    <link rel="stylesheet" type="text/css" href="../_static/shibuya.css?v=9454f7d5" />
+    <link rel="stylesheet" type="text/css" href="../_static/shibuya.css?v=2ceb65ce" />
     <link media="print" rel="stylesheet" type="text/css" href="../_static/print.css?v=20ff2c19" />
     <link rel="stylesheet" type="text/css" href="../_static/areno.css?v=02a4506f" />
     <style>
@@ -142,11 +142,11 @@ data-aria-dark="Switch to auto color mode">
       <div class="relative min-w-0 max-w-6xl px-6 pb-6 pt-8 xl:px-12">
   <article class="yue" role="main">
           <section id="quickstart">
-<h1>Quickstart<a class="headerlink" href="#quickstart" title="Link to this heading">¶</a></h1>
+<h1>Quickstart<a class="headerlink" href="#quickstart" title="Link to this heading">#</a></h1>
 <p>Use these commands after installation to validate the main AReno paths. Full
 training and agentic rollout require a CUDA-capable NVIDIA GPU.</p>
 <section id="training-smoke-test">
-<h2>Training smoke test<a class="headerlink" href="#training-smoke-test" title="Link to this heading">¶</a></h2>
+<h2>Training smoke test<a class="headerlink" href="#training-smoke-test" title="Link to this heading">#</a></h2>
 <p>Run the smallest official training task to verify that the CLI can load a
 model, build batches, execute the training loop, and write outputs locally.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span data-line="1">areno<span class="w"> </span>train<span class="w"> </span><span class="se">\</span>
@@ -162,7 +162,7 @@ model, build batches, execute the training loop, and write outputs locally.</p>
 </div>
 </section>
 <section id="rlvr-path">
-<h2>RLVR path<a class="headerlink" href="#rlvr-path" title="Link to this heading">¶</a></h2>
+<h2>RLVR path<a class="headerlink" href="#rlvr-path" title="Link to this heading">#</a></h2>
 <p>RLVR connects a dataset, model rollout, reward function, and policy loss. The
 math example is the fastest way to see that path end to end.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span data-line="1">areno<span class="w"> </span>train<span class="w"> </span><span class="se">\</span>
@@ -179,7 +179,7 @@ math example is the fastest way to see that path end to end.</p>
 <a class="reference internal" href="../cookbook/math-rlvr.html"><span class="doc">Math RLVR recipe</span></a> for the runnable recipe shape.</p>
 </section>
 <section id="agentic-rollout-path">
-<h2>Agentic rollout path<a class="headerlink" href="#agentic-rollout-path" title="Link to this heading">¶</a></h2>
+<h2>Agentic rollout path<a class="headerlink" href="#agentic-rollout-path" title="Link to this heading">#</a></h2>
 <p>Agentic rollout is for tasks where the model interacts with tools, games,
 services, or an environment before AReno scores the trajectory.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span data-line="1">areno<span class="w"> </span>train<span class="w"> </span><span class="se">\</span>

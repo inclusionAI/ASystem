@@ -6,7 +6,7 @@
     function setColorMode(t){let e=document.documentElement;e.setAttribute("data-color-mode",t);let a=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,s=t;"auto"===t&&(s=a?"dark":"light"),"light"===s?(e.classList.remove("dark"),e.classList.add("light")):(e.classList.remove("light"),e.classList.add("dark"))}
     setColorMode(localStorage._theme||"auto");
   </script><link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=e1a1ceaf" />
-    <link rel="stylesheet" type="text/css" href="../_static/shibuya.css?v=9454f7d5" />
+    <link rel="stylesheet" type="text/css" href="../_static/shibuya.css?v=2ceb65ce" />
     <link media="print" rel="stylesheet" type="text/css" href="../_static/print.css?v=20ff2c19" />
     <link rel="stylesheet" type="text/css" href="../_static/areno.css?v=02a4506f" />
     <style>
@@ -141,7 +141,7 @@ data-aria-dark="Switch to auto color mode">
       <div class="relative min-w-0 max-w-6xl px-6 pb-6 pt-8 xl:px-12">
   <article class="yue" role="main">
           <section id="chat-templates">
-<h1>Chat templates<a class="headerlink" href="#chat-templates" title="Link to this heading">¶</a></h1>
+<h1>Chat templates<a class="headerlink" href="#chat-templates" title="Link to this heading">#</a></h1>
 <p>Chat templates turn structured messages into the exact prompt text expected by
 the selected tokenizer. AReno keeps this rendering close to rollout and serving
 so a training run and an OpenAI-compatible endpoint can use the same model
@@ -151,14 +151,14 @@ conversation format.</p>
 task fields and normalized prompts separate; tokenizer-specific formatting
 belongs in the training or serving path.</p>
 <section id="thinking-mode">
-<h2>Thinking mode<a class="headerlink" href="#thinking-mode" title="Link to this heading">¶</a></h2>
+<h2>Thinking mode<a class="headerlink" href="#thinking-mode" title="Link to this heading">#</a></h2>
 <p>Some reasoning or chat checkpoints expose an <code class="docutils literal notranslate"><span class="pre">enable_thinking</span></code> option through
 their tokenizer chat template. AReno’s CLI exposes <code class="docutils literal notranslate"><span class="pre">--disable-thinking</span></code> for
 training and serving, which passes <code class="docutils literal notranslate"><span class="pre">enable_thinking=False</span></code> when supported and
 falls back to the normal template call otherwise.</p>
 </section>
 <section id="where-to-go-next">
-<h2>Where to go next<a class="headerlink" href="#where-to-go-next" title="Link to this heading">¶</a></h2>
+<h2>Where to go next<a class="headerlink" href="#where-to-go-next" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p><a class="reference internal" href="../cli/training.html"><span class="doc">Training CLI reference</span></a> documents the training flag.</p></li>
 <li><p><a class="reference internal" href="../cli/inference.html"><span class="doc">Inference CLI reference</span></a> documents the serving flag.</p></li>

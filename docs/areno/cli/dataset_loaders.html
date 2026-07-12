@@ -6,7 +6,7 @@
     function setColorMode(t){let e=document.documentElement;e.setAttribute("data-color-mode",t);let a=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,s=t;"auto"===t&&(s=a?"dark":"light"),"light"===s?(e.classList.remove("dark"),e.classList.add("light")):(e.classList.remove("light"),e.classList.add("dark"))}
     setColorMode(localStorage._theme||"auto");
   </script><link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=e1a1ceaf" />
-    <link rel="stylesheet" type="text/css" href="../_static/shibuya.css?v=9454f7d5" />
+    <link rel="stylesheet" type="text/css" href="../_static/shibuya.css?v=2ceb65ce" />
     <link media="print" rel="stylesheet" type="text/css" href="../_static/print.css?v=20ff2c19" />
     <link rel="stylesheet" type="text/css" href="../_static/areno.css?v=02a4506f" />
     <style>
@@ -143,7 +143,7 @@ data-aria-dark="Switch to auto color mode">
       <div class="relative min-w-0 max-w-6xl px-6 pb-6 pt-8 xl:px-12">
   <article class="yue" role="main">
           <section id="dataset-loaders">
-<h1>Dataset loaders<a class="headerlink" href="#dataset-loaders" title="Link to this heading">¶</a></h1>
+<h1>Dataset loaders<a class="headerlink" href="#dataset-loaders" title="Link to this heading">#</a></h1>
 <p><code class="docutils literal notranslate"><span class="pre">--dataset-loader-fn</span></code> points to a Python function that normalizes raw dataset
 rows before the trainer sees them. The function shape is the same across
 examples:</p>
@@ -158,7 +158,7 @@ JSON/JSONL, Parquet, CSV/TSV, Arrow, <code class="docutils literal notranslate">
 and Hugging Face dataset references. Loaders should keep tokenization out of the
 dataset layer; trainers own tokenizer-specific rendering and token limits.</p>
 <section id="sft">
-<h2>SFT<a class="headerlink" href="#sft" title="Link to this heading">¶</a></h2>
+<h2>SFT<a class="headerlink" href="#sft" title="Link to this heading">#</a></h2>
 <p>SFT always requires <code class="docutils literal notranslate"><span class="pre">--dataset-loader-fn</span></code>. The loader must return rows with
 <code class="docutils literal notranslate"><span class="pre">prompt</span></code> and <code class="docutils literal notranslate"><span class="pre">response</span></code> keys:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="k">def</span><span class="w"> </span><span class="nf">load_training_dataset</span><span class="p">(</span><span class="n">dataset_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">default_loader</span><span class="p">,</span> <span class="o">**</span><span class="n">_</span><span class="p">:</span> <span class="nb">object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">]:</span>
@@ -179,20 +179,20 @@ dataset layer; trainers own tokenizer-specific rendering and token limits.</p>
 <code class="docutils literal notranslate"><span class="pre">examples/sft/alpaca/dataset_loader.py</span></code>.</p>
 </section>
 <section id="dpo">
-<h2>DPO<a class="headerlink" href="#dpo" title="Link to this heading">¶</a></h2>
+<h2>DPO<a class="headerlink" href="#dpo" title="Link to this heading">#</a></h2>
 <p>DPO loaders should return <code class="docutils literal notranslate"><span class="pre">prompt</span></code>, <code class="docutils literal notranslate"><span class="pre">chosen</span></code>, and <code class="docutils literal notranslate"><span class="pre">rejected</span></code>. <code class="docutils literal notranslate"><span class="pre">prompt</span></code>
 is the shared context, <code class="docutils literal notranslate"><span class="pre">chosen</span></code> is the preferred answer, and <code class="docutils literal notranslate"><span class="pre">rejected</span></code> is
 the lower-ranked answer.</p>
 </section>
 <section id="prompt-based-rl">
-<h2>Prompt-based RL<a class="headerlink" href="#prompt-based-rl" title="Link to this heading">¶</a></h2>
+<h2>Prompt-based RL<a class="headerlink" href="#prompt-based-rl" title="Link to this heading">#</a></h2>
 <p>GSPO, GRPO, and PPO prompt datasets should return <code class="docutils literal notranslate"><span class="pre">prompt</span></code>. Reward functions
 may require additional fields such as <code class="docutils literal notranslate"><span class="pre">solutions</span></code> or task metadata, so loaders
 usually preserve those fields while adding the canonical prompt. The math loader
 in <code class="docutils literal notranslate"><span class="pre">examples/math/dataset_loader.py</span></code> follows this pattern.</p>
 </section>
 <section id="agentic-rl">
-<h2>Agentic RL<a class="headerlink" href="#agentic-rl" title="Link to this heading">¶</a></h2>
+<h2>Agentic RL<a class="headerlink" href="#agentic-rl" title="Link to this heading">#</a></h2>
 <p>Agentic loaders also return <code class="docutils literal notranslate"><span class="pre">prompt</span></code> plus task metadata consumed by
 <code class="docutils literal notranslate"><span class="pre">run_agent.py</span></code> and <code class="docutils literal notranslate"><span class="pre">reward.py</span></code>. Examples include
 <code class="docutils literal notranslate"><span class="pre">examples/agentic/coding/dataset_loader.py</span></code> and

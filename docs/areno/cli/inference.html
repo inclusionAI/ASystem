@@ -6,7 +6,7 @@
     function setColorMode(t){let e=document.documentElement;e.setAttribute("data-color-mode",t);let a=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,s=t;"auto"===t&&(s=a?"dark":"light"),"light"===s?(e.classList.remove("dark"),e.classList.add("light")):(e.classList.remove("light"),e.classList.add("dark"))}
     setColorMode(localStorage._theme||"auto");
   </script><link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=e1a1ceaf" />
-    <link rel="stylesheet" type="text/css" href="../_static/shibuya.css?v=9454f7d5" />
+    <link rel="stylesheet" type="text/css" href="../_static/shibuya.css?v=2ceb65ce" />
     <link media="print" rel="stylesheet" type="text/css" href="../_static/print.css?v=20ff2c19" />
     <link rel="stylesheet" type="text/css" href="../_static/areno.css?v=02a4506f" />
     <style>
@@ -151,7 +151,7 @@ data-aria-dark="Switch to auto color mode">
       <div class="relative min-w-0 max-w-6xl px-6 pb-6 pt-8 xl:px-12">
   <article class="yue" role="main">
           <section id="inference-cli-reference">
-<h1>Inference CLI reference<a class="headerlink" href="#inference-cli-reference" title="Link to this heading">¶</a></h1>
+<h1>Inference CLI reference<a class="headerlink" href="#inference-cli-reference" title="Link to this heading">#</a></h1>
 <p><code class="docutils literal notranslate"><span class="pre">areno</span> <span class="pre">serve</span></code></p>
 <p>Start an OpenAI-compatible HTTP server backed by the Areno inference engine.
 The server exposes <code class="docutils literal notranslate"><span class="pre">/v1/chat/completions</span></code>, accepts standard chat-completion
@@ -166,11 +166,15 @@ so rollout state and CUDA graph state can be reused across requests.</p>
 </span></pre></div>
 </div>
 <section id="areno-serve">
-<h2>areno serve<a class="headerlink" href="#areno-serve" title="Link to this heading">¶</a></h2>
+<h2>areno serve<a class="headerlink" href="#areno-serve" title="Link to this heading">#</a></h2>
 <p>Serve chat completions.</p>
 <p>Options:</p>
 <dl class="simple">
-<dt><code class="docutils literal notranslate"><span class="pre">--model-path</span> <span class="pre">TEXT</span></code></dt><dd><p>Local checkpoint/tokenizer path or Hugging Face repo ID. Required.</p>
+<dt><code class="docutils literal notranslate"><span class="pre">--model-path</span> <span class="pre">TEXT</span></code></dt><dd><p>Local checkpoint/tokenizer path or remote model repo ID. Required.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">--model-hub</span> <span class="pre">[hf|modelscope]</span></code></dt><dd><p>Remote hub used when <code class="docutils literal notranslate"><span class="pre">--model-path</span></code> is not a local path. Use
+<code class="docutils literal notranslate"><span class="pre">--model-hub</span> <span class="pre">hf</span></code> for Hugging Face and <code class="docutils literal notranslate"><span class="pre">--model-hub</span> <span class="pre">modelscope</span></code> for
+ModelScope. Default: <code class="docutils literal notranslate"><span class="pre">modelscope</span></code>.</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">--tp-size</span> <span class="pre">INTEGER</span></code></dt><dd><p>Tensor parallel size. Default: <code class="docutils literal notranslate"><span class="pre">1</span></code>.</p>
 </dd>
@@ -180,7 +184,7 @@ so rollout state and CUDA graph state can be reused across requests.</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">--port</span> <span class="pre">INTEGER</span></code></dt><dd><p>HTTP bind port. Default: <code class="docutils literal notranslate"><span class="pre">8000</span></code>.</p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">--max-running-prompts</span> <span class="pre">INTEGER</span></code></dt><dd><p>Maximum concurrent rollout prompts per request chunk. Default: <code class="docutils literal notranslate"><span class="pre">128</span></code>.</p>
+<dt><code class="docutils literal notranslate"><span class="pre">--max-running-prompts</span> <span class="pre">INTEGER</span></code></dt><dd><p>Maximum concurrent rollout prompts per request chunk. Default: <code class="docutils literal notranslate"><span class="pre">16</span></code>.</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">--default-max-tokens</span> <span class="pre">INTEGER</span></code></dt><dd><p>Default max generated tokens when requests omit a token budget. Default:
 <code class="docutils literal notranslate"><span class="pre">1024</span></code>.</p>
@@ -205,9 +209,9 @@ normal chat-template call.</p>
 <p><code class="docutils literal notranslate"><span class="pre">world-size</span></code> must be divisible by <code class="docutils literal notranslate"><span class="pre">tp-size</span></code>.</p>
 </section>
 <section id="examples">
-<h2>Examples<a class="headerlink" href="#examples" title="Link to this heading">¶</a></h2>
+<h2>Examples<a class="headerlink" href="#examples" title="Link to this heading">#</a></h2>
 <section id="single-rank-server">
-<h3>Single-rank server<a class="headerlink" href="#single-rank-server" title="Link to this heading">¶</a></h3>
+<h3>Single-rank server<a class="headerlink" href="#single-rank-server" title="Link to this heading">#</a></h3>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span data-line="1">areno<span class="w"> </span>serve<span class="w"> </span><span class="se">\</span>
 </span><span data-line="2"><span class="w">  </span>--model-path<span class="w"> </span>/path/to/model<span class="w"> </span><span class="se">\</span>
 </span><span data-line="3"><span class="w">  </span>--tp-size<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
@@ -217,7 +221,7 @@ normal chat-template call.</p>
 </div>
 </section>
 <section id="tp4-server">
-<h3>TP4 server<a class="headerlink" href="#tp4-server" title="Link to this heading">¶</a></h3>
+<h3>TP4 server<a class="headerlink" href="#tp4-server" title="Link to this heading">#</a></h3>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span data-line="1">areno<span class="w"> </span>serve<span class="w"> </span><span class="se">\</span>
 </span><span data-line="2"><span class="w">  </span>--model-path<span class="w"> </span>/path/to/model<span class="w"> </span><span class="se">\</span>
 </span><span data-line="3"><span class="w">  </span>--tp-size<span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="se">\</span>
@@ -227,7 +231,7 @@ normal chat-template call.</p>
 </div>
 </section>
 <section id="chat-completion-request">
-<h3>Chat completion request<a class="headerlink" href="#chat-completion-request" title="Link to this heading">¶</a></h3>
+<h3>Chat completion request<a class="headerlink" href="#chat-completion-request" title="Link to this heading">#</a></h3>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span data-line="1">curl<span class="w"> </span>http://127.0.0.1:8000/v1/chat/completions<span class="w"> </span><span class="se">\</span>
 </span><span data-line="2"><span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;Content-Type: application/json&#39;</span><span class="w"> </span><span class="se">\</span>
 </span><span data-line="3"><span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{</span>
@@ -243,7 +247,7 @@ normal chat-template call.</p>
 </section>
 </section>
 <section id="request-fields">
-<h2>Request fields<a class="headerlink" href="#request-fields" title="Link to this heading">¶</a></h2>
+<h2>Request fields<a class="headerlink" href="#request-fields" title="Link to this heading">#</a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">POST</span> <span class="pre">/v1/chat/completions</span></code></p>
 <div class="table-wrapper colwidths-given docutils container">
 <table class="docutils align-default">
@@ -327,7 +331,7 @@ parser used by agentic rollout converts generated tool-call text into
 </dl>
 </section>
 <section id="continuous-batching-behavior">
-<h2>Continuous batching behavior<a class="headerlink" href="#continuous-batching-behavior" title="Link to this heading">¶</a></h2>
+<h2>Continuous batching behavior<a class="headerlink" href="#continuous-batching-behavior" title="Link to this heading">#</a></h2>
 <p>The server runs inside a long-lived rollout session. Compatible requests can be
 admitted into an active worker decode loop through continuous batching; requests
 with different generation settings are scheduled separately. Requests are
@@ -344,7 +348,7 @@ compatible when these fields match:</p>
 <p>Requests with different generation settings are scheduled separately.</p>
 </section>
 <section id="decode-progress-logs">
-<h2>Decode progress logs<a class="headerlink" href="#decode-progress-logs" title="Link to this heading">¶</a></h2>
+<h2>Decode progress logs<a class="headerlink" href="#decode-progress-logs" title="Link to this heading">#</a></h2>
 <p>Set <code class="docutils literal notranslate"><span class="pre">--decode-progress-interval-s</span></code> to a positive value to print worker decode
 progress:</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span><span data-line="1">rollout decode progress: dp=0/4 active=32 cuda_graph=True tokens_per_second=2810.7
@@ -357,7 +361,7 @@ for at least one decode step in that window; <code class="docutils literal notra
 eagerly.</p>
 </section>
 <section id="tool-calls">
-<h2>Tool calls<a class="headerlink" href="#tool-calls" title="Link to this heading">¶</a></h2>
+<h2>Tool calls<a class="headerlink" href="#tool-calls" title="Link to this heading">#</a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">areno</span> <span class="pre">serve</span></code> supports the Chat Completions tool-call shape and reuses the
 same tool-call parser as agentic rollout:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="kn">from</span><span class="w"> </span><span class="nn">openai</span><span class="w"> </span><span class="kn">import</span> <span class="n">OpenAI</span>
@@ -392,7 +396,7 @@ cover Qwen/Qwen3.5/MiniCPM-style <code class="docutils literal notranslate"><spa
 blocks, and generic JSON tool-call output.</p>
 </section>
 <section id="help">
-<h2>Help<a class="headerlink" href="#help" title="Link to this heading">¶</a></h2>
+<h2>Help<a class="headerlink" href="#help" title="Link to this heading">#</a></h2>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span data-line="1">areno<span class="w"> </span>serve<span class="w"> </span>--help
 </span></pre></div>
 </div>

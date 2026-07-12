@@ -2,7 +2,7 @@
 <html lang="en" data-accent-color="gray" data-content_root="../">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Math RLVR recipe - AReno docs</title><link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="TicTacToe agentic RL" href="tictactoe-agentic-rl.html" /><link rel="prev" title="Reward functions" href="../concepts/reward-functions.html" /><script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Operations agent CLI - AReno docs</title><link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><script>
     function setColorMode(t){let e=document.documentElement;e.setAttribute("data-color-mode",t);let a=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,s=t;"auto"===t&&(s=a?"dark":"light"),"light"===s?(e.classList.remove("dark"),e.classList.add("light")):(e.classList.remove("light"),e.classList.add("dark"))}
     setColorMode(localStorage._theme||"auto");
   </script><link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=e1a1ceaf" />
@@ -16,7 +16,7 @@
 }
 </style>
     
-  <meta property="og:type" content="website"/><meta property="og:title" content="Math RLVR recipe"/>
+  <meta property="og:type" content="website"/><meta property="og:title" content="Operations agent CLI"/>
     <meta name="twitter:card" content="summary"/>
   </head>
 <body><div class="sy-head">
@@ -28,7 +28,7 @@
       <strong>AReno</strong>
     </a>
     <div class="sy-head-nav" id="head-nav">
-      <nav class="sy-head-links"><ul><li class="link"><a href="../getting-started/welcome.html">Get Started</a></li><li class="link"><a href="../concepts/training-loop.html">Concepts</a></li><li class="link"><a href="#">Cookbook</a></li><li class="link"><a href="../reference/cli.html">Reference</a></li><li class="link"><a href="../troubleshooting/index.html">Troubleshooting</a></li></ul></nav>
+      <nav class="sy-head-links"><ul><li class="link"><a href="../getting-started/welcome.html">Get Started</a></li><li class="link"><a href="../concepts/training-loop.html">Concepts</a></li><li class="link"><a href="../cookbook/math-rlvr.html">Cookbook</a></li><li class="link"><a href="../reference/cli.html">Reference</a></li><li class="link"><a href="../troubleshooting/index.html">Troubleshooting</a></li></ul></nav>
       <div class="sy-head-extra flex items-center print:hidden"><div class="sy-head-socials"></div></div>
     </div>
     <div class="sy-head-actions flex items-center shrink-0 print:hidden">
@@ -80,10 +80,10 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l1"><a class="reference internal" href="../concepts/reward-functions.html">Reward Functions</a></li>
 </ul>
 <p class="caption" role="heading" aria-level="3"><span class="caption-text">Cookbook</span></p>
-<ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Math RLVR recipe</a></li>
-<li class="toctree-l1"><a class="reference internal" href="tictactoe-agentic-rl.html">TicTacToe agentic RL</a></li>
-<li class="toctree-l1"><a class="reference internal" href="duelgrid-visual-agent.html">DuelGrid visual agent</a></li>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../cookbook/math-rlvr.html">Math RLVR recipe</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cookbook/tictactoe-agentic-rl.html">TicTacToe agentic RL</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cookbook/duelgrid-visual-agent.html">DuelGrid visual agent</a></li>
 </ul>
 <p class="caption" role="heading" aria-level="3"><span class="caption-text">Reference</span></p>
 <ul>
@@ -107,7 +107,13 @@ data-aria-dark="Switch to auto color mode">
     <button class="rside-close js-menu xl:hidden" aria-label="Close Table of Contents" type="button" aria-controls="rside" aria-expanded="false">
       <i class="i-lucide close"></i>
     </button>
-    <div class="sy-scrollbar sy-rside-inner px-6 xl:top-16 xl:sticky xl:pl-0 pt-6 pb-4"></div>
+    <div class="sy-scrollbar sy-rside-inner px-6 xl:top-16 xl:sticky xl:pl-0 pt-6 pb-4"><div class="localtoc"><h3>On this page</h3><ul>
+<li><a class="reference internal" href="#configure-the-agent">Configure the agent</a></li>
+<li><a class="reference internal" href="#run-an-agent-task">Run an agent task</a></li>
+<li><a class="reference internal" href="#refresh-agent-knowledge">Refresh agent knowledge</a></li>
+<li><a class="reference internal" href="#when-to-use-it">When to use it</a></li>
+</ul>
+</div></div>
   </aside>
   <div class="rside-overlay js-menu" role="button" aria-label="Close Table of Contents" aria-controls="rside" aria-expanded="false"></div>
   <main class="sy-main w-full max-sm:max-w-full print:pt-6">
@@ -123,7 +129,7 @@ data-aria-dark="Switch to auto color mode">
         <span>/</span>
         <meta itemprop="position" content="1" />
       </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-        <strong itemprop="name">Math RLVR recipe</strong>
+        <strong itemprop="name">Operations agent CLI</strong>
         <meta itemprop="position" content="2" />
       </li></ol>
     <div class="xl:hidden ml-1">
@@ -136,28 +142,58 @@ data-aria-dark="Switch to auto color mode">
 </div><div class="flex flex-col break-words justify-between">
       <div class="relative min-w-0 max-w-6xl px-6 pb-6 pt-8 xl:px-12">
   <article class="yue" role="main">
-          <section id="math-rlvr-recipe">
-<h1>Math RLVR recipe<a class="headerlink" href="#math-rlvr-recipe" title="Link to this heading">#</a></h1>
-<p>This recipe runs a small math RLVR task with a GSM8K-style dataset loader and
-math verification reward function.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span data-line="1">areno<span class="w"> </span>train<span class="w"> </span><span class="se">\</span>
-</span><span data-line="2"><span class="w">  </span>--ckpt<span class="w"> </span>Qwen/Qwen3-0.6B<span class="w"> </span><span class="se">\</span>
-</span><span data-line="3"><span class="w">  </span>--dataset-path<span class="w"> </span>gsm8k:main<span class="w"> </span><span class="se">\</span>
-</span><span data-line="4"><span class="w">  </span>--dataset-loader-fn<span class="w"> </span>examples/math/dataset_loader.py<span class="w"> </span><span class="se">\</span>
-</span><span data-line="5"><span class="w">  </span>--reward-fn-path<span class="w"> </span>examples/math/math_verify_reward.py<span class="w"> </span><span class="se">\</span>
-</span><span data-line="6"><span class="w">  </span>--algo<span class="w"> </span>gspo<span class="w"> </span><span class="se">\</span>
-</span><span data-line="7"><span class="w">  </span>--tp-size<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
-</span><span data-line="8"><span class="w">  </span>--world-size<span class="w"> </span><span class="m">1</span>
+          <section id="operations-agent-cli">
+<h1>Operations agent CLI<a class="headerlink" href="#operations-agent-cli" title="Link to this heading">#</a></h1>
+<p><code class="docutils literal notranslate"><span class="pre">areno</span> <span class="pre">agent</span></code></p>
+<p>Run a local operations assistant for AReno training and serving tasks. The
+agent uses an OpenAI-compatible chat model, inspects the current checkout, reads
+command help, runs diagnostics, and can produce or execute AReno commands for
+the current machine.</p>
+<section id="configure-the-agent">
+<h2>Configure the agent<a class="headerlink" href="#configure-the-agent" title="Link to this heading">#</a></h2>
+<p>Store the endpoint, model, and API key once:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span data-line="1">areno<span class="w"> </span>agent<span class="w"> </span>--set<span class="w"> </span><span class="se">\</span>
+</span><span data-line="2"><span class="w">  </span>--base-url<span class="w"> </span>http://127.0.0.1:8000/v1<span class="w"> </span><span class="se">\</span>
+</span><span data-line="3"><span class="w">  </span>--model<span class="w"> </span>deepseek-v4-flash<span class="w"> </span><span class="se">\</span>
+</span><span data-line="4"><span class="w">  </span>--api-key<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$OPENAI_API_KEY</span><span class="s2">&quot;</span>
 </span></pre></div>
 </div>
-<p>Key files:</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">examples/math/dataset_loader.py</span></code> normalizes the dataset.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">examples/math/math_verify_reward.py</span></code> scores completions.</p></li>
-<li><p><a class="reference internal" href="../cli/training.html"><span class="doc">Training CLI reference</span></a> documents rollout, loss, and checkpoint flags.</p></li>
-</ul>
-<p>Adapt this recipe by replacing the dataset loader and reward function first.
-Keep the batch size small until the environment and reward signal are stable.</p>
+<p>The config is stored under <code class="docutils literal notranslate"><span class="pre">~/.areno</span></code>. After this, normal agent runs do not
+need <code class="docutils literal notranslate"><span class="pre">--base-url</span></code>, <code class="docutils literal notranslate"><span class="pre">--model</span></code>, or <code class="docutils literal notranslate"><span class="pre">--api-key</span></code> on the command line.</p>
+</section>
+<section id="run-an-agent-task">
+<h2>Run an agent task<a class="headerlink" href="#run-an-agent-task" title="Link to this heading">#</a></h2>
+<p>Pass the requested job as one natural-language argument:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span data-line="1">areno<span class="w"> </span>agent<span class="w"> </span><span class="s2">&quot;Give me a complete command to run the math demo with n-samples=8, fitting the current GPU and using as much GPU memory as practical.&quot;</span>
+</span></pre></div>
+</div>
+<p>The agent can inspect GPUs, read example files, run <code class="docutils literal notranslate"><span class="pre">areno</span> <span class="pre">check</span></code> and
+<code class="docutils literal notranslate"><span class="pre">areno</span> <span class="pre">train</span> <span class="pre">--help</span></code>, ask follow-up questions through the terminal when a
+required value is missing, and stream command output while it works.</p>
+<p>From a source checkout, use the repository-local wrapper when AReno is not
+installed:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span data-line="1">./agent.sh<span class="w"> </span><span class="s2">&quot;Give me a complete command to run the math demo with n-samples=8, fitting the current GPU and using as much GPU memory as practical.&quot;</span>
+</span></pre></div>
+</div>
+</section>
+<section id="refresh-agent-knowledge">
+<h2>Refresh agent knowledge<a class="headerlink" href="#refresh-agent-knowledge" title="Link to this heading">#</a></h2>
+<p>The built-in operations knowledge tells the model how to reason about AReno
+train and serve commands, GPU memory, smoke checks, ModelScope defaults, and
+common recovery steps. Refresh the local copy when CLI behavior or examples
+change:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span data-line="1">areno<span class="w"> </span>agent<span class="w"> </span>--refresh-knowledge
+</span></pre></div>
+</div>
+</section>
+<section id="when-to-use-it">
+<h2>When to use it<a class="headerlink" href="#when-to-use-it" title="Link to this heading">#</a></h2>
+<p>Use <code class="docutils literal notranslate"><span class="pre">areno</span> <span class="pre">agent</span></code> when you want help choosing runnable train or serve
+parameters for the current machine, especially when GPU memory, tensor
+parallelism, dataset loaders, reward functions, or agentic rollout settings are
+unclear. For deterministic scripts and CI, prefer explicit <code class="docutils literal notranslate"><span class="pre">areno</span> <span class="pre">train</span></code> or
+<code class="docutils literal notranslate"><span class="pre">areno</span> <span class="pre">serve</span></code> commands after the agent has helped you settle on parameters.</p>
+</section>
 </section>
 
         </article><button class="back-to-top" type="button">
@@ -165,21 +201,7 @@ Keep the batch size small until the environment and reward signal are stable.</p
     <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
   </svg>
   <span>Back to top</span>
-</button><div class="navigation flex print:hidden"><div class="navigation-prev">
-    <a href="../concepts/reward-functions.html">
-      <i class="i-lucide chevron-left"></i>
-      <div class="page-info">
-        <span>Previous</span><div class="title">Reward functions</div></div>
-    </a>
-  </div><div class="navigation-next">
-    <a href="tictactoe-agentic-rl.html">
-      <div class="page-info">
-        <span>Next</span>
-        <div class="title">TicTacToe agentic RL</div>
-      </div>
-      <i class="i-lucide chevron-right"></i>
-    </a>
-  </div></div></div>
+</button><div class="navigation flex print:hidden"></div></div>
     </div>
   </main>
 </div>

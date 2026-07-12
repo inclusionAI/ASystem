@@ -6,7 +6,7 @@
     function setColorMode(t){let e=document.documentElement;e.setAttribute("data-color-mode",t);let a=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,s=t;"auto"===t&&(s=a?"dark":"light"),"light"===s?(e.classList.remove("dark"),e.classList.add("light")):(e.classList.remove("light"),e.classList.add("dark"))}
     setColorMode(localStorage._theme||"auto");
   </script><link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=e1a1ceaf" />
-    <link rel="stylesheet" type="text/css" href="../_static/shibuya.css?v=9454f7d5" />
+    <link rel="stylesheet" type="text/css" href="../_static/shibuya.css?v=2ceb65ce" />
     <link media="print" rel="stylesheet" type="text/css" href="../_static/print.css?v=20ff2c19" />
     <link rel="stylesheet" type="text/css" href="../_static/areno.css?v=02a4506f" />
     <style>
@@ -143,7 +143,7 @@ data-aria-dark="Switch to auto color mode">
       <div class="relative min-w-0 max-w-6xl px-6 pb-6 pt-8 xl:px-12">
   <article class="yue" role="main">
           <section id="observability">
-<h1>Observability<a class="headerlink" href="#observability" title="Link to this heading">¶</a></h1>
+<h1>Observability<a class="headerlink" href="#observability" title="Link to this heading">#</a></h1>
 <p>AReno exposes training state through plain logs, the per-step <code class="docutils literal notranslate"><span class="pre">train_stats</span></code>
 dictionary, TensorBoard scalar metrics, and optional agentic trajectory
 diagnostics. The implementation is intentionally local and lightweight:
@@ -151,7 +151,7 @@ metrics are recorded by <code class="docutils literal notranslate"><span class="
 directory through <code class="docutils literal notranslate"><span class="pre">--metrics-log-dir</span></code>. AReno does not currently provide a
 built-in wandb integration.</p>
 <section id="console-logs">
-<h2>Console logs<a class="headerlink" href="#console-logs" title="Link to this heading">¶</a></h2>
+<h2>Console logs<a class="headerlink" href="#console-logs" title="Link to this heading">#</a></h2>
 <p>The trainer logs a compact lifecycle for every epoch and step. For rollout
 algorithms, <code class="docutils literal notranslate"><span class="pre">areno.api.trainers.policy_only.PolicyOnlyTrainer</span></code> emits:</p>
 <ul class="simple">
@@ -186,7 +186,7 @@ other non-model work before asking the OpenAI-compatible proxy for the next
 model response.</p>
 </section>
 <section id="train-stats">
-<h2><code class="docutils literal notranslate"><span class="pre">train_stats</span></code><a class="headerlink" href="#train-stats" title="Link to this heading">¶</a></h2>
+<h2><code class="docutils literal notranslate"><span class="pre">train_stats</span></code><a class="headerlink" href="#train-stats" title="Link to this heading">#</a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">train_stats</span></code> is the easiest place to inspect one completed optimizer step.
 It is logged as a Python dictionary and also passed to TensorBoard by
 <code class="docutils literal notranslate"><span class="pre">areno.api.metrics.MetricsRecorder</span></code> when metrics recording is enabled.</p>
@@ -259,7 +259,7 @@ in the scalar value at the current ratio, while gradients can still be non-zero
 because the derivative depends on the logprob term.</p>
 </section>
 <section id="tensorboard-metrics">
-<h2>TensorBoard metrics<a class="headerlink" href="#tensorboard-metrics" title="Link to this heading">¶</a></h2>
+<h2>TensorBoard metrics<a class="headerlink" href="#tensorboard-metrics" title="Link to this heading">#</a></h2>
 <p>Pass <code class="docutils literal notranslate"><span class="pre">--metrics-log-dir</span></code> to control where TensorBoard event files are written.
 The default is shown by <code class="docutils literal notranslate"><span class="pre">areno</span> <span class="pre">train</span> <span class="pre">--help</span></code> and is also surfaced in the
 training config printout.</p>
@@ -290,7 +290,7 @@ training config printout.</p>
 </dl>
 </section>
 <section id="agentic-diagnostics">
-<h2>Agentic diagnostics<a class="headerlink" href="#agentic-diagnostics" title="Link to this heading">¶</a></h2>
+<h2>Agentic diagnostics<a class="headerlink" href="#agentic-diagnostics" title="Link to this heading">#</a></h2>
 <p>Agentic rollout adds two diagnostic surfaces.</p>
 <p>First, the trainer logs batch-level information before and after agent
 execution:</p>

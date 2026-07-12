@@ -6,7 +6,7 @@
     function setColorMode(t){let e=document.documentElement;e.setAttribute("data-color-mode",t);let a=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,s=t;"auto"===t&&(s=a?"dark":"light"),"light"===s?(e.classList.remove("dark"),e.classList.add("light")):(e.classList.remove("light"),e.classList.add("dark"))}
     setColorMode(localStorage._theme||"auto");
   </script><link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=e1a1ceaf" />
-    <link rel="stylesheet" type="text/css" href="../_static/shibuya.css?v=9454f7d5" />
+    <link rel="stylesheet" type="text/css" href="../_static/shibuya.css?v=2ceb65ce" />
     <link media="print" rel="stylesheet" type="text/css" href="../_static/print.css?v=20ff2c19" />
     <link rel="stylesheet" type="text/css" href="../_static/areno.css?v=02a4506f" />
     <style>
@@ -143,7 +143,7 @@ data-aria-dark="Switch to auto color mode">
       <div class="relative min-w-0 max-w-6xl px-6 pb-6 pt-8 xl:px-12">
   <article class="yue" role="main">
           <section class="landing-page" id="areno-documentation">
-<h1>AReno documentation<a class="headerlink" href="#areno-documentation" title="Link to this heading">¶</a></h1>
+<h1>AReno documentation<a class="headerlink" href="#areno-documentation" title="Link to this heading">#</a></h1>
 <div class="areno-hero">
   <div class="areno-hero-copy">
     <p class="areno-eyebrow">Local post-training and serving</p>
@@ -155,7 +155,7 @@ data-aria-dark="Switch to auto color mode">
     </div>
   </div>
 </div><section id="start">
-<h2>Start<a class="headerlink" href="#start" title="Link to this heading">¶</a></h2>
+<h2>Start<a class="headerlink" href="#start" title="Link to this heading">#</a></h2>
 <div class="areno-command-grid">
   <div class="areno-command-card">
     <p class="areno-card-kicker">Install</p>
@@ -177,7 +177,7 @@ path. Use <code class="docutils literal notranslate"><span class="pre">--attn-ba
 or when the local GPU is unsupported by FlashAttention.</p>
 </section>
 <section id="core-workflows">
-<h2>Core workflows<a class="headerlink" href="#core-workflows" title="Link to this heading">¶</a></h2>
+<h2>Core workflows<a class="headerlink" href="#core-workflows" title="Link to this heading">#</a></h2>
 <div class="areno-doc-grid">
  <a class="areno-doc-card" href="../cli/training.html">
     <span class="areno-icon">01</span>
@@ -227,7 +227,7 @@ run docs, packaging checks, and lightweight CPU tests, but cannot run the AReno
 training or serving engine.</p>
 </section>
 <section id="agentic-rollout">
-<h2>Agentic rollout<a class="headerlink" href="#agentic-rollout" title="Link to this heading">¶</a></h2>
+<h2>Agentic rollout<a class="headerlink" href="#agentic-rollout" title="Link to this heading">#</a></h2>
 <div class="areno-split">
   <div>
     <p class="areno-eyebrow">Agentic RL</p>
@@ -276,7 +276,7 @@ and avoid trap tiles.</p>
 loader, reward function, OpenAI-compatible agent, and browser UI.</p>
 </section>
 <section id="what-areno-owns">
-<h2>What AReno owns<a class="headerlink" href="#what-areno-owns" title="Link to this heading">¶</a></h2>
+<h2>What AReno owns<a class="headerlink" href="#what-areno-owns" title="Link to this heading">#</a></h2>
 <div class="areno-layer-list">
   <div><span>Kernels</span><p>Fused CUDA paths in <code>areno_accel</code> for runtime hot paths.</p></div>
   <div><span>Engine</span><p>Tensor-parallel workers, KV/cache layout, CUDA graph support, rollout state, scoring, optimizer steps, and checkpoint I/O.</p></div>

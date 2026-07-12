@@ -6,7 +6,7 @@
     function setColorMode(t){let e=document.documentElement;e.setAttribute("data-color-mode",t);let a=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,s=t;"auto"===t&&(s=a?"dark":"light"),"light"===s?(e.classList.remove("dark"),e.classList.add("light")):(e.classList.remove("light"),e.classList.add("dark"))}
     setColorMode(localStorage._theme||"auto");
   </script><link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=e1a1ceaf" />
-    <link rel="stylesheet" type="text/css" href="../_static/shibuya.css?v=9454f7d5" />
+    <link rel="stylesheet" type="text/css" href="../_static/shibuya.css?v=2ceb65ce" />
     <link media="print" rel="stylesheet" type="text/css" href="../_static/print.css?v=20ff2c19" />
     <link rel="stylesheet" type="text/css" href="../_static/areno.css?v=02a4506f" />
     <style>
@@ -144,36 +144,36 @@ data-aria-dark="Switch to auto color mode">
       <div class="relative min-w-0 max-w-6xl px-6 pb-6 pt-8 xl:px-12">
   <article class="yue" role="main">
           <section id="dataset-formats">
-<h1>Dataset formats<a class="headerlink" href="#dataset-formats" title="Link to this heading">¶</a></h1>
+<h1>Dataset formats<a class="headerlink" href="#dataset-formats" title="Link to this heading">#</a></h1>
 <p>AReno loaders normalize external datasets into small dictionaries consumed by
 the selected algorithm. Keep tokenization out of the dataset layer; trainers
 own tokenizer rendering, sequence limits, and chat-template behavior.</p>
 <section id="sft-rows">
-<h2>SFT rows<a class="headerlink" href="#sft-rows" title="Link to this heading">¶</a></h2>
+<h2>SFT rows<a class="headerlink" href="#sft-rows" title="Link to this heading">#</a></h2>
 <p>SFT rows provide a supervised prompt and target response:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="p">{</span><span class="s2">&quot;prompt&quot;</span><span class="p">:</span> <span class="s2">&quot;Instruction: ...&quot;</span><span class="p">,</span> <span class="s2">&quot;response&quot;</span><span class="p">:</span> <span class="s2">&quot;...&quot;</span><span class="p">}</span>
 </span></pre></div>
 </div>
 </section>
 <section id="dpo-rows">
-<h2>DPO rows<a class="headerlink" href="#dpo-rows" title="Link to this heading">¶</a></h2>
+<h2>DPO rows<a class="headerlink" href="#dpo-rows" title="Link to this heading">#</a></h2>
 <p>DPO rows provide one shared prompt and two ranked answers:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="p">{</span><span class="s2">&quot;prompt&quot;</span><span class="p">:</span> <span class="s2">&quot;...&quot;</span><span class="p">,</span> <span class="s2">&quot;chosen&quot;</span><span class="p">:</span> <span class="s2">&quot;...&quot;</span><span class="p">,</span> <span class="s2">&quot;rejected&quot;</span><span class="p">:</span> <span class="s2">&quot;...&quot;</span><span class="p">}</span>
 </span></pre></div>
 </div>
 </section>
 <section id="prompt-based-rl-rows">
-<h2>Prompt-based RL rows<a class="headerlink" href="#prompt-based-rl-rows" title="Link to this heading">¶</a></h2>
+<h2>Prompt-based RL rows<a class="headerlink" href="#prompt-based-rl-rows" title="Link to this heading">#</a></h2>
 <p>GSPO, GRPO, and PPO prompt datasets provide <code class="docutils literal notranslate"><span class="pre">prompt</span></code>. They can also preserve
 task metadata such as <code class="docutils literal notranslate"><span class="pre">solutions</span></code> for reward functions.</p>
 </section>
 <section id="agentic-rows">
-<h2>Agentic rows<a class="headerlink" href="#agentic-rows" title="Link to this heading">¶</a></h2>
+<h2>Agentic rows<a class="headerlink" href="#agentic-rows" title="Link to this heading">#</a></h2>
 <p>Agentic datasets provide <code class="docutils literal notranslate"><span class="pre">prompt</span></code> plus any task metadata consumed by the agent
 and reward files.</p>
 </section>
 <section id="where-to-go-next">
-<h2>Where to go next<a class="headerlink" href="#where-to-go-next" title="Link to this heading">¶</a></h2>
+<h2>Where to go next<a class="headerlink" href="#where-to-go-next" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p><a class="reference internal" href="../cli/dataset_loaders.html"><span class="doc">Dataset loaders</span></a> documents loader shapes and examples.</p></li>
 <li><p><a class="reference internal" href="reward-functions.html"><span class="doc">Reward functions</span></a> explains how preserved metadata is used for scoring.</p></li>

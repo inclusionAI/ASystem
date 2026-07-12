@@ -6,7 +6,7 @@
     function setColorMode(t){let e=document.documentElement;e.setAttribute("data-color-mode",t);let a=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,s=t;"auto"===t&&(s=a?"dark":"light"),"light"===s?(e.classList.remove("dark"),e.classList.add("light")):(e.classList.remove("light"),e.classList.add("dark"))}
     setColorMode(localStorage._theme||"auto");
   </script><link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=e1a1ceaf" />
-    <link rel="stylesheet" type="text/css" href="../_static/shibuya.css?v=9454f7d5" />
+    <link rel="stylesheet" type="text/css" href="../_static/shibuya.css?v=2ceb65ce" />
     <link media="print" rel="stylesheet" type="text/css" href="../_static/print.css?v=20ff2c19" />
     <link rel="stylesheet" type="text/css" href="../_static/areno.css?v=02a4506f" />
     <style>
@@ -159,7 +159,7 @@ data-aria-dark="Switch to auto color mode">
       <div class="relative min-w-0 max-w-6xl px-6 pb-6 pt-8 xl:px-12">
   <article class="yue" role="main">
           <section id="training-cli-reference">
-<h1>Training CLI reference<a class="headerlink" href="#training-cli-reference" title="Link to this heading">¶</a></h1>
+<h1>Training CLI reference<a class="headerlink" href="#training-cli-reference" title="Link to this heading">#</a></h1>
 <p><code class="docutils literal notranslate"><span class="pre">areno</span> <span class="pre">train</span></code></p>
 <p>Run SFT, DPO, GSPO, GRPO, or PPO training with the local Areno backend. The
 command owns the full loop: dataset loading, optional normalization, rollout,
@@ -179,14 +179,14 @@ saving.</p>
 </span></pre></div>
 </div>
 <section id="areno-train">
-<h2>areno train<a class="headerlink" href="#areno-train" title="Link to this heading">¶</a></h2>
+<h2>areno train<a class="headerlink" href="#areno-train" title="Link to this heading">#</a></h2>
 <p>Start a training run.</p>
 <p>Options are grouped into sections that match <code class="docutils literal notranslate"><span class="pre">areno</span> <span class="pre">train</span> <span class="pre">--help</span></code>, following
 the RL training loop: <strong>Basic</strong> (what to run plus devices), <strong>Rollout</strong>
 (generate and score completions), <strong>Train</strong> (consume rollouts and update
 weights), <strong>Checkpoint</strong> (produced artifacts), and <strong>Observability</strong> (logs).</p>
 <section id="basic">
-<h3>Basic<a class="headerlink" href="#basic" title="Link to this heading">¶</a></h3>
+<h3>Basic<a class="headerlink" href="#basic" title="Link to this heading">#</a></h3>
 <p>Inputs, dataset loader, the algorithm and run length, and device counts.</p>
 <dl class="simple">
 <dt><code class="docutils literal notranslate"><span class="pre">--ckpt</span> <span class="pre">TEXT</span></code></dt><dd><p>Actor model/tokenizer checkpoint path or remote model repo ID.</p>
@@ -196,7 +196,7 @@ dataset reference.</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">--model-hub</span> <span class="pre">[hf|modelscope]</span></code></dt><dd><p>Remote hub used when <code class="docutils literal notranslate"><span class="pre">--ckpt</span></code>, role checkpoints, or <code class="docutils literal notranslate"><span class="pre">--dataset-path</span></code> are
 not local paths. Use <code class="docutils literal notranslate"><span class="pre">--model-hub</span> <span class="pre">hf</span></code> for Hugging Face and
-<code class="docutils literal notranslate"><span class="pre">--model-hub</span> <span class="pre">modelscope</span></code> for ModelScope. Default: <code class="docutils literal notranslate"><span class="pre">hf</span></code>.</p>
+<code class="docutils literal notranslate"><span class="pre">--model-hub</span> <span class="pre">modelscope</span></code> for ModelScope. Default: <code class="docutils literal notranslate"><span class="pre">modelscope</span></code>.</p>
 </dd>
 </dl>
 <p>Dataset references use <code class="docutils literal notranslate"><span class="pre">repo/name</span></code>, <code class="docutils literal notranslate"><span class="pre">repo/name:config</span></code>, or
@@ -232,7 +232,7 @@ indices have completed, even if the current epoch still has more batches.</p>
 <p><code class="docutils literal notranslate"><span class="pre">world-size</span></code> must be divisible by <code class="docutils literal notranslate"><span class="pre">tp-size</span></code>.</p>
 </section>
 <section id="rollout">
-<h3>Rollout<a class="headerlink" href="#rollout" title="Link to this heading">¶</a></h3>
+<h3>Rollout<a class="headerlink" href="#rollout" title="Link to this heading">#</a></h3>
 <p>Everything that generates and scores completions: batch volume, sequence
 limits, sampling, decode runtime, the agentic-rollout hooks, and the reward
 signal.</p>
@@ -325,7 +325,7 @@ row for the whole agentic trajectory, not only the latest chat-completion turn.<
 </dl>
 </section>
 <section id="parameter-tuning">
-<h3>Parameter tuning<a class="headerlink" href="#parameter-tuning" title="Link to this heading">¶</a></h3>
+<h3>Parameter tuning<a class="headerlink" href="#parameter-tuning" title="Link to this heading">#</a></h3>
 <dl class="simple">
 <dt><code class="docutils literal notranslate"><span class="pre">--tune-params</span></code></dt><dd><p>Probe rollout and training memory before starting the real run, then fill
 safe values for <code class="docutils literal notranslate"><span class="pre">--max-running-prompts</span></code>, <code class="docutils literal notranslate"><span class="pre">--batch-size</span></code> and
@@ -382,7 +382,7 @@ is capped by <code class="docutils literal notranslate"><span class="pre">tune-m
 </div>
 </section>
 <section id="train">
-<h3>Train<a class="headerlink" href="#train" title="Link to this heading">¶</a></h3>
+<h3>Train<a class="headerlink" href="#train" title="Link to this heading">#</a></h3>
 <p>Everything that consumes rollouts and updates weights: training batching and
 memory, the policy optimizer, reference/critic models, and the per-algorithm
 loss knobs. Each algorithm-specific flag applies only to the algorithms named
@@ -449,7 +449,7 @@ enabled.</p>
 </dl>
 </section>
 <section id="checkpoint">
-<h3>Checkpoint<a class="headerlink" href="#checkpoint" title="Link to this heading">¶</a></h3>
+<h3>Checkpoint<a class="headerlink" href="#checkpoint" title="Link to this heading">#</a></h3>
 <dl class="simple">
 <dt><code class="docutils literal notranslate"><span class="pre">--save-path</span> <span class="pre">TEXT</span></code></dt><dd><p>Optional checkpoint output directory.</p>
 </dd>
@@ -458,7 +458,7 @@ enabled.</p>
 </dl>
 </section>
 <section id="observability">
-<h3>Observability<a class="headerlink" href="#observability" title="Link to this heading">¶</a></h3>
+<h3>Observability<a class="headerlink" href="#observability" title="Link to this heading">#</a></h3>
 <dl class="simple">
 <dt><code class="docutils literal notranslate"><span class="pre">--metrics-log-dir</span> <span class="pre">TEXT</span></code></dt><dd><p>TensorBoard metrics log directory. See <a class="reference internal" href="observability.html"><span class="doc">Observability</span></a> for the
 <code class="docutils literal notranslate"><span class="pre">rollout/*</span></code>, <code class="docutils literal notranslate"><span class="pre">train/*</span></code>, and <code class="docutils literal notranslate"><span class="pre">time/*</span></code> metric namespaces and debugging
@@ -468,9 +468,9 @@ log examples.</p>
 </section>
 </section>
 <section id="examples">
-<h2>Examples<a class="headerlink" href="#examples" title="Link to this heading">¶</a></h2>
+<h2>Examples<a class="headerlink" href="#examples" title="Link to this heading">#</a></h2>
 <section id="tiny-training-smoke-test">
-<h3>Tiny training smoke test<a class="headerlink" href="#tiny-training-smoke-test" title="Link to this heading">¶</a></h3>
+<h3>Tiny training smoke test<a class="headerlink" href="#tiny-training-smoke-test" title="Link to this heading">#</a></h3>
 <p>Use this command when you only want to check that a machine can run one small
 official training task end to end:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span data-line="1">areno<span class="w"> </span>train<span class="w"> </span><span class="se">\</span>
@@ -488,7 +488,7 @@ official training task end to end:</p>
 quality.</p>
 </section>
 <section id="gspo-math-training">
-<h3>GSPO math training<a class="headerlink" href="#gspo-math-training" title="Link to this heading">¶</a></h3>
+<h3>GSPO math training<a class="headerlink" href="#gspo-math-training" title="Link to this heading">#</a></h3>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span data-line="1">areno<span class="w"> </span>train<span class="w"> </span><span class="se">\</span>
 </span><span data-line="2"><span class="w">  </span>--ckpt<span class="w"> </span>Qwen/Qwen3-0.6B<span class="w"> </span><span class="se">\</span>
 </span><span data-line="3"><span class="w">  </span>--dataset-path<span class="w"> </span>gsm8k:main<span class="w"> </span><span class="se">\</span>
@@ -504,7 +504,7 @@ quality.</p>
 </div>
 </section>
 <section id="sft-instruction-tuning">
-<h3>SFT instruction tuning<a class="headerlink" href="#sft-instruction-tuning" title="Link to this heading">¶</a></h3>
+<h3>SFT instruction tuning<a class="headerlink" href="#sft-instruction-tuning" title="Link to this heading">#</a></h3>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span data-line="1">areno<span class="w"> </span>train<span class="w"> </span><span class="se">\</span>
 </span><span data-line="2"><span class="w">  </span>--ckpt<span class="w"> </span>Qwen/Qwen3-0.6B<span class="w"> </span><span class="se">\</span>
 </span><span data-line="3"><span class="w">  </span>--dataset-path<span class="w"> </span>yahma/alpaca-cleaned<span class="w"> </span><span class="se">\</span>
@@ -520,7 +520,7 @@ quality.</p>
 The trainer performs tokenization and trains on the response suffix.</p>
 </section>
 <section id="dpo-preference-training">
-<h3>DPO preference training<a class="headerlink" href="#dpo-preference-training" title="Link to this heading">¶</a></h3>
+<h3>DPO preference training<a class="headerlink" href="#dpo-preference-training" title="Link to this heading">#</a></h3>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span data-line="1">areno<span class="w"> </span>train<span class="w"> </span><span class="se">\</span>
 </span><span data-line="2"><span class="w">  </span>--ckpt<span class="w"> </span>/path/to/policy<span class="w"> </span><span class="se">\</span>
 </span><span data-line="3"><span class="w">  </span>--ref-ckpt<span class="w"> </span>/path/to/reference<span class="w"> </span><span class="se">\</span>
@@ -535,7 +535,7 @@ The trainer performs tokenization and trains on the response suffix.</p>
 <code class="docutils literal notranslate"><span class="pre">rejected</span></code>.</p>
 </section>
 <section id="ppo-with-reward-and-critic-roles">
-<h3>PPO with reward and critic roles<a class="headerlink" href="#ppo-with-reward-and-critic-roles" title="Link to this heading">¶</a></h3>
+<h3>PPO with reward and critic roles<a class="headerlink" href="#ppo-with-reward-and-critic-roles" title="Link to this heading">#</a></h3>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span data-line="1">areno<span class="w"> </span>train<span class="w"> </span><span class="se">\</span>
 </span><span data-line="2"><span class="w">  </span>--ckpt<span class="w"> </span>/path/to/policy<span class="w"> </span><span class="se">\</span>
 </span><span data-line="3"><span class="w">  </span>--ref-ckpt<span class="w"> </span>/path/to/reference<span class="w"> </span><span class="se">\</span>
@@ -550,7 +550,7 @@ The trainer performs tokenization and trains on the response suffix.</p>
 </div>
 </section>
 <section id="agentic-tic-tac-toe">
-<h3>Agentic Tic-Tac-Toe<a class="headerlink" href="#agentic-tic-tac-toe" title="Link to this heading">¶</a></h3>
+<h3>Agentic Tic-Tac-Toe<a class="headerlink" href="#agentic-tic-tac-toe" title="Link to this heading">#</a></h3>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span data-line="1">python<span class="w"> </span>examples/agentic/tictactoe/dataset_generator.py<span class="w"> </span><span class="se">\</span>
 </span><span data-line="2"><span class="w">  </span>--output<span class="w"> </span>/tmp/areno-tictactoe.jsonl<span class="w"> </span><span class="se">\</span>
 </span><span data-line="3"><span class="w">  </span>--count<span class="w"> </span><span class="m">256</span><span class="w"> </span><span class="se">\</span>
@@ -577,7 +577,7 @@ logprobs, parsed <code class="docutils literal notranslate"><span class="pre">to
 resulting batch to the same policy trainer used by non-agentic rollouts.</p>
 </section>
 <section id="agentic-duelgrid">
-<h3>Agentic DuelGrid<a class="headerlink" href="#agentic-duelgrid" title="Link to this heading">¶</a></h3>
+<h3>Agentic DuelGrid<a class="headerlink" href="#agentic-duelgrid" title="Link to this heading">#</a></h3>
 <p>DuelGrid is a turn-based grid tactics example for agentic RLVR. The user
 controls <code class="docutils literal notranslate"><span class="pre">U</span></code> and the LLM controls <code class="docutils literal notranslate"><span class="pre">A</span></code> with JSON action sequences such as
 <code class="docutils literal notranslate"><span class="pre">MOVE</span></code>, <code class="docutils literal notranslate"><span class="pre">ATTACK</span></code>, <code class="docutils literal notranslate"><span class="pre">RANGED_ATTACK</span></code>, <code class="docutils literal notranslate"><span class="pre">PICKUP</span></code>, and <code class="docutils literal notranslate"><span class="pre">SHIELD</span></code>.</p>
@@ -639,7 +639,7 @@ game loop.</p>
 </section>
 </section>
 <section id="help">
-<h2>Help<a class="headerlink" href="#help" title="Link to this heading">¶</a></h2>
+<h2>Help<a class="headerlink" href="#help" title="Link to this heading">#</a></h2>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span data-line="1">areno<span class="w"> </span>train<span class="w"> </span>--help
 </span></pre></div>
 </div>

@@ -6,7 +6,7 @@
     function setColorMode(t){let e=document.documentElement;e.setAttribute("data-color-mode",t);let a=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,s=t;"auto"===t&&(s=a?"dark":"light"),"light"===s?(e.classList.remove("dark"),e.classList.add("light")):(e.classList.remove("light"),e.classList.add("dark"))}
     setColorMode(localStorage._theme||"auto");
   </script><link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=e1a1ceaf" />
-    <link rel="stylesheet" type="text/css" href="../_static/shibuya.css?v=9454f7d5" />
+    <link rel="stylesheet" type="text/css" href="../_static/shibuya.css?v=2ceb65ce" />
     <link media="print" rel="stylesheet" type="text/css" href="../_static/print.css?v=20ff2c19" />
     <link rel="stylesheet" type="text/css" href="../_static/areno.css?v=02a4506f" />
     <style>
@@ -140,7 +140,7 @@ data-aria-dark="Switch to auto color mode">
       <div class="relative min-w-0 max-w-6xl px-6 pb-6 pt-8 xl:px-12">
   <article class="yue" role="main">
           <section id="diagnostics-cli-reference">
-<h1>Diagnostics CLI reference<a class="headerlink" href="#diagnostics-cli-reference" title="Link to this heading">¶</a></h1>
+<h1>Diagnostics CLI reference<a class="headerlink" href="#diagnostics-cli-reference" title="Link to this heading">#</a></h1>
 <p><code class="docutils literal notranslate"><span class="pre">areno</span> <span class="pre">env</span></code> and <code class="docutils literal notranslate"><span class="pre">areno</span> <span class="pre">check</span></code> help diagnose setup problems before a user
 hits low-level Python, CUDA, or PyTorch errors.</p>
 <p><code class="docutils literal notranslate"><span class="pre">areno</span> <span class="pre">env</span></code> is a descriptive support report. It does not initialize the AReno
@@ -169,7 +169,7 @@ engine or load model weights. Use it when collecting information for an issue.</
 <code class="docutils literal notranslate"><span class="pre">CUDA_VISIBLE_DEVICES</span></code>, and <code class="docutils literal notranslate"><span class="pre">TORCH_CUDA_ARCH_LIST</span></code></p></li>
 </ul>
 <section id="areno-check">
-<h2>areno check<a class="headerlink" href="#areno-check" title="Link to this heading">¶</a></h2>
+<h2>areno check<a class="headerlink" href="#areno-check" title="Link to this heading">#</a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">areno</span> <span class="pre">check</span></code> validates whether the machine is ready to run AReno training
 and serving. It classifies each check as <code class="docutils literal notranslate"><span class="pre">OK</span></code>, <code class="docutils literal notranslate"><span class="pre">WARN</span></code>, or <code class="docutils literal notranslate"><span class="pre">FAIL</span></code> and
 prints concrete next steps for failures.</p>
