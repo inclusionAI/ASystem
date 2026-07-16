@@ -1,31 +1,26 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 560" role="img" aria-labelledby="title desc">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 420" role="img" aria-labelledby="title desc">
   <title id="title">ASystem technical capability map</title>
   <desc id="desc">Data, training, and evaluation connect through shared state and memory infrastructure.</desc>
   <defs>
-    <linearGradient id="panel" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#ffffff"/>
-      <stop offset="1" stop-color="#eef3ff"/>
-    </linearGradient>
     <filter id="shadow" x="-30%" y="-30%" width="160%" height="160%">
       <feDropShadow dx="0" dy="12" stdDeviation="18" flood-color="#53658a" flood-opacity=".12"/>
     </filter>
   </defs>
-  <rect x="1" y="1" width="718" height="558" rx="24" fill="url(#panel)" stroke="#dfe6f3"/>
   <g fill="none" stroke="#aab8d2" stroke-width="2">
-    <path d="M148 160 C238 160 244 280 330 280"/>
-    <path d="M148 400 C238 400 244 280 330 280"/>
-    <path d="M572 160 C482 160 476 280 390 280"/>
-    <path d="M572 400 C482 400 476 280 390 280"/>
+    <path d="M148 120 C238 120 244 210 330 210"/>
+    <path d="M148 300 C238 300 244 210 330 210"/>
+    <path d="M572 120 C482 120 476 210 390 210"/>
+    <path d="M572 300 C482 300 476 210 390 210"/>
   </g>
   <g fill="#7f91b2">
-    <circle cx="238" cy="194" r="4"/><circle cx="238" cy="366" r="4"/>
-    <circle cx="482" cy="194" r="4"/><circle cx="482" cy="366" r="4"/>
+    <circle cx="238" cy="144" r="4"/><circle cx="238" cy="276" r="4"/>
+    <circle cx="482" cy="144" r="4"/><circle cx="482" cy="276" r="4"/>
   </g>
   <g filter="url(#shadow)" font-family="Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" text-anchor="middle">
-    <g><rect x="70" y="116" width="156" height="88" rx="16" fill="#fff" stroke="#dfe6f3"/><text x="148" y="154" font-size="13" fill="#72809c">INPUT</text><text x="148" y="178" font-size="18" font-weight="700" fill="#090b10">Data</text></g>
-    <g><rect x="70" y="356" width="156" height="88" rx="16" fill="#fff" stroke="#dfe6f3"/><text x="148" y="394" font-size="13" fill="#72809c">OPTIMIZE</text><text x="148" y="418" font-size="18" font-weight="700" fill="#090b10">Training</text></g>
-    <g><rect x="494" y="116" width="156" height="88" rx="16" fill="#fff" stroke="#dfe6f3"/><text x="572" y="154" font-size="13" fill="#72809c">MEASURE</text><text x="572" y="178" font-size="18" font-weight="700" fill="#090b10">Evaluation</text></g>
-    <g><rect x="494" y="356" width="156" height="88" rx="16" fill="#fff" stroke="#dfe6f3"/><text x="572" y="394" font-size="13" fill="#72809c">RETAIN</text><text x="572" y="418" font-size="18" font-weight="700" fill="#090b10">Memory</text></g>
-    <g><rect x="282" y="226" width="156" height="108" rx="54" fill="#090b10"/><text x="360" y="270" font-size="13" fill="#aeb8ca">SHARED CORE</text><text x="360" y="298" font-size="20" font-weight="700" fill="#fff">State</text></g>
+    <g><rect x="70" y="76" width="156" height="88" rx="16" fill="#fff" stroke="#dfe6f3"/><text x="148" y="114" font-size="13" fill="#72809c">INPUT</text><text x="148" y="138" font-size="18" font-weight="700" fill="#090b10">Data</text></g>
+    <g><rect x="70" y="256" width="156" height="88" rx="16" fill="#fff" stroke="#dfe6f3"/><text x="148" y="294" font-size="13" fill="#72809c">OPTIMIZE</text><text x="148" y="318" font-size="18" font-weight="700" fill="#090b10">Training</text></g>
+    <g><rect x="494" y="76" width="156" height="88" rx="16" fill="#fff" stroke="#dfe6f3"/><text x="572" y="114" font-size="13" fill="#72809c">MEASURE</text><text x="572" y="138" font-size="18" font-weight="700" fill="#090b10">Evaluation</text></g>
+    <g><rect x="494" y="256" width="156" height="88" rx="16" fill="#fff" stroke="#dfe6f3"/><text x="572" y="294" font-size="13" fill="#72809c">RETAIN</text><text x="572" y="318" font-size="18" font-weight="700" fill="#090b10">Memory</text></g>
+    <g><rect x="282" y="156" width="156" height="108" rx="54" fill="#090b10"/><text x="360" y="200" font-size="13" fill="#aeb8ca">SHARED CORE</text><text x="360" y="228" font-size="20" font-weight="700" fill="#fff">State</text></g>
   </g>
 </svg>
