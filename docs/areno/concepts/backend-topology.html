@@ -2,7 +2,7 @@
 <html lang="en" data-accent-color="gray" data-content_root="../">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Reward function issues - AReno docs</title><link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Backend Topology - AReno docs</title><link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Chat templates" href="chat-templates.html" /><link rel="prev" title="Training Loop" href="training-loop.html" /><script>
     function setColorMode(t){let e=document.documentElement;e.setAttribute("data-color-mode",t);let a=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,s=t;"auto"===t&&(s=a?"dark":"light"),"light"===s?(e.classList.remove("dark"),e.classList.add("light")):(e.classList.remove("light"),e.classList.add("dark"))}
     setColorMode(localStorage._theme||"auto");
   </script><link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=e1a1ceaf" />
@@ -16,7 +16,7 @@
 }
 </style>
     
-  <meta property="og:type" content="website"/><meta property="og:title" content="Reward function issues"/>
+  <meta property="og:type" content="website"/><meta property="og:title" content="Backend Topology"/>
     <meta name="twitter:card" content="summary"/>
   </head>
 <body><div class="sy-head">
@@ -28,7 +28,7 @@
       <strong>AReno</strong>
     </a>
     <div class="sy-head-nav" id="head-nav">
-      <nav class="sy-head-links"><ul><li class="link"><a href="../getting-started/welcome.html">Get Started</a></li><li class="link"><a href="../concepts/training-loop.html">Concepts</a></li><li class="link"><a href="../cookbook/math-rlvr.html">Cookbook</a></li><li class="link"><a href="../reference/cli.html">Reference</a></li><li class="link"><a href="index.html">Troubleshooting</a></li></ul></nav>
+      <nav class="sy-head-links"><ul><li class="link"><a href="../getting-started/welcome.html">Get Started</a></li><li class="link"><a href="training-loop.html">Concepts</a></li><li class="link"><a href="../cookbook/math-rlvr.html">Cookbook</a></li><li class="link"><a href="../reference/cli.html">Reference</a></li><li class="link"><a href="../troubleshooting/index.html">Troubleshooting</a></li></ul></nav>
       <div class="sy-head-extra flex items-center print:hidden"><div class="sy-head-socials"></div></div>
     </div>
     <div class="sy-head-actions flex items-center shrink-0 print:hidden">
@@ -73,12 +73,12 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l1"><a class="reference internal" href="../getting-started/quickstart.html">Quickstart</a></li>
 </ul>
 <p class="caption" role="heading" aria-level="3"><span class="caption-text">Conceptual Guides</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../concepts/training-loop.html">Training Loop</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../concepts/backend-topology.html">Backend Topology</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../concepts/chat-templates.html">Chat Templates</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../concepts/dataset-formats.html">Dataset Formats</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../concepts/reward-functions.html">Reward Functions</a></li>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="training-loop.html">Training Loop</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Backend Topology</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chat-templates.html">Chat Templates</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dataset-formats.html">Dataset Formats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reward-functions.html">Reward Functions</a></li>
 </ul>
 <p class="caption" role="heading" aria-level="3"><span class="caption-text">Cookbook</span></p>
 <ul>
@@ -94,9 +94,9 @@ data-aria-dark="Switch to auto color mode">
 </ul>
 <p class="caption" role="heading" aria-level="3"><span class="caption-text">Troubleshooting &amp; FAQ</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="index.html">Troubleshooting</a></li>
-<li class="toctree-l1"><a class="reference internal" href="faq.html">FAQ</a></li>
-<li class="toctree-l1"><a class="reference internal" href="report-issue.html">Report an issue</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../troubleshooting/index.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../troubleshooting/faq.html">FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../troubleshooting/report-issue.html">Report an issue</a></li>
 </ul>
 
         </div>
@@ -108,7 +108,10 @@ data-aria-dark="Switch to auto color mode">
     <button class="rside-close js-menu xl:hidden" aria-label="Close Table of Contents" type="button" aria-controls="rside" aria-expanded="false">
       <i class="i-lucide close"></i>
     </button>
-    <div class="sy-scrollbar sy-rside-inner px-6 xl:top-16 xl:sticky xl:pl-0 pt-6 pb-4"></div>
+    <div class="sy-scrollbar sy-rside-inner px-6 xl:top-16 xl:sticky xl:pl-0 pt-6 pb-4"><div class="localtoc"><h3>On this page</h3><ul>
+<li><a class="reference internal" href="#one-colocated-engine">One colocated engine</a></li>
+</ul>
+</div></div>
   </aside>
   <div class="rside-overlay js-menu" role="button" aria-label="Close Table of Contents" aria-controls="rside" aria-expanded="false"></div>
   <main class="sy-main w-full max-sm:max-w-full print:pt-6">
@@ -124,7 +127,7 @@ data-aria-dark="Switch to auto color mode">
         <span>/</span>
         <meta itemprop="position" content="1" />
       </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-        <strong itemprop="name">Reward function issues</strong>
+        <strong itemprop="name">Backend Topology</strong>
         <meta itemprop="position" content="2" />
       </li></ol>
     <div class="xl:hidden ml-1">
@@ -137,21 +140,35 @@ data-aria-dark="Switch to auto color mode">
 </div><div class="flex flex-col break-words justify-between">
       <div class="relative min-w-0 max-w-6xl px-6 pb-6 pt-8 xl:px-12">
   <article class="yue" role="main">
-          <section id="reward-function-issues">
-<h1>Reward function issues<a class="headerlink" href="#reward-function-issues" title="Link to this heading">#</a></h1>
-<p>Reward issues often look like training instability. Debug the reward function
-before changing algorithms.</p>
-<p>Check:</p>
+          <section id="backend-topology">
+<h1>Backend Topology<a class="headerlink" href="#backend-topology" title="Link to this heading">#</a></h1>
+<p>The current SDK runtime follows one AReno backend path:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span><span data-line="1">Trainer
+</span><span data-line="2">  -&gt; Backend
+</span><span data-line="3">    -&gt; ArenoBackend
+</span><span data-line="4">      -&gt; ArenoEngine
+</span></pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Trainer</span></code> is the public coordinator. In <code class="docutils literal notranslate"><span class="pre">areno/api/trainer.py</span></code>,
+<code class="docutils literal notranslate"><span class="pre">Trainer.init</span></code> resolves a registered backend implementation, while
+<code class="docutils literal notranslate"><span class="pre">Trainer.rollout_token_batch</span></code> and <code class="docutils literal notranslate"><span class="pre">Trainer.train</span></code> delegate rollout and
+training to that backend.</p>
+<p><code class="docutils literal notranslate"><span class="pre">Backend</span></code> is the execution contract in <code class="docutils literal notranslate"><span class="pre">areno/api/backend/base.py</span></code>. Its
+<code class="docutils literal notranslate"><span class="pre">rollout_batch</span></code> and <code class="docutils literal notranslate"><span class="pre">train</span></code> methods define the operations required by the
+training loop. <code class="docutils literal notranslate"><span class="pre">ArenoBackend</span></code> is the registered AReno implementation in
+<code class="docutils literal notranslate"><span class="pre">areno/api/backend/areno/backend.py</span></code>.</p>
+<section id="one-colocated-engine">
+<h2>One colocated engine<a class="headerlink" href="#one-colocated-engine" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">ArenoBackend.initialize</span></code> creates one <code class="docutils literal notranslate"><span class="pre">ArenoEngine</span></code> and stores it in
+<code class="docutils literal notranslate"><span class="pre">self._engine</span></code>. The same engine handles both sides of the loop:</p>
 <ul class="simple">
-<li><p>The file passed to <code class="docutils literal notranslate"><span class="pre">--reward-fn-path</span></code> exports <code class="docutils literal notranslate"><span class="pre">reward_fn</span></code>.</p></li>
-<li><p>The reward list length matches the completions list length.</p></li>
-<li><p>Parsing handles empty, malformed, or unexpected completions.</p></li>
-<li><p>Scores match a hand-checked example.</p></li>
-<li><p>Logged examples include enough context to explain wrong scores.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ArenoBackend.rollout_batch</span></code> calls <code class="docutils literal notranslate"><span class="pre">ArenoEngine.generate_rollout</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ArenoBackend.train</span></code> calls <code class="docutils literal notranslate"><span class="pre">ArenoEngine.step</span></code>.</p></li>
 </ul>
-<p>If rewards are always zero, inspect answer parsing first. If rewards are
-always one, verify the checker actually reads the completion.</p>
-<p>See <a class="reference internal" href="../concepts/reward-functions.html"><span class="doc">Reward functions</span></a> and <a class="reference internal" href="../reference/reward-function-api.html"><span class="doc">Reward function API</span></a>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">ArenoEngine</span></code> is implemented in <code class="docutils literal notranslate"><span class="pre">areno/engine/api.py</span></code>. It coordinates the
+worker cluster used by both rollout and training, so the current backend does
+not split those calls across separate engines or external runtimes.</p>
+</section>
 </section>
 
         </article><button class="back-to-top" type="button">
@@ -159,7 +176,21 @@ always one, verify the checker actually reads the completion.</p>
     <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
   </svg>
   <span>Back to top</span>
-</button><div class="navigation flex print:hidden"></div></div>
+</button><div class="navigation flex print:hidden"><div class="navigation-prev">
+    <a href="training-loop.html">
+      <i class="i-lucide chevron-left"></i>
+      <div class="page-info">
+        <span>Previous</span><div class="title">Training Loop</div></div>
+    </a>
+  </div><div class="navigation-next">
+    <a href="chat-templates.html">
+      <div class="page-info">
+        <span>Next</span>
+        <div class="title">Chat templates</div>
+      </div>
+      <i class="i-lucide chevron-right"></i>
+    </a>
+  </div></div></div>
     </div>
   </main>
 </div>
