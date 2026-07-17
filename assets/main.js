@@ -51,8 +51,11 @@
       "updates.quickstart.body": "从环境配置到结果，完成一个小型训练工作流。",
       "updates.areno.title": "AReno 版本说明",
       "updates.areno.body": "查看新能力、修复内容与升级说明。",
-      "community.kicker": "开放共建",
       "community.title": "社区与贡献",
+      "community.activity.heading": "最新议题",
+      "community.fallback.author": "ASystem 社区",
+      "community.fallback.viewIssues": "查看开放议题",
+      "community.fallback.join": "参与最新项目讨论。",
       "community.areno.title": "改进训练工作流",
       "community.areno.body": "反馈问题、贡献配方，共同提升开发体验。",
       "community.awex.title": "扩展执行能力",
@@ -165,12 +168,17 @@
         storage = null;
       }
     }
+    const liveUI = settings.liveUI || (globalObject && globalObject.ASystemGitHubUI);
+    const fetchImpl = Object.prototype.hasOwnProperty.call(settings, "fetchImpl")
+      ? settings.fetchImpl
+      : (globalObject && typeof globalObject.fetch === "function" ? globalObject.fetch.bind(globalObject) : null);
     if (!doc) return null;
 
     const header = doc.querySelector(".site-header");
     const menuButton = doc.querySelector(".menu-toggle");
     const navigation = doc.querySelector("#site-nav");
     let locale = applyLanguage(doc, readStoredLanguage(storage));
+    let liveData = null;
 
     function setMenu(open) {
       if (!header || !menuButton) return;
@@ -188,6 +196,7 @@
       button.addEventListener("click", () => {
         locale = applyLanguage(doc, button.dataset.locale);
         writeStoredLanguage(storage, locale);
+        if (liveData) liveData.render(locale);
         setMenu(header && header.dataset.menuOpen === "true");
       });
     });
@@ -211,9 +220,19 @@
       }
     });
 
+    if (liveUI && typeof liveUI.initGitHubLiveData === "function") {
+      liveData = liveUI.initGitHubLiveData({
+        doc,
+        storage,
+        fetchImpl,
+        getLocale() { return locale; },
+      });
+    }
+
     return {
       getLocale() { return locale; },
-      setMenu
+      setMenu,
+      liveData,
     };
   }
 

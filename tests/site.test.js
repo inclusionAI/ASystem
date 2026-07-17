@@ -36,3 +36,53 @@ test("valid saved locale is restored", () => {
   assert.equal(site.writeStoredLanguage(storage, "en"), true);
   assert.equal(storage.value, "en");
 });
+
+function documentStub() {
+  const buttons = ["en", "zh-CN"].map((locale) => ({
+    dataset: { locale },
+    attributes: {},
+    handlers: {},
+    setAttribute(name, value) { this.attributes[name] = value; },
+    addEventListener(name, handler) { this.handlers[name] = handler; },
+    click() { this.handlers.click(); },
+  }));
+  return {
+    buttons,
+    doc: {
+      documentElement: { lang: "en" },
+      title: "",
+      querySelectorAll(selector) {
+        if (selector === "[data-locale]") return buttons;
+        return [];
+      },
+      querySelector() { return null; },
+      addEventListener() {},
+    },
+  };
+}
+
+test("language changes re-render live data without refetching", () => {
+  const { doc, buttons } = documentStub();
+  const rendered = [];
+  let initializationCount = 0;
+  const liveUI = {
+    initGitHubLiveData(options) {
+      initializationCount += 1;
+      assert.equal(options.doc, doc);
+      assert.equal(options.getLocale(), "en");
+      return {
+        ready: Promise.resolve(),
+        render(locale) { rendered.push(locale); },
+        getSnapshot() { return null; },
+      };
+    },
+  };
+
+  const result = site.initSite({ doc, storage: null, liveUI, fetchImpl: async () => {} });
+  buttons[1].click();
+
+  assert.equal(initializationCount, 1);
+  assert.equal(doc.documentElement.lang, "zh-CN");
+  assert.deepEqual(rendered, ["zh-CN"]);
+  assert.ok(result.liveData);
+});

@@ -11,6 +11,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@700&display=swap" rel="stylesheet">
   <link rel="icon" type="image/png" href="https://mdn.alipayobjects.com/huamei_fz8c8n/afts/img/dpNuRY8szNMAAAAANrAAAAgADpuRAQJr/original">
   <link rel="stylesheet" href="assets/styles.css">
+  <script src="assets/github-data.js" defer></script>
+  <script src="assets/github-ui.js" defer></script>
   <script src="assets/main.js" defer></script>
 </head>
 <body id="top">
@@ -26,11 +28,11 @@
       <span class="sr-only" data-i18n="a11y.openMenu">Open menu</span>
     </button>
     <nav id="site-nav" class="site-nav" aria-label="Primary navigation">
-      <a href="#top" data-i18n="nav.home">Home</a>
-      <a href="#projects" data-i18n="nav.projects">Projects</a>
-      <a href="/docs/areno/" data-i18n="nav.docs">Docs</a>
-      <a href="#updates" data-i18n="nav.blog">Blog</a>
-      <a href="#community" data-i18n="nav.ecosystem">Ecosystem</a>
+      <a href="https://asystem-ai.io/" data-i18n="nav.home">Home</a>
+      <a href="https://asystem-ai.io/#projects" data-i18n="nav.projects">Projects</a>
+      <a href="https://asystem-ai.io/docs/areno/" data-i18n="nav.docs">Docs</a>
+      <a href="https://asystem-ai.io/#updates" data-i18n="nav.blog">Blog</a>
+      <a href="https://asystem-ai.io/#community" data-i18n="nav.ecosystem">Ecosystem</a>
     </nav>
     <div class="header-actions">
       <div class="language-switch" role="group" aria-label="Language">
@@ -38,7 +40,7 @@
         <button type="button" data-locale="zh-CN" aria-pressed="false">中文</button>
       </div>
       <a class="icon-link" href="https://github.com/inclusionAI/ASystem"
-         target="_blank" rel="noopener noreferrer" aria-label="ASystem on GitHub">
+         aria-label="ASystem on GitHub">
         <img src="assets/images/github.svg" alt="" width="32" height="32">
       </a>
     </div>
@@ -52,47 +54,75 @@
         An open system for large-scale reinforcement learning
       </p>
       <a class="button button--dark button--arrow" href="https://github.com/inclusionAI/ASystem"
-         target="_blank" rel="noopener noreferrer" data-i18n="hero.cta">
+         data-i18n="hero.cta">
         Explore on GitHub
       </a>
     </section>
 
     <section id="projects" class="section-shell" aria-labelledby="projects-title">
       <div class="section-heading section-heading--center">
-        <p class="section-kicker" data-i18n="projects.kicker">Open ecosystem</p>
         <h2 id="projects-title" data-i18n="projects.title">Project Center</h2>
       </div>
       <div class="project-grid">
-        <article class="project-card">
-          <div class="project-card__top"><span class="project-icon-wrap"><img class="project-icon" src="assets/images/icon-areno.svg" alt="" width="48" height="48"><img class="project-icon-hover" src="assets/images/icon-areno-hover.svg" alt="" width="48" height="48"></span><h3>AReno</h3></div>
+        <article class="project-card" data-project-card="areno">
+          <div class="project-card__top">
+            <span class="project-icon" aria-hidden="true"><img src="assets/images/project-areno.svg" alt="" width="56" height="56"></span><h3>AReno</h3>
+            <span class="live-status" data-project-status></span>
+          </div>
           <p data-i18n="projects.areno.description">A developer-first toolkit for reinforcement-learning workflows.</p>
           <ul class="tag-list"><li data-i18n="tags.easy">Accessible</li><li data-i18n="tags.single">Single-node</li></ul>
+          <dl class="project-live-meta" data-project-meta hidden>
+            <div><dt data-project-stars-label>stars</dt><dd data-project-stars>—</dd></div>
+            <div><dt data-project-release-label>Latest release</dt><dd data-project-release>—</dd></div>
+            <div><dt data-project-updated-label>Updated</dt><dd data-project-updated>—</dd></div>
+          </dl>
           <div class="card-actions">
-            <a href="/docs/areno/getting-started/quickstart.html" data-i18n="actions.quickStart">Quick Start <img class="card-arrow" src="assets/images/arrow-black.svg" alt="" width="16" height="16"></a>
-            <a href="https://github.com/inclusionAI/AReno" target="_blank" rel="noopener noreferrer"
+            <a href="https://asystem-ai.io/docs/areno/getting-started/quickstart.html" data-i18n="actions.quickStart">Quick Start</a>
+            <a href="https://github.com/inclusionAI/AReno"
                aria-label="AReno on GitHub"><img src="assets/images/github.svg" alt="" width="18" height="18"></a>
           </div>
         </article>
-        <article class="project-card">
-          <div class="project-card__top"><span class="project-icon-wrap"><img class="project-icon" src="assets/images/icon-awex.svg" alt="" width="48" height="48"><img class="project-icon-hover" src="assets/images/icon-awex-hover.svg" alt="" width="48" height="48"></span><h3>Awex</h3></div>
+        <article class="project-card" data-project-card="awex">
+          <div class="project-card__top"><span class="project-icon" aria-hidden="true"><img src="assets/images/project-awex.svg" alt="" width="56" height="56"></span><h3>Awex</h3><span class="live-status" data-project-status></span></div>
           <p data-i18n="projects.awex.description">Scalable execution infrastructure for training and evaluation.</p>
           <ul class="tag-list"><li data-i18n="tags.scalable">Scalable</li><li data-i18n="tags.modular">Modular</li></ul>
-          <div class="card-actions"><a href="https://github.com/inclusionAI/Awex" data-i18n="actions.learnMore">Learn More <img class="card-arrow" src="assets/images/arrow-black.svg" alt="" width="16" height="16"></a>
-            <a href="https://github.com/inclusionAI/Awex" target="_blank" rel="noopener noreferrer" aria-label="Awex on GitHub"><img src="assets/images/github.svg" alt="" width="18" height="18"></a></div>
+          <dl class="project-live-meta" data-project-meta hidden>
+            <div><dt data-project-stars-label>stars</dt><dd data-project-stars>—</dd></div>
+            <div><dt data-project-release-label>Latest release</dt><dd data-project-release>—</dd></div>
+            <div><dt data-project-updated-label>Updated</dt><dd data-project-updated>—</dd></div>
+          </dl>
+          <div class="card-actions">
+            <a href="https://github.com/inclusionAI/Awex" data-i18n="actions.learnMore">Learn More</a>
+            <a href="https://github.com/inclusionAI/Awex" aria-label="Awex on GitHub"><img src="assets/images/github.svg" alt="" width="18" height="18"></a>
+          </div>
         </article>
-        <article class="project-card">
-          <div class="project-card__top"><span class="project-icon-wrap"><img class="project-icon" src="assets/images/icon-astate.svg" alt="" width="48" height="48"><img class="project-icon-hover" src="assets/images/icon-astate-hover.svg" alt="" width="48" height="48"></span><h3>AState</h3></div>
+        <article class="project-card" data-project-card="astate">
+          <div class="project-card__top"><span class="project-icon" aria-hidden="true"><img src="assets/images/project-astate.svg" alt="" width="56" height="56"></span><h3>AState</h3><span class="live-status" data-project-status></span></div>
           <p data-i18n="projects.astate.description">Reliable state and trajectory primitives for agentic systems.</p>
           <ul class="tag-list"><li data-i18n="tags.reliable">Reliable</li><li data-i18n="tags.observable">Observable</li></ul>
-          <div class="card-actions"><a href="https://github.com/inclusionAI/AState" data-i18n="actions.learnMore">Learn More <img class="card-arrow" src="assets/images/arrow-black.svg" alt="" width="16" height="16"></a>
-            <a href="https://github.com/inclusionAI/AState" target="_blank" rel="noopener noreferrer" aria-label="AState on GitHub"><img src="assets/images/github.svg" alt="" width="18" height="18"></a></div>
+          <dl class="project-live-meta" data-project-meta hidden>
+            <div><dt data-project-stars-label>stars</dt><dd data-project-stars>—</dd></div>
+            <div><dt data-project-release-label>Latest release</dt><dd data-project-release>—</dd></div>
+            <div><dt data-project-updated-label>Updated</dt><dd data-project-updated>—</dd></div>
+          </dl>
+          <div class="card-actions">
+            <a href="https://github.com/inclusionAI/AState" data-i18n="actions.learnMore">Learn More</a>
+            <a href="https://github.com/inclusionAI/AState" aria-label="AState on GitHub"><img src="assets/images/github.svg" alt="" width="18" height="18"></a>
+          </div>
         </article>
-        <article class="project-card">
-          <div class="project-card__top"><span class="project-icon-wrap"><img class="project-icon" src="assets/images/icon-amem.svg" alt="" width="48" height="48"><img class="project-icon-hover" src="assets/images/icon-amem-hover.svg" alt="" width="48" height="48"></span><h3>AMem</h3></div>
+        <article class="project-card" data-project-card="amem">
+          <div class="project-card__top"><span class="project-icon" aria-hidden="true"><img src="assets/images/project-amem.svg" alt="" width="56" height="56"></span><h3>AMem</h3><span class="live-status" data-project-status></span></div>
           <p data-i18n="projects.amem.description">Memory infrastructure for long-horizon intelligent applications.</p>
           <ul class="tag-list"><li data-i18n="tags.longContext">Long-context</li><li data-i18n="tags.extensible">Extensible</li></ul>
-          <div class="card-actions"><a href="https://github.com/inclusionAI/asystem-amem" data-i18n="actions.learnMore">Learn More <img class="card-arrow" src="assets/images/arrow-black.svg" alt="" width="16" height="16"></a>
-            <a href="https://github.com/inclusionAI/asystem-amem" target="_blank" rel="noopener noreferrer" aria-label="AMem on GitHub"><img src="assets/images/github.svg" alt="" width="18" height="18"></a></div>
+          <dl class="project-live-meta" data-project-meta hidden>
+            <div><dt data-project-stars-label>stars</dt><dd data-project-stars>—</dd></div>
+            <div><dt data-project-release-label>Latest release</dt><dd data-project-release>—</dd></div>
+            <div><dt data-project-updated-label>Updated</dt><dd data-project-updated>—</dd></div>
+          </dl>
+          <div class="card-actions">
+            <a href="https://github.com/inclusionAI/asystem-amem" data-i18n="actions.learnMore">Learn More</a>
+            <a href="https://github.com/inclusionAI/asystem-amem" aria-label="AMem on GitHub"><img src="assets/images/github.svg" alt="" width="18" height="18"></a>
+          </div>
         </article>
       </div>
     </section>
@@ -121,23 +151,182 @@
         <h2 id="updates-title" data-i18n="updates.title">Latest Updates</h2>
       </div>
       <div class="update-grid">
-        <a class="update-card" href="https://github.com/inclusionAI/ASystem/releases"><span>ASystem</span><h3 data-i18n="updates.release.title">Latest ASystem releases</h3><p data-i18n="updates.release.body">Follow coordinated releases across the ecosystem.</p></a>
-        <a class="update-card" href="/docs/areno/getting-started/installation.html"><span>Docs</span><h3 data-i18n="updates.install.title">Install AReno</h3><p data-i18n="updates.install.body">Prepare a supported environment and verify the toolchain.</p></a>
-        <a class="update-card" href="/docs/areno/getting-started/quickstart.html"><span>Guide</span><h3 data-i18n="updates.quickstart.title">Run the quick start</h3><p data-i18n="updates.quickstart.body">Take a small training workflow from setup to result.</p></a>
-        <a class="update-card" href="https://github.com/inclusionAI/AReno/releases"><span>AReno</span><h3 data-i18n="updates.areno.title">AReno release notes</h3><p data-i18n="updates.areno.body">Review new capabilities, fixes, and upgrade notes.</p></a>
+        <a class="update-card" data-update-slot
+           data-update-fallback-href="https://github.com/inclusionAI/ASystem/releases"
+           data-update-fallback-repository="ASystem"
+           href="https://github.com/inclusionAI/ASystem/releases">
+          <span class="card-meta"><span data-update-repository>ASystem</span><span class="live-status" data-update-status></span></span>
+          <h3 data-update-title data-i18n="updates.release.title">Latest ASystem releases</h3>
+          <p data-update-body data-i18n="updates.release.body">Follow coordinated releases across the ecosystem.</p>
+          <time class="update-card__date" data-update-date></time>
+        </a>
+        <a class="update-card" data-update-slot
+           data-update-fallback-href="/docs/areno/getting-started/installation.html"
+           data-update-fallback-repository="Docs"
+           href="/docs/areno/getting-started/installation.html">
+          <span class="card-meta"><span data-update-repository>Docs</span><span class="live-status" data-update-status></span></span>
+          <h3 data-update-title data-i18n="updates.install.title">Install AReno</h3>
+          <p data-update-body data-i18n="updates.install.body">Prepare a supported environment and verify the toolchain.</p>
+          <time class="update-card__date" data-update-date></time>
+        </a>
+        <a class="update-card" data-update-slot
+           data-update-fallback-href="https://asystem-ai.io/docs/areno/getting-started/quickstart.html"
+           data-update-fallback-repository="Guide"
+           href="https://asystem-ai.io/docs/areno/getting-started/quickstart.html">
+          <span class="card-meta"><span data-update-repository>Guide</span><span class="live-status" data-update-status></span></span>
+          <h3 data-update-title data-i18n="updates.quickstart.title">Run the quick start</h3>
+          <p data-update-body data-i18n="updates.quickstart.body">Take a small training workflow from setup to result.</p>
+          <time class="update-card__date" data-update-date></time>
+        </a>
+        <a class="update-card" data-update-slot
+           data-update-fallback-href="https://github.com/inclusionAI/AReno/releases"
+           data-update-fallback-repository="AReno"
+           href="https://github.com/inclusionAI/AReno/releases">
+          <span class="card-meta"><span data-update-repository>AReno</span><span class="live-status" data-update-status></span></span>
+          <h3 data-update-title data-i18n="updates.areno.title">AReno release notes</h3>
+          <p data-update-body data-i18n="updates.areno.body">Review new capabilities, fixes, and upgrade notes.</p>
+          <time class="update-card__date" data-update-date></time>
+        </a>
       </div>
     </section>
 
     <section id="community" class="section-shell" aria-labelledby="community-title">
       <div class="section-heading section-heading--center">
-        <p class="section-kicker" data-i18n="community.kicker">Build in the open</p>
         <h2 id="community-title" data-i18n="community.title">Community &amp; Contributions</h2>
       </div>
       <div class="community-grid">
-        <a class="community-card" href="https://github.com/inclusionAI/AReno/issues"><span>AReno</span><h3 data-i18n="community.areno.title">Improve training workflows</h3><p data-i18n="community.areno.body">Report issues, propose recipes, and help strengthen the developer experience.</p></a>
-        <a class="community-card" href="https://github.com/inclusionAI/Awex/issues"><span>Awex</span><h3 data-i18n="community.awex.title">Scale execution</h3><p data-i18n="community.awex.body">Contribute runtime ideas and reproducible performance reports.</p></a>
-        <a class="community-card" href="https://github.com/inclusionAI/AState/issues"><span>AState</span><h3 data-i18n="community.astate.title">Advance state infrastructure</h3><p data-i18n="community.astate.body">Help refine durable state and observability primitives.</p></a>
-        <a class="community-card" href="https://github.com/inclusionAI/asystem-amem/issues"><span>AMem</span><h3 data-i18n="community.amem.title">Extend intelligent memory</h3><p data-i18n="community.amem.body">Explore memory abstractions for long-running applications.</p></a>
+        <article class="community-card" data-community-card="areno">
+          <div class="community-card__heading">
+            <span class="community-issue-dot" aria-hidden="true"></span>
+            <h3 data-i18n="community.activity.heading">New Issues</h3>
+            <span class="live-status" data-community-status></span>
+          </div>
+          <div class="community-fallback" data-community-fallback aria-label="Recent GitHub issues">
+            <a class="community-activity" data-community-fallback-item
+               href="https://github.com/inclusionAI/AReno/issues/162"
+               aria-label="AReno Issue 162: Improve AReno installation experience with a guided shell installer"
+               title="Improve AReno installation experience with a guided shell installer">
+              <span class="community-activity__person"><img class="community-activity__avatar" src="https://avatars.githubusercontent.com/u/71679464?v=4" alt="" width="24" height="24" loading="lazy" referrerpolicy="no-referrer"><span>adohe</span></span>
+              <strong class="community-activity__title">Improve AReno installation experience with a guided shell installer</strong>
+              <span class="community-activity__meta">Issue #162 · Open · 3d ago</span>
+            </a>
+            <a class="community-activity" data-community-fallback-item
+               href="https://github.com/inclusionAI/AReno/issues/108"
+               aria-label="AReno Issue 108: Add First Training and RLVR quickstarts"
+               title="Add First Training and RLVR quickstarts">
+              <span class="community-activity__person"><img class="community-activity__avatar" src="https://avatars.githubusercontent.com/u/71679464?v=4" alt="" width="24" height="24" loading="lazy" referrerpolicy="no-referrer"><span>adohe</span></span>
+              <strong class="community-activity__title">Add First Training and RLVR quickstarts</strong>
+              <span class="community-activity__meta">Issue #108 · Open · 3d ago</span>
+            </a>
+          </div>
+          <div class="community-activity-list" data-community-list hidden></div>
+          <a class="community-project" href="https://github.com/inclusionAI/AReno" aria-label="AReno on GitHub">
+            <img class="community-project__icon" src="assets/images/project-areno.svg" alt="" width="24" height="24">
+            <strong>AReno</strong>
+            <span class="community-project__tag" data-i18n="tags.easy">Accessible</span>
+            <span class="community-project__tag" data-i18n="tags.single">Single-node</span>
+            <span class="community-project__stars"><img src="assets/images/star.svg" alt="" width="16" height="16"><span data-community-stars>12</span></span>
+          </a>
+        </article>
+        <article class="community-card" data-community-card="awex">
+          <div class="community-card__heading">
+            <span class="community-issue-dot" aria-hidden="true"></span>
+            <h3 data-i18n="community.activity.heading">New Issues</h3>
+            <span class="live-status" data-community-status></span>
+          </div>
+          <div class="community-fallback" data-community-fallback aria-label="Recent GitHub issues">
+            <a class="community-activity" data-community-fallback-item
+               href="https://github.com/inclusionAI/Awex/issues/111"
+               aria-label="Awex Issue 111: verl performance in the benchmark table"
+               title="[Question] verl performance in the benchmark table">
+              <span class="community-activity__person"><img class="community-activity__avatar" src="https://avatars.githubusercontent.com/u/29516934?v=4" alt="" width="24" height="24" loading="lazy" referrerpolicy="no-referrer"><span>ellerre</span></span>
+              <strong class="community-activity__title">[Question] verl performance in the benchmark table</strong>
+              <span class="community-activity__meta">Issue #111 · Open · 31d ago</span>
+            </a>
+            <a class="community-activity" data-community-fallback-item
+               href="https://github.com/inclusionAI/Awex/pull/110"
+               aria-label="Awex PR 110: add sglang worker task monkey patch"
+               title="feat: add sglang worker task monkey patch">
+              <span class="community-activity__person"><img class="community-activity__avatar" src="https://avatars.githubusercontent.com/u/12445254?v=4" alt="" width="24" height="24" loading="lazy" referrerpolicy="no-referrer"><span>chaokunyang</span></span>
+              <strong class="community-activity__title">feat: add sglang worker task monkey patch</strong>
+              <span class="community-activity__meta">PR #110 · Open · 53d ago</span>
+            </a>
+          </div>
+          <div class="community-activity-list" data-community-list hidden></div>
+          <a class="community-project" href="https://github.com/inclusionAI/Awex" aria-label="Awex on GitHub">
+            <img class="community-project__icon" src="assets/images/project-awex.svg" alt="" width="24" height="24">
+            <strong>Awex</strong>
+            <span class="community-project__tag" data-i18n="tags.scalable">Scalable</span>
+            <span class="community-project__tag" data-i18n="tags.modular">Modular</span>
+            <span class="community-project__stars"><img src="assets/images/star.svg" alt="" width="16" height="16"><span data-community-stars>163</span></span>
+          </a>
+        </article>
+        <article class="community-card" data-community-card="astate">
+          <div class="community-card__heading">
+            <span class="community-issue-dot" aria-hidden="true"></span>
+            <h3 data-i18n="community.activity.heading">New Issues</h3>
+            <span class="live-status" data-community-status></span>
+          </div>
+          <div class="community-fallback" data-community-fallback aria-label="Recent GitHub issues">
+            <a class="community-activity" data-community-fallback-item
+               href="https://github.com/inclusionAI/AState/issues/2"
+               aria-label="AState Issue 2: rdma test usage"
+               title="rdma test usage">
+              <span class="community-activity__person"><img class="community-activity__avatar" src="https://avatars.githubusercontent.com/u/30464411?v=4" alt="" width="24" height="24" loading="lazy" referrerpolicy="no-referrer"><span>15050188022</span></span>
+              <strong class="community-activity__title">rdma test usage</strong>
+              <span class="community-activity__meta">Issue #2 · Open · 212d ago</span>
+            </a>
+            <a class="community-activity" data-community-fallback-item
+               href="https://github.com/inclusionAI/AState/issues/4"
+               aria-label="AState Issue 4: idhm_create will always return NULL, can not create table"
+               title="idhm_create will always return NULL, can not create table">
+              <span class="community-activity__person"><img class="community-activity__avatar" src="https://avatars.githubusercontent.com/u/46778179?v=4" alt="" width="24" height="24" loading="lazy" referrerpolicy="no-referrer"><span>new-TonyWang</span></span>
+              <strong class="community-activity__title">idhm_create will always return NULL, can not create table</strong>
+              <span class="community-activity__meta">Issue #4 · Open · 220d ago</span>
+            </a>
+          </div>
+          <div class="community-activity-list" data-community-list hidden></div>
+          <a class="community-project" href="https://github.com/inclusionAI/AState" aria-label="AState on GitHub">
+            <img class="community-project__icon" src="assets/images/project-astate.svg" alt="" width="24" height="24">
+            <strong>AState</strong>
+            <span class="community-project__tag" data-i18n="tags.reliable">Reliable</span>
+            <span class="community-project__tag" data-i18n="tags.observable">Observable</span>
+            <span class="community-project__stars"><img src="assets/images/star.svg" alt="" width="16" height="16"><span data-community-stars>41</span></span>
+          </a>
+        </article>
+        <article class="community-card" data-community-card="amem">
+          <div class="community-card__heading">
+            <span class="community-issue-dot" aria-hidden="true"></span>
+            <h3 data-i18n="community.activity.heading">New Issues</h3>
+            <span class="live-status" data-community-status></span>
+          </div>
+          <div class="community-fallback" data-community-fallback aria-label="Recent GitHub issues">
+            <a class="community-activity" data-community-fallback-item
+               href="https://github.com/inclusionAI/asystem-amem/issues/15"
+               aria-label="AMem Issue 15: Per-block synchronous RTT in ncclResume peer notification becomes a bottleneck under multi-GPU P2P"
+               title="Per-block synchronous RTT in ncclResume peer notification becomes a bottleneck under multi-GPU P2P — could it be pipelined?">
+              <span class="community-activity__person"><img class="community-activity__avatar" src="https://avatars.githubusercontent.com/u/53850800?v=4" alt="" width="24" height="24" loading="lazy" referrerpolicy="no-referrer"><span>zhaojingxuan123</span></span>
+              <strong class="community-activity__title">Per-block synchronous RTT in ncclResume peer notification becomes a bottleneck under multi-GPU P2P — could it be pipelined?</strong>
+              <span class="community-activity__meta">Issue #15 · Open · 10d ago</span>
+            </a>
+            <a class="community-activity" data-community-fallback-item
+               href="https://github.com/inclusionAI/asystem-amem/issues/12"
+               aria-label="AMem Issue 12: timeline for nccl 2.28 support"
+               title="Question: timeline for nccl 2.28 support">
+              <span class="community-activity__person"><img class="community-activity__avatar" src="https://avatars.githubusercontent.com/u/19699370?v=4" alt="" width="24" height="24" loading="lazy" referrerpolicy="no-referrer"><span>jon-barker</span></span>
+              <strong class="community-activity__title">Question: timeline for nccl 2.28 support</strong>
+              <span class="community-activity__meta">Issue #12 · Open · 139d ago</span>
+            </a>
+          </div>
+          <div class="community-activity-list" data-community-list hidden></div>
+          <a class="community-project" href="https://github.com/inclusionAI/asystem-amem" aria-label="AMem on GitHub">
+            <img class="community-project__icon" src="assets/images/project-amem.svg" alt="" width="24" height="24">
+            <strong>AMem</strong>
+            <span class="community-project__tag" data-i18n="tags.longContext">Long-context</span>
+            <span class="community-project__tag" data-i18n="tags.extensible">Extensible</span>
+            <span class="community-project__stars"><img src="assets/images/star.svg" alt="" width="16" height="16"><span data-community-stars>110</span></span>
+          </a>
+        </article>
       </div>
     </section>
   </main>
