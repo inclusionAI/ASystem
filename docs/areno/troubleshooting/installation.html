@@ -141,22 +141,33 @@ data-aria-dark="Switch to auto color mode">
 <h1>Installation issues<a class="headerlink" href="#installation-issues" title="Link to this heading">#</a></h1>
 <p>Most installation issues come from mismatched Python, PyTorch, CUDA, compiler,
 or optional acceleration packages.</p>
-<p>First checks:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span data-line="1">python<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;import torch; print(torch.__version__, torch.cuda.is_available())&quot;</span>
-</span><span data-line="2">areno<span class="w"> </span>check
-</span><span data-line="3">areno<span class="w"> </span>env<span class="w"> </span>--json
+<p>Start by rerunning the installer. It preserves the full command output in the
+user state directory, usually <code class="docutils literal notranslate"><span class="pre">~/.local/state/areno/install.log</span></code>, and ends
+failures with the stage, reason, and suggested actions:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span data-line="1">bash<span class="w"> </span>scripts/install.sh
 </span></pre></div>
 </div>
-<p>Common fixes:</p>
-<ul class="simple">
-<li><p>Install AReno inside an environment that already has the intended PyTorch
-and CUDA stack.</p></li>
-<li><p>Use <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">-e</span> <span class="pre">.</span> <span class="pre">--no-build-isolation</span></code> so extension builds use the
-installed PyTorch.</p></li>
-<li><p>Set <code class="docutils literal notranslate"><span class="pre">ARENO_BUILD_EXT=0</span></code> only for docs, metadata, or CPU-only package
-checks.</p></li>
-<li><p>Use Docker when you need a cleaner reproduction path.</p></li>
-</ul>
+<p>Failures before Python setup usually mean a required system tool is missing,
+WSL1 was detected, or <code class="docutils literal notranslate"><span class="pre">nvidia-smi</span></code> cannot see a usable GPU. Correct the
+reported host issue and rerun the same command.</p>
+<p>PyTorch is checked but never installed or upgraded automatically. If the
+installer reports missing, outdated, CPU-only, or unusable PyTorch, prepare
+CUDA-enabled PyTorch 2.6 or newer in the Python environment named in the error,
+then rerun the installer. Use the <a class="reference external" href="https://pytorch.org/get-started/locally/">official PyTorch selector</a> for standard Linux GPU systems.
+For DGX Spark, start from NVIDIA’s provided Jupyter environment or follow the
+<a class="reference external" href="https://build.nvidia.com/spark/pytorch-fine-tune/instructions">DGX Spark PyTorch playbook</a> to select a
+current NGC PyTorch development container.</p>
+<p>Some IDE terminals provide a preconfigured Python environment without setting
+<code class="docutils literal notranslate"><span class="pre">VIRTUAL_ENV</span></code> or <code class="docutils literal notranslate"><span class="pre">CONDA_PREFIX</span></code>. The installer detects a PyTorch-providing
+Python on <code class="docutils literal notranslate"><span class="pre">PATH</span></code> and reuses it automatically. To select an interpreter
+explicitly, rerun with <code class="docutils literal notranslate"><span class="pre">PYTHON=/path/to/python</span> <span class="pre">bash</span> <span class="pre">scripts/install.sh</span></code>.</p>
+<p>If installation completes but a later runtime check fails, collect:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span data-line="1">areno<span class="w"> </span>check
+</span><span data-line="2">areno<span class="w"> </span>env<span class="w"> </span>--json
+</span></pre></div>
+</div>
+<p>Use Docker when the installer reports a host CUDA or system-toolchain problem
+and a clean reproduction path is preferable.</p>
 <p>See <a class="reference internal" href="../getting-started/installation.html"><span class="doc">Installation</span></a> for supported setup paths.</p>
 </section>
 
