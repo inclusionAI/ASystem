@@ -2,6 +2,8 @@
 
 const test = require("node:test");
 const assert = require("node:assert/strict");
+const fs = require("node:fs");
+const path = require("node:path");
 const site = require("../assets/main.js");
 
 test("normalizes supported locales and defaults to English", () => {
@@ -13,8 +15,24 @@ test("normalizes supported locales and defaults to English", () => {
 
 test("returns Chinese translation and preserves English fallback", () => {
   assert.equal(site.translatedValue("nav.home", "zh-CN", "Home"), "首页");
+  assert.equal(site.translatedValue("metrics.nodes.value", "zh-CN", "20K+"), "2万+");
+  assert.equal(site.translatedValue("metrics.workflows.value", "zh-CN", "100+"), "100+");
+  assert.equal(site.translatedValue("metrics.projects.value", "zh-CN", "4"), "4");
   assert.equal(site.translatedValue("missing.key", "zh-CN", "Fallback"), "Fallback");
   assert.equal(site.translatedValue("nav.home", "en", "Home"), "Home");
+});
+
+test("capability values and installation links keep localization contracts", () => {
+  const html = fs.readFileSync(path.join(__dirname, "..", "index.html"), "utf8");
+  const installationUrl = "https://asystem-ai.io/docs/areno/getting-started/installation.html";
+
+  for (const key of (
+    "metrics.nodes.value metrics.workflows.value metrics.projects.value"
+  ).split(" ")) {
+    assert.ok(html.includes(`data-i18n="${key}"`), key);
+  }
+  assert.equal(html.split(installationUrl).length - 1, 2);
+  assert.ok(!html.includes('href="/docs/areno/getting-started/installation.html"'));
 });
 
 test("storage failures never break locale fallback", () => {
