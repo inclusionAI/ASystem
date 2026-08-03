@@ -225,18 +225,55 @@ per-algorithm loader contracts.</p>
 <dt><code class="docutils literal notranslate"><span class="pre">--max-steps</span> <span class="pre">INTEGER</span></code></dt><dd><p>Optional global trainer step cap. Training stops after this many step
 indices have completed, even if the current epoch still has more batches.</p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">--world-size</span> <span class="pre">INTEGER</span></code></dt><dd><p>Total device count for the backend. Default: <code class="docutils literal notranslate"><span class="pre">8</span></code>.</p>
+<dt><code class="docutils literal notranslate"><span class="pre">--world-size</span> <span class="pre">INTEGER</span></code></dt><dd><p>Total training device count. Default: <code class="docutils literal notranslate"><span class="pre">8</span></code>. When <code class="docutils literal notranslate"><span class="pre">--train-devices</span></code> is
+provided, AReno infers this value from the expanded device list.</p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">--tp-size</span> <span class="pre">INTEGER</span></code></dt><dd><p>Tensor parallel size for the backend. Default: <code class="docutils literal notranslate"><span class="pre">4</span></code>.</p>
+<dt><code class="docutils literal notranslate"><span class="pre">--tp-size</span> <span class="pre">INTEGER</span></code>, <code class="docutils literal notranslate"><span class="pre">--train-tp-size</span> <span class="pre">INTEGER</span></code></dt><dd><p>Tensor parallel size for training. The two option names are aliases.
+Default: <code class="docutils literal notranslate"><span class="pre">4</span></code>.</p>
 </dd>
 </dl>
 <p><code class="docutils literal notranslate"><span class="pre">world-size</span></code> must be divisible by <code class="docutils literal notranslate"><span class="pre">tp-size</span></code>.</p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">--train-devices</span> <span class="pre">TEXT</span></code></dt><dd><p>Comma-separated logical CUDA device indices or inclusive ranges used by
+training. For example, <code class="docutils literal notranslate"><span class="pre">0..8,11..29</span></code> includes both endpoints. AReno
+derives <code class="docutils literal notranslate"><span class="pre">world-size</span></code> from the expanded count. When omitted, AReno uses
+<code class="docutils literal notranslate"><span class="pre">0</span></code> through <code class="docutils literal notranslate"><span class="pre">world-size</span> <span class="pre">-</span> <span class="pre">1</span></code>.</p>
+</dd>
+</dl>
 </section>
 <section id="rollout">
 <h3>Rollout<a class="headerlink" href="#rollout" title="Link to this heading">#</a></h3>
 <p>Everything that generates and scores completions: batch volume, sequence
 limits, sampling, decode runtime, the agentic-rollout hooks, and the reward
 signal.</p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">--rollout-devices</span> <span class="pre">TEXT</span></code></dt><dd><p>Comma-separated logical CUDA device indices or inclusive ranges for an
+independent rollout engine. They may overlap <code class="docutils literal notranslate"><span class="pre">--train-devices</span></code> when the
+GPU has enough memory for both worker processes. This option is valid only
+for online algorithms that generate rollouts.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">--rollout-tp-size</span> <span class="pre">INTEGER</span></code></dt><dd><p>Tensor parallel size of the independent rollout engine. It defaults to the
+training <code class="docutils literal notranslate"><span class="pre">tp-size</span></code>. The rollout device count must be divisible by this
+value.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">--policy-sync-bucket-mb</span> <span class="pre">INTEGER</span></code></dt><dd><p>Maximum reusable GPU buffer used while streaming policy weights from the
+training engine to the rollout engine. Default: <code class="docutils literal notranslate"><span class="pre">64</span></code> MiB.</p>
+</dd>
+</dl>
+<p>For example, the following uses four visible GPUs for training and two
+different visible GPUs for rollout:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span data-line="1">areno<span class="w"> </span>train<span class="w"> </span><span class="se">\</span>
+</span><span data-line="2"><span class="w">  </span>--algo<span class="w"> </span>gspo<span class="w"> </span><span class="se">\</span>
+</span><span data-line="3"><span class="w">  </span>--ckpt<span class="w"> </span>Qwen/Qwen3-8B<span class="w"> </span><span class="se">\</span>
+</span><span data-line="4"><span class="w">  </span>--dataset-path<span class="w"> </span>...<span class="w"> </span><span class="se">\</span>
+</span><span data-line="5"><span class="w">  </span>--reward-fn-path<span class="w"> </span>...<span class="w"> </span><span class="se">\</span>
+</span><span data-line="6"><span class="w">  </span>--world-size<span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="se">\</span>
+</span><span data-line="7"><span class="w">  </span>--tp-size<span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="se">\</span>
+</span><span data-line="8"><span class="w">  </span>--train-devices<span class="w"> </span><span class="m">0</span>,1,2,3<span class="w"> </span><span class="se">\</span>
+</span><span data-line="9"><span class="w">  </span>--rollout-devices<span class="w"> </span><span class="m">4</span>,5<span class="w"> </span><span class="se">\</span>
+</span><span data-line="10"><span class="w">  </span>--rollout-tp-size<span class="w"> </span><span class="m">2</span>
+</span></pre></div>
+</div>
 <dl class="simple">
 <dt><code class="docutils literal notranslate"><span class="pre">--batch-size</span> <span class="pre">INTEGER</span></code></dt><dd><p>Prompt or pair batch size. Default: <code class="docutils literal notranslate"><span class="pre">32</span></code>.</p>
 </dd>

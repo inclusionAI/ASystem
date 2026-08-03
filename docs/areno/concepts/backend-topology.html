@@ -109,7 +109,7 @@ data-aria-dark="Switch to auto color mode">
       <i class="i-lucide close"></i>
     </button>
     <div class="sy-scrollbar sy-rside-inner px-6 xl:top-16 xl:sticky xl:pl-0 pt-6 pb-4"><div class="localtoc"><h3>On this page</h3><ul>
-<li><a class="reference internal" href="#one-colocated-engine">One colocated engine</a></li>
+<li><a class="reference internal" href="#colocated-and-partitioned-engines">Colocated and partitioned engines</a></li>
 </ul>
 </div></div>
   </aside>
@@ -157,17 +157,37 @@ training to that backend.</p>
 <code class="docutils literal notranslate"><span class="pre">rollout_batch</span></code> and <code class="docutils literal notranslate"><span class="pre">train</span></code> methods define the operations required by the
 training loop. <code class="docutils literal notranslate"><span class="pre">ArenoBackend</span></code> is the registered AReno implementation in
 <code class="docutils literal notranslate"><span class="pre">areno/api/backend/areno/backend.py</span></code>.</p>
-<section id="one-colocated-engine">
-<h2>One colocated engine<a class="headerlink" href="#one-colocated-engine" title="Link to this heading">#</a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">ArenoBackend.initialize</span></code> creates one <code class="docutils literal notranslate"><span class="pre">ArenoEngine</span></code> and stores it in
-<code class="docutils literal notranslate"><span class="pre">self._engine</span></code>. The same engine handles both sides of the loop:</p>
+<section id="colocated-and-partitioned-engines">
+<h2>Colocated and partitioned engines<a class="headerlink" href="#colocated-and-partitioned-engines" title="Link to this heading">#</a></h2>
+<p>By default, <code class="docutils literal notranslate"><span class="pre">ArenoBackend.initialize</span></code> creates one <code class="docutils literal notranslate"><span class="pre">ArenoEngine</span></code>. The same
+engine handles both sides of the loop:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">ArenoBackend.rollout_batch</span></code> calls <code class="docutils literal notranslate"><span class="pre">ArenoEngine.generate_rollout</span></code>.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">ArenoBackend.train</span></code> calls <code class="docutils literal notranslate"><span class="pre">ArenoEngine.step</span></code>.</p></li>
 </ul>
 <p><code class="docutils literal notranslate"><span class="pre">ArenoEngine</span></code> is implemented in <code class="docutils literal notranslate"><span class="pre">areno/engine/api.py</span></code>. It coordinates the
-worker cluster used by both rollout and training, so the current backend does
-not split those calls across separate engines or external runtimes.</p>
+worker cluster used by both rollout and training.</p>
+<p>Online RL runs may instead assign CUDA devices to an independent rollout
+engine. Training and rollout workers then join one
+distributed world but use separate TP and DP process groups. This permits, for
+example, training with TP 8 while generating rollouts with TP 2.</p>
+<p>After an optimizer step, the rollout engine keeps its current policy until the
+next rollout begins. AReno then streams the new policy directly between GPUs
+with NCCL. Tensors are distributed over training DP rows by byte size, moved
+through a bounded bucket, and written into the rollout TP shards without a CPU
+or filesystem staging copy.</p>
+<p>Both device lists use logical indices within the parent process’
+<code class="docutils literal notranslate"><span class="pre">CUDA_VISIBLE_DEVICES</span></code>. They may overlap; overlapping devices hold both a
+training worker and a rollout worker, so the combined model, optimizer, cache,
+and CUDA-context memory must fit on those GPUs. For an overlapping topology,
+AReno selects train and rollout relay ranks on different physical GPUs, then
+fans each received bucket through rollout-only TP/DP groups. This keeps
+duplicate physical GPUs out of an NCCL communicator.</p>
+<p>Every completed synchronization logs its total time, collective transfer time,
+bytes, tensor count, and effective throughput. The same values are emitted
+with the next training metrics as <code class="docutils literal notranslate"><span class="pre">policy_sync_time_s</span></code>,
+<code class="docutils literal notranslate"><span class="pre">policy_sync_transfer_time_s</span></code>, <code class="docutils literal notranslate"><span class="pre">policy_sync_bytes</span></code>,
+<code class="docutils literal notranslate"><span class="pre">policy_sync_tensors</span></code>, and <code class="docutils literal notranslate"><span class="pre">policy_sync_throughput_gbps</span></code>.</p>
 </section>
 </section>
 
