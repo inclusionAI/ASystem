@@ -78,6 +78,7 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l1"><a class="reference internal" href="../concepts/backend-topology.html">Backend Topology</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../concepts/chat-templates.html">Chat Templates</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../concepts/dataset-formats.html">Dataset Formats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../concepts/multimodal-inputs.html">Multimodal Inputs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../concepts/reward-functions.html">Reward Functions</a></li>
 </ul>
 <p class="caption" role="heading" aria-level="3"><span class="caption-text">Cookbook</span></p>
@@ -143,7 +144,7 @@ data-aria-dark="Switch to auto color mode">
 PyTorch install. CPU-only environments can run docs and lightweight tests, but
 they cannot run the training or serving engine.</p>
 <p>Check GPU visibility:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span data-line="1">python<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;import torch; print(&#39;GPU:&#39;, torch.cuda.is_available())&quot;</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span data-line="1">python<span class="w"> </span>-c<span class="w"> </span><span class="s2">"import torch; print('GPU:', torch.cuda.is_available())"</span>
 </span></pre></div>
 </div>
 <p>If the result is <code class="docutils literal notranslate"><span class="pre">False</span></code>:</p>

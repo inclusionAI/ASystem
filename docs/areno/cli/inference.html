@@ -78,6 +78,7 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l1"><a class="reference internal" href="../concepts/backend-topology.html">Backend Topology</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../concepts/chat-templates.html">Chat Templates</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../concepts/dataset-formats.html">Dataset Formats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../concepts/multimodal-inputs.html">Multimodal Inputs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../concepts/reward-functions.html">Reward Functions</a></li>
 </ul>
 <p class="caption" role="heading" aria-level="3"><span class="caption-text">Cookbook</span></p>
@@ -117,6 +118,7 @@ data-aria-dark="Switch to auto color mode">
 </ul>
 </li>
 <li><a class="reference internal" href="#request-fields">Request fields</a></li>
+<li><a class="reference internal" href="#multimodal-content">Multimodal content</a></li>
 <li><a class="reference internal" href="#continuous-batching-behavior">Continuous batching behavior</a></li>
 <li><a class="reference internal" href="#decode-progress-logs">Decode progress logs</a></li>
 <li><a class="reference internal" href="#tool-calls">Tool calls</a></li>
@@ -234,15 +236,15 @@ normal chat-template call.</p>
 <section id="chat-completion-request">
 <h3>Chat completion request<a class="headerlink" href="#chat-completion-request" title="Link to this heading">#</a></h3>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span data-line="1">curl<span class="w"> </span>http://127.0.0.1:8000/v1/chat/completions<span class="w"> </span><span class="se">\</span>
-</span><span data-line="2"><span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;Content-Type: application/json&#39;</span><span class="w"> </span><span class="se">\</span>
-</span><span data-line="3"><span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{</span>
-</span><span data-line="4"><span class="s1">    &quot;model&quot;: &quot;areno&quot;,</span>
-</span><span data-line="5"><span class="s1">    &quot;messages&quot;: [</span>
-</span><span data-line="6"><span class="s1">      {&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: &quot;Solve 12 * 13.&quot;}</span>
+</span><span data-line="2"><span class="w">  </span>-H<span class="w"> </span><span class="s1">'Content-Type: application/json'</span><span class="w"> </span><span class="se">\</span>
+</span><span data-line="3"><span class="w">  </span>-d<span class="w"> </span><span class="s1">'{</span>
+</span><span data-line="4"><span class="s1">    "model": "areno",</span>
+</span><span data-line="5"><span class="s1">    "messages": [</span>
+</span><span data-line="6"><span class="s1">      {"role": "user", "content": "Solve 12 * 13."}</span>
 </span><span data-line="7"><span class="s1">    ],</span>
-</span><span data-line="8"><span class="s1">    &quot;max_tokens&quot;: 128,</span>
-</span><span data-line="9"><span class="s1">    &quot;temperature&quot;: 0.0</span>
-</span><span data-line="10"><span class="s1">  }&#39;</span>
+</span><span data-line="8"><span class="s1">    "max_tokens": 128,</span>
+</span><span data-line="9"><span class="s1">    "temperature": 0.0</span>
+</span><span data-line="10"><span class="s1">  }'</span>
 </span></pre></div>
 </div>
 </section>
@@ -331,6 +333,30 @@ parser used by agentic rollout converts generated tool-call text into
 </dd>
 </dl>
 </section>
+<section id="multimodal-content">
+<h2>Multimodal content<a class="headerlink" href="#multimodal-content" title="Link to this heading">#</a></h2>
+<p>For a checkpoint with a compatible processor, <code class="docutils literal notranslate"><span class="pre">content</span></code> may be a list of
+text, image, audio, and video parts. AReno accepts OpenAI-style <code class="docutils literal notranslate"><span class="pre">*_url</span></code>
+parts and forwards normalized media references to the checkpoint processor:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="p">{</span>
+</span><span data-line="2"><span class="w">  </span><span class="nt">"role"</span><span class="p">:</span><span class="w"> </span><span class="s2">"user"</span><span class="p">,</span>
+</span><span data-line="3"><span class="w">  </span><span class="nt">"content"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+</span><span data-line="4"><span class="w">    </span><span class="p">{</span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"video_url"</span><span class="p">,</span><span class="w"> </span><span class="nt">"video_url"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/data/clip.mp4"</span><span class="p">}},</span>
+</span><span data-line="5"><span class="w">    </span><span class="p">{</span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"audio_url"</span><span class="p">,</span><span class="w"> </span><span class="nt">"audio_url"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/data/clip.wav"</span><span class="p">}},</span>
+</span><span data-line="6"><span class="w">    </span><span class="p">{</span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"text"</span><span class="p">,</span><span class="w"> </span><span class="nt">"text"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Describe the synchronized event."</span><span class="p">}</span>
+</span><span data-line="7"><span class="w">  </span><span class="p">]</span>
+</span><span data-line="8"><span class="p">}</span>
+</span></pre></div>
+</div>
+<p>Supported part types are <code class="docutils literal notranslate"><span class="pre">image_url</span></code>, <code class="docutils literal notranslate"><span class="pre">audio_url</span></code>, <code class="docutils literal notranslate"><span class="pre">video_url</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">input_audio</span></code>. The direct processor forms <code class="docutils literal notranslate"><span class="pre">image</span></code>, <code class="docutils literal notranslate"><span class="pre">audio</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">video</span></code> are also accepted. <code class="docutils literal notranslate"><span class="pre">input_audio</span></code> contains base64 data and a format
+such as <code class="docutils literal notranslate"><span class="pre">wav</span></code> or <code class="docutils literal notranslate"><span class="pre">mp3</span></code>. Local paths are resolved on the server, not on the
+client, so the media files must be visible to the serving process. Data URLs
+can be used when the client and server do not share a filesystem.</p>
+<p>Media support depends on the loaded model processor. See
+<a class="reference internal" href="../concepts/multimodal-inputs.html"><span class="doc">Multimodal inputs</span></a> for serving and training guidance.</p>
+</section>
 <section id="continuous-batching-behavior">
 <h2>Continuous batching behavior<a class="headerlink" href="#continuous-batching-behavior" title="Link to this heading">#</a></h2>
 <p>The server runs inside a long-lived rollout session. Compatible requests can be
@@ -367,26 +393,26 @@ eagerly.</p>
 same tool-call parser as agentic rollout:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="kn">from</span><span class="w"> </span><span class="nn">openai</span><span class="w"> </span><span class="kn">import</span> <span class="n">OpenAI</span>
 </span><span data-line="2">
-</span><span data-line="3"><span class="n">client</span> <span class="o">=</span> <span class="n">OpenAI</span><span class="p">(</span><span class="n">base_url</span><span class="o">=</span><span class="s2">&quot;http://127.0.0.1:8000/v1&quot;</span><span class="p">,</span> <span class="n">api_key</span><span class="o">=</span><span class="s2">&quot;unused&quot;</span><span class="p">)</span>
+</span><span data-line="3"><span class="n">client</span> <span class="o">=</span> <span class="n">OpenAI</span><span class="p">(</span><span class="n">base_url</span><span class="o">=</span><span class="s2">"http://127.0.0.1:8000/v1"</span><span class="p">,</span> <span class="n">api_key</span><span class="o">=</span><span class="s2">"unused"</span><span class="p">)</span>
 </span><span data-line="4"><span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">completions</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
-</span><span data-line="5">    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;areno&quot;</span><span class="p">,</span>
-</span><span data-line="6">    <span class="n">messages</span><span class="o">=</span><span class="p">[{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;Choose a move: left or right.&quot;</span><span class="p">}],</span>
+</span><span data-line="5">    <span class="n">model</span><span class="o">=</span><span class="s2">"areno"</span><span class="p">,</span>
+</span><span data-line="6">    <span class="n">messages</span><span class="o">=</span><span class="p">[{</span><span class="s2">"role"</span><span class="p">:</span> <span class="s2">"user"</span><span class="p">,</span> <span class="s2">"content"</span><span class="p">:</span> <span class="s2">"Choose a move: left or right."</span><span class="p">}],</span>
 </span><span data-line="7">    <span class="n">tools</span><span class="o">=</span><span class="p">[</span>
 </span><span data-line="8">        <span class="p">{</span>
-</span><span data-line="9">            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;function&quot;</span><span class="p">,</span>
-</span><span data-line="10">            <span class="s2">&quot;function&quot;</span><span class="p">:</span> <span class="p">{</span>
-</span><span data-line="11">                <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;choose_move&quot;</span><span class="p">,</span>
-</span><span data-line="12">                <span class="s2">&quot;parameters&quot;</span><span class="p">:</span> <span class="p">{</span>
-</span><span data-line="13">                    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
-</span><span data-line="14">                    <span class="s2">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span>
-</span><span data-line="15">                        <span class="s2">&quot;direction&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span> <span class="s2">&quot;enum&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;left&quot;</span><span class="p">,</span> <span class="s2">&quot;right&quot;</span><span class="p">]},</span>
+</span><span data-line="9">            <span class="s2">"type"</span><span class="p">:</span> <span class="s2">"function"</span><span class="p">,</span>
+</span><span data-line="10">            <span class="s2">"function"</span><span class="p">:</span> <span class="p">{</span>
+</span><span data-line="11">                <span class="s2">"name"</span><span class="p">:</span> <span class="s2">"choose_move"</span><span class="p">,</span>
+</span><span data-line="12">                <span class="s2">"parameters"</span><span class="p">:</span> <span class="p">{</span>
+</span><span data-line="13">                    <span class="s2">"type"</span><span class="p">:</span> <span class="s2">"object"</span><span class="p">,</span>
+</span><span data-line="14">                    <span class="s2">"properties"</span><span class="p">:</span> <span class="p">{</span>
+</span><span data-line="15">                        <span class="s2">"direction"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"type"</span><span class="p">:</span> <span class="s2">"string"</span><span class="p">,</span> <span class="s2">"enum"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"left"</span><span class="p">,</span> <span class="s2">"right"</span><span class="p">]},</span>
 </span><span data-line="16">                    <span class="p">},</span>
-</span><span data-line="17">                    <span class="s2">&quot;required&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;direction&quot;</span><span class="p">],</span>
+</span><span data-line="17">                    <span class="s2">"required"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"direction"</span><span class="p">],</span>
 </span><span data-line="18">                <span class="p">},</span>
 </span><span data-line="19">            <span class="p">},</span>
 </span><span data-line="20">        <span class="p">}</span>
 </span><span data-line="21">    <span class="p">],</span>
-</span><span data-line="22">    <span class="n">tool_choice</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;function&quot;</span><span class="p">,</span> <span class="s2">&quot;function&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;choose_move&quot;</span><span class="p">}},</span>
+</span><span data-line="22">    <span class="n">tool_choice</span><span class="o">=</span><span class="p">{</span><span class="s2">"type"</span><span class="p">:</span> <span class="s2">"function"</span><span class="p">,</span> <span class="s2">"function"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"name"</span><span class="p">:</span> <span class="s2">"choose_move"</span><span class="p">}},</span>
 </span><span data-line="23"><span class="p">)</span>
 </span><span data-line="24">
 </span><span data-line="25"><span class="nb">print</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">choices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">tool_calls</span><span class="p">)</span>

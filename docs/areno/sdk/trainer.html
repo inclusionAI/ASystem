@@ -78,6 +78,7 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l1"><a class="reference internal" href="../concepts/backend-topology.html">Backend Topology</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../concepts/chat-templates.html">Chat Templates</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../concepts/dataset-formats.html">Dataset Formats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../concepts/multimodal-inputs.html">Multimodal Inputs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../concepts/reward-functions.html">Reward Functions</a></li>
 </ul>
 <p class="caption" role="heading" aria-level="3"><span class="caption-text">Cookbook</span></p>
@@ -204,7 +205,7 @@ rollout state, actor onload/offload, and optional agentic proxy serving.</p>
 </span><span data-line="6">    <span class="c1"># Near-instant: constructs the Python wrapper only.</span>
 </span><span data-line="7">    <span class="n">trainer</span> <span class="o">=</span> <span class="n">Trainer</span><span class="p">(</span>
 </span><span data-line="8">        <span class="n">world_size</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-</span><span data-line="9">        <span class="n">model_path</span><span class="o">=</span><span class="s2">&quot;Qwen/Qwen3.5-4B&quot;</span><span class="p">,</span>
+</span><span data-line="9">        <span class="n">model_path</span><span class="o">=</span><span class="s2">"Qwen/Qwen3.5-4B"</span><span class="p">,</span>
 </span><span data-line="10">        <span class="n">backend_type</span><span class="o">=</span><span class="n">areno</span><span class="o">.</span><span class="n">Areno</span><span class="p">,</span>
 </span><span data-line="11">        <span class="n">custom_config</span><span class="o">=</span><span class="n">areno</span><span class="o">.</span><span class="n">ArenoConfig</span><span class="p">(</span><span class="n">tp_size</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
 </span><span data-line="12">    <span class="p">)</span>
@@ -216,7 +217,7 @@ rollout state, actor onload/offload, and optional agentic proxy serving.</p>
 </span><span data-line="18">    <span class="c1"># session owns actor onload/offload and rollout-state cleanup.</span>
 </span><span data-line="19">    <span class="n">sampling</span> <span class="o">=</span> <span class="n">areno</span><span class="o">.</span><span class="n">SamplingParams</span><span class="p">(</span><span class="n">max_new_tokens</span><span class="o">=</span><span class="mi">128</span><span class="p">)</span>
 </span><span data-line="20">    <span class="k">async</span> <span class="k">with</span> <span class="n">trainer</span><span class="o">.</span><span class="n">rollout_session</span><span class="p">(</span><span class="n">sampling_params</span><span class="o">=</span><span class="n">sampling</span><span class="p">,</span> <span class="n">proxy</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-</span><span data-line="21">        <span class="n">rollout</span> <span class="o">=</span> <span class="n">trainer</span><span class="o">.</span><span class="n">rollout_batch</span><span class="p">([</span><span class="s2">&quot;Solve 12 * 13.&quot;</span><span class="p">],</span> <span class="n">n_samples</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">sampling_params</span><span class="o">=</span><span class="n">sampling</span><span class="p">)</span>
+</span><span data-line="21">        <span class="n">rollout</span> <span class="o">=</span> <span class="n">trainer</span><span class="o">.</span><span class="n">rollout_batch</span><span class="p">([</span><span class="s2">"Solve 12 * 13."</span><span class="p">],</span> <span class="n">n_samples</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">sampling_params</span><span class="o">=</span><span class="n">sampling</span><span class="p">)</span>
 </span><span data-line="22">
 </span><span data-line="23">    <span class="c1"># Build TrainSequence rows and a loss function for your algorithm,</span>
 </span><span data-line="24">    <span class="c1"># then run one backend optimizer step.</span>
@@ -239,7 +240,7 @@ scoring, and training calls then reuse the initialized backend.</p>
 </span><span data-line="3">
 </span><span data-line="4"><span class="n">trainer</span> <span class="o">=</span> <span class="n">Trainer</span><span class="p">(</span>
 </span><span data-line="5">    <span class="n">world_size</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-</span><span data-line="6">    <span class="n">model_path</span><span class="o">=</span><span class="s2">&quot;Qwen/Qwen3.5-4B&quot;</span><span class="p">,</span>
+</span><span data-line="6">    <span class="n">model_path</span><span class="o">=</span><span class="s2">"Qwen/Qwen3.5-4B"</span><span class="p">,</span>
 </span><span data-line="7">    <span class="n">backend_type</span><span class="o">=</span><span class="n">areno</span><span class="o">.</span><span class="n">Areno</span><span class="p">,</span>
 </span><span data-line="8">    <span class="n">custom_config</span><span class="o">=</span><span class="n">areno</span><span class="o">.</span><span class="n">ArenoConfig</span><span class="p">(</span><span class="n">tp_size</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
 </span><span data-line="9"><span class="p">)</span>
@@ -283,7 +284,7 @@ checkpoint saving.</p>
 <span class="sig-name descname"><span class="pre">get_tokenizer</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#areno.Trainer.get_tokenizer" title="Link to this definition">#</a></dt>
 <dd><p>Return the initialized tokenizer.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="n">tokenizer</span> <span class="o">=</span> <span class="n">trainer</span><span class="o">.</span><span class="n">get_tokenizer</span><span class="p">()</span>
-</span><span data-line="2"><span class="n">ids</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;Hello&quot;</span><span class="p">)</span>
+</span><span data-line="2"><span class="n">ids</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">"Hello"</span><span class="p">)</span>
 </span></pre></div>
 </div>
 <dl class="field-list simple">
@@ -352,7 +353,7 @@ delegates to <a class="reference internal" href="#areno.Trainer.rollout_token_ba
 </span><span data-line="3"><span class="n">sampling</span> <span class="o">=</span> <span class="n">SamplingParams</span><span class="p">(</span><span class="n">max_new_tokens</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span> <span class="n">temperature</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
 </span><span data-line="4"><span class="k">async</span> <span class="k">with</span> <span class="n">trainer</span><span class="o">.</span><span class="n">rollout_session</span><span class="p">(</span><span class="n">sampling_params</span><span class="o">=</span><span class="n">sampling</span><span class="p">,</span> <span class="n">proxy</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 </span><span data-line="5">    <span class="n">rollouts</span> <span class="o">=</span> <span class="n">trainer</span><span class="o">.</span><span class="n">rollout_batch</span><span class="p">(</span>
-</span><span data-line="6">        <span class="p">[</span><span class="s2">&quot;Solve 12 * 13.&quot;</span><span class="p">],</span>
+</span><span data-line="6">        <span class="p">[</span><span class="s2">"Solve 12 * 13."</span><span class="p">],</span>
 </span><span data-line="7">        <span class="n">n_samples</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
 </span><span data-line="8">        <span class="n">sampling_params</span><span class="o">=</span><span class="n">sampling</span><span class="p">,</span>
 </span><span data-line="9">    <span class="p">)</span>
@@ -381,7 +382,7 @@ delegates to <a class="reference internal" href="#areno.Trainer.rollout_token_ba
 <p>Use this method when your loop already tokenized prompts while building a
 dataset batch.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="n">tokenizer</span> <span class="o">=</span> <span class="n">trainer</span><span class="o">.</span><span class="n">get_tokenizer</span><span class="p">()</span>
-</span><span data-line="2"><span class="n">prompt_tokens</span> <span class="o">=</span> <span class="p">[</span><span class="n">tokenizer</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;Solve 12 * 13.&quot;</span><span class="p">)]</span>
+</span><span data-line="2"><span class="n">prompt_tokens</span> <span class="o">=</span> <span class="p">[</span><span class="n">tokenizer</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">"Solve 12 * 13."</span><span class="p">)]</span>
 </span><span data-line="3"><span class="n">sampling</span> <span class="o">=</span> <span class="n">SamplingParams</span><span class="p">(</span><span class="n">max_new_tokens</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span> <span class="n">temperature</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
 </span><span data-line="4"><span class="k">async</span> <span class="k">with</span> <span class="n">trainer</span><span class="o">.</span><span class="n">rollout_session</span><span class="p">(</span><span class="n">sampling_params</span><span class="o">=</span><span class="n">sampling</span><span class="p">,</span> <span class="n">proxy</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 </span><span data-line="5">    <span class="n">rollouts</span> <span class="o">=</span> <span class="n">trainer</span><span class="o">.</span><span class="n">rollout_token_batch</span><span class="p">(</span>
@@ -478,8 +479,8 @@ DPO.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="kn">from</span><span class="w"> </span><span class="nn">areno</span><span class="w"> </span><span class="kn">import</span> <span class="n">ModelRole</span>
 </span><span data-line="2">
 </span><span data-line="3"><span class="n">trainer</span><span class="o">.</span><span class="n">ensure_roles</span><span class="p">({</span>
-</span><span data-line="4">    <span class="s2">&quot;ref&quot;</span><span class="p">:</span> <span class="n">ModelRole</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;ref&quot;</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="s2">&quot;/path/to/reference&quot;</span><span class="p">,</span> <span class="n">trainable</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
-</span><span data-line="5">    <span class="s2">&quot;critic&quot;</span><span class="p">:</span> <span class="n">ModelRole</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;critic&quot;</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="s2">&quot;/path/to/critic&quot;</span><span class="p">,</span> <span class="n">trainable</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">optimizer_lr</span><span class="o">=</span><span class="mf">1e-5</span><span class="p">),</span>
+</span><span data-line="4">    <span class="s2">"ref"</span><span class="p">:</span> <span class="n">ModelRole</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">"ref"</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="s2">"/path/to/reference"</span><span class="p">,</span> <span class="n">trainable</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+</span><span data-line="5">    <span class="s2">"critic"</span><span class="p">:</span> <span class="n">ModelRole</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">"critic"</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="s2">"/path/to/critic"</span><span class="p">,</span> <span class="n">trainable</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">optimizer_lr</span><span class="o">=</span><span class="mf">1e-5</span><span class="p">),</span>
 </span><span data-line="6"><span class="p">})</span>
 </span></pre></div>
 </div>
@@ -500,7 +501,7 @@ DPO.</p>
 <dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">list[list[float]]</span></code></p>
 </dd>
 </dl>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="n">ref_logprobs</span> <span class="o">=</span> <span class="n">trainer</span><span class="o">.</span><span class="n">score_logprobs</span><span class="p">(</span><span class="s2">&quot;ref&quot;</span><span class="p">,</span> <span class="n">token_rows</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="n">ref_logprobs</span> <span class="o">=</span> <span class="n">trainer</span><span class="o">.</span><span class="n">score_logprobs</span><span class="p">(</span><span class="s2">"ref"</span><span class="p">,</span> <span class="n">token_rows</span><span class="p">)</span>
 </span></pre></div>
 </div>
 </dd></dl>
@@ -520,7 +521,7 @@ DPO.</p>
 <dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">list[list[float]]</span></code></p>
 </dd>
 </dl>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="n">values</span> <span class="o">=</span> <span class="n">trainer</span><span class="o">.</span><span class="n">score_values</span><span class="p">(</span><span class="s2">&quot;critic&quot;</span><span class="p">,</span> <span class="n">token_rows</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="n">values</span> <span class="o">=</span> <span class="n">trainer</span><span class="o">.</span><span class="n">score_values</span><span class="p">(</span><span class="s2">"critic"</span><span class="p">,</span> <span class="n">token_rows</span><span class="p">)</span>
 </span></pre></div>
 </div>
 </dd></dl>
@@ -540,7 +541,7 @@ DPO.</p>
 <dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">list[float]</span></code></p>
 </dd>
 </dl>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="n">rewards</span> <span class="o">=</span> <span class="n">trainer</span><span class="o">.</span><span class="n">score_rewards</span><span class="p">(</span><span class="s2">&quot;reward&quot;</span><span class="p">,</span> <span class="n">token_rows</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="n">rewards</span> <span class="o">=</span> <span class="n">trainer</span><span class="o">.</span><span class="n">score_rewards</span><span class="p">(</span><span class="s2">"reward"</span><span class="p">,</span> <span class="n">token_rows</span><span class="p">)</span>
 </span></pre></div>
 </div>
 </dd></dl>
@@ -565,7 +566,7 @@ microbatches.</p></li>
 <dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">dict[str,</span> <span class="pre">float]</span></code></p>
 </dd>
 </dl>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="n">critic_stats</span> <span class="o">=</span> <span class="n">trainer</span><span class="o">.</span><span class="n">train_values</span><span class="p">(</span><span class="s2">&quot;critic&quot;</span><span class="p">,</span> <span class="n">batch_data</span><span class="p">,</span> <span class="n">mini_bs</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="n">critic_stats</span> <span class="o">=</span> <span class="n">trainer</span><span class="o">.</span><span class="n">train_values</span><span class="p">(</span><span class="s2">"critic"</span><span class="p">,</span> <span class="n">batch_data</span><span class="p">,</span> <span class="n">mini_bs</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
 </span></pre></div>
 </div>
 </dd></dl>
@@ -582,7 +583,7 @@ microbatches.</p></li>
 <dd class="field-even"><p>saved checkpoint path as <code class="docutils literal notranslate"><span class="pre">str</span></code>.</p>
 </dd>
 </dl>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="n">saved_path</span> <span class="o">=</span> <span class="n">trainer</span><span class="o">.</span><span class="n">save_checkpoint</span><span class="p">(</span><span class="s2">&quot;/tmp/areno-step-10&quot;</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="n">saved_path</span> <span class="o">=</span> <span class="n">trainer</span><span class="o">.</span><span class="n">save_checkpoint</span><span class="p">(</span><span class="s2">"/tmp/areno-step-10"</span><span class="p">)</span>
 </span></pre></div>
 </div>
 </dd></dl>
@@ -773,17 +774,17 @@ the same context as rollout, but they are masked from policy loss by default.</p
 </span><span data-line="18"><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
 </span><span data-line="19">    <span class="n">trainer</span> <span class="o">=</span> <span class="n">Trainer</span><span class="p">(</span>
 </span><span data-line="20">        <span class="n">world_size</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-</span><span data-line="21">        <span class="n">model_path</span><span class="o">=</span><span class="s2">&quot;Qwen/Qwen3.5-4B&quot;</span><span class="p">,</span>
+</span><span data-line="21">        <span class="n">model_path</span><span class="o">=</span><span class="s2">"Qwen/Qwen3.5-4B"</span><span class="p">,</span>
 </span><span data-line="22">        <span class="n">backend_type</span><span class="o">=</span><span class="n">areno</span><span class="o">.</span><span class="n">Areno</span><span class="p">,</span>
 </span><span data-line="23">        <span class="n">custom_config</span><span class="o">=</span><span class="n">areno</span><span class="o">.</span><span class="n">ArenoConfig</span><span class="p">(</span><span class="n">tp_size</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
 </span><span data-line="24">    <span class="p">)</span>
 </span><span data-line="25">    <span class="n">trainer</span><span class="o">.</span><span class="n">init</span><span class="p">()</span>
 </span><span data-line="26">
-</span><span data-line="27">    <span class="n">row</span> <span class="o">=</span> <span class="n">load_dataset</span><span class="p">(</span><span class="s2">&quot;gsm8k&quot;</span><span class="p">,</span> <span class="s2">&quot;main&quot;</span><span class="p">,</span> <span class="n">split</span><span class="o">=</span><span class="s2">&quot;train[0:1]&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
-</span><span data-line="28">    <span class="n">target</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s2">&quot;answer&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">rsplit</span><span class="p">(</span><span class="s2">&quot;####&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+</span><span data-line="27">    <span class="n">row</span> <span class="o">=</span> <span class="n">load_dataset</span><span class="p">(</span><span class="s2">"gsm8k"</span><span class="p">,</span> <span class="s2">"main"</span><span class="p">,</span> <span class="n">split</span><span class="o">=</span><span class="s2">"train[0:1]"</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+</span><span data-line="28">    <span class="n">target</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s2">"answer"</span><span class="p">])</span><span class="o">.</span><span class="n">rsplit</span><span class="p">(</span><span class="s2">"####"</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
 </span><span data-line="29">    <span class="n">prompt</span> <span class="o">=</span> <span class="p">(</span>
-</span><span data-line="30">        <span class="s2">&quot;Solve the problem and put the final answer in </span><span class="se">\\</span><span class="s2">boxed</span><span class="si">{}</span><span class="s2">.</span><span class="se">\n\n</span><span class="s2">&quot;</span>
-</span><span data-line="31">        <span class="sa">f</span><span class="s2">&quot;Problem: </span><span class="si">{</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;question&#39;</span><span class="p">]</span><span class="si">}</span><span class="se">\n</span><span class="s2">Solution:&quot;</span>
+</span><span data-line="30">        <span class="s2">"Solve the problem and put the final answer in </span><span class="se">\\</span><span class="s2">boxed</span><span class="si">{}</span><span class="s2">.</span><span class="se">\n\n</span><span class="s2">"</span>
+</span><span data-line="31">        <span class="sa">f</span><span class="s2">"Problem: </span><span class="si">{</span><span class="n">row</span><span class="p">[</span><span class="s1">'question'</span><span class="p">]</span><span class="si">}</span><span class="se">\n</span><span class="s2">Solution:"</span>
 </span><span data-line="32">    <span class="p">)</span>
 </span><span data-line="33">    <span class="n">prompt_tokens</span> <span class="o">=</span> <span class="n">trainer</span><span class="o">.</span><span class="n">get_tokenizer</span><span class="p">()</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">prompt</span><span class="p">)</span>
 </span><span data-line="34">    <span class="n">sampling</span> <span class="o">=</span> <span class="n">SamplingParams</span><span class="p">(</span><span class="n">max_new_tokens</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span> <span class="n">temperature</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
@@ -835,15 +836,15 @@ token, logprob, reward, and loss-mask rows used by regular rollouts.</p>
 </span><span data-line="8">
 </span><span data-line="9"><span class="n">tools</span> <span class="o">=</span> <span class="p">[</span>
 </span><span data-line="10">    <span class="p">{</span>
-</span><span data-line="11">        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;function&quot;</span><span class="p">,</span>
-</span><span data-line="12">        <span class="s2">&quot;function&quot;</span><span class="p">:</span> <span class="p">{</span>
-</span><span data-line="13">            <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;choose_move&quot;</span><span class="p">,</span>
-</span><span data-line="14">            <span class="s2">&quot;parameters&quot;</span><span class="p">:</span> <span class="p">{</span>
-</span><span data-line="15">                <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
-</span><span data-line="16">                <span class="s2">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span>
-</span><span data-line="17">                    <span class="s2">&quot;direction&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span> <span class="s2">&quot;enum&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;up&quot;</span><span class="p">,</span> <span class="s2">&quot;down&quot;</span><span class="p">,</span> <span class="s2">&quot;left&quot;</span><span class="p">,</span> <span class="s2">&quot;right&quot;</span><span class="p">]},</span>
+</span><span data-line="11">        <span class="s2">"type"</span><span class="p">:</span> <span class="s2">"function"</span><span class="p">,</span>
+</span><span data-line="12">        <span class="s2">"function"</span><span class="p">:</span> <span class="p">{</span>
+</span><span data-line="13">            <span class="s2">"name"</span><span class="p">:</span> <span class="s2">"choose_move"</span><span class="p">,</span>
+</span><span data-line="14">            <span class="s2">"parameters"</span><span class="p">:</span> <span class="p">{</span>
+</span><span data-line="15">                <span class="s2">"type"</span><span class="p">:</span> <span class="s2">"object"</span><span class="p">,</span>
+</span><span data-line="16">                <span class="s2">"properties"</span><span class="p">:</span> <span class="p">{</span>
+</span><span data-line="17">                    <span class="s2">"direction"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"type"</span><span class="p">:</span> <span class="s2">"string"</span><span class="p">,</span> <span class="s2">"enum"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"up"</span><span class="p">,</span> <span class="s2">"down"</span><span class="p">,</span> <span class="s2">"left"</span><span class="p">,</span> <span class="s2">"right"</span><span class="p">]},</span>
 </span><span data-line="18">                <span class="p">},</span>
-</span><span data-line="19">                <span class="s2">&quot;required&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;direction&quot;</span><span class="p">],</span>
+</span><span data-line="19">                <span class="s2">"required"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"direction"</span><span class="p">],</span>
 </span><span data-line="20">            <span class="p">},</span>
 </span><span data-line="21">        <span class="p">},</span>
 </span><span data-line="22">    <span class="p">}</span>
@@ -855,12 +856,12 @@ token, logprob, reward, and loss-mask rows used by regular rollouts.</p>
 </span><span data-line="28">
 </span><span data-line="29">    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">run_one</span><span class="p">(</span><span class="n">item</span><span class="p">):</span>
 </span><span data-line="30">        <span class="n">messages</span> <span class="o">=</span> <span class="p">[</span>
-</span><span data-line="31">            <span class="p">{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;system&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;Call choose_move with the selected direction.&quot;</span><span class="p">},</span>
-</span><span data-line="32">            <span class="p">{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="n">item</span><span class="o">.</span><span class="n">prompt</span><span class="p">},</span>
+</span><span data-line="31">            <span class="p">{</span><span class="s2">"role"</span><span class="p">:</span> <span class="s2">"system"</span><span class="p">,</span> <span class="s2">"content"</span><span class="p">:</span> <span class="s2">"Call choose_move with the selected direction."</span><span class="p">},</span>
+</span><span data-line="32">            <span class="p">{</span><span class="s2">"role"</span><span class="p">:</span> <span class="s2">"user"</span><span class="p">,</span> <span class="s2">"content"</span><span class="p">:</span> <span class="n">item</span><span class="o">.</span><span class="n">prompt</span><span class="p">},</span>
 </span><span data-line="33">        <span class="p">]</span>
-</span><span data-line="34">        <span class="n">tool_choice</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;function&quot;</span><span class="p">,</span> <span class="s2">&quot;function&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;choose_move&quot;</span><span class="p">}}</span>
+</span><span data-line="34">        <span class="n">tool_choice</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"type"</span><span class="p">:</span> <span class="s2">"function"</span><span class="p">,</span> <span class="s2">"function"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"name"</span><span class="p">:</span> <span class="s2">"choose_move"</span><span class="p">}}</span>
 </span><span data-line="35">        <span class="n">response</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">completions</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
-</span><span data-line="36">            <span class="n">model</span><span class="o">=</span><span class="s2">&quot;policy&quot;</span><span class="p">,</span>
+</span><span data-line="36">            <span class="n">model</span><span class="o">=</span><span class="s2">"policy"</span><span class="p">,</span>
 </span><span data-line="37">            <span class="n">messages</span><span class="o">=</span><span class="n">messages</span><span class="p">,</span>
 </span><span data-line="38">            <span class="n">tools</span><span class="o">=</span><span class="n">tools</span><span class="p">,</span>
 </span><span data-line="39">            <span class="n">tool_choice</span><span class="o">=</span><span class="n">tool_choice</span><span class="p">,</span>
@@ -899,7 +900,7 @@ token, logprob, reward, and loss-mask rows used by regular rollouts.</p>
 </span><span data-line="72">
 </span><span data-line="73"><span class="n">trainer</span> <span class="o">=</span> <span class="n">Trainer</span><span class="p">(</span>
 </span><span data-line="74">    <span class="n">world_size</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-</span><span data-line="75">    <span class="n">model_path</span><span class="o">=</span><span class="s2">&quot;Qwen/Qwen3-0.6B&quot;</span><span class="p">,</span>
+</span><span data-line="75">    <span class="n">model_path</span><span class="o">=</span><span class="s2">"Qwen/Qwen3-0.6B"</span><span class="p">,</span>
 </span><span data-line="76">    <span class="n">backend_type</span><span class="o">=</span><span class="n">areno</span><span class="o">.</span><span class="n">Areno</span><span class="p">,</span>
 </span><span data-line="77">    <span class="n">custom_config</span><span class="o">=</span><span class="n">areno</span><span class="o">.</span><span class="n">ArenoConfig</span><span class="p">(</span><span class="n">tp_size</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
 </span><span data-line="78"><span class="p">)</span>

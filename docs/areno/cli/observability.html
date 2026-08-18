@@ -78,6 +78,7 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l1"><a class="reference internal" href="../concepts/backend-topology.html">Backend Topology</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../concepts/chat-templates.html">Chat Templates</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../concepts/dataset-formats.html">Dataset Formats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../concepts/multimodal-inputs.html">Multimodal Inputs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../concepts/reward-functions.html">Reward Functions</a></li>
 </ul>
 <p class="caption" role="heading" aria-level="3"><span class="caption-text">Cookbook</span></p>
@@ -230,8 +231,8 @@ GRPO, and PPO.</p></td>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">grad_norm</span></code></p></td>
 <td><p>Global gradient norm after clipping/accounting.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">grad_zero_ratio</span></code> / <code class="docutils literal notranslate"><span class="pre">grad_nonzero_ratio</span></code></p></td>
-<td><p>Fraction of parameter-gradient entries that are zero/non-zero.</p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">tower_grad_norm</span></code> / <code class="docutils literal notranslate"><span class="pre">projector_grad_norm</span></code></p></td>
+<td><p>Gradient norms for enabled multimodal parameter groups.</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">lr</span></code></p></td>
 <td><p>Current optimizer learning rate.</p></td>
@@ -244,12 +245,12 @@ GRPO, and PPO.</p></td>
 </div>
 <p>For example, if a debugging log shows:</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span><span data-line="1">metric=reward_mean value=0.125000
-</span><span data-line="2">train_stats={&#39;loss&#39;: 0.0, &#39;advantage_mean&#39;: 0.0, &#39;response_len&#39;: 912.5625,
-</span><span data-line="3">             &#39;rollout_logprobs_mean&#39;: -0.17456013709306717,
-</span><span data-line="4">             &#39;train_logprobs_mean&#39;: -0.2500366196036339,
-</span><span data-line="5">             &#39;logp_diff_mean&#39;: 0.07547648251056671,
-</span><span data-line="6">             &#39;step_rollout_time_s&#39;: 213.92972119152546,
-</span><span data-line="7">             &#39;step_train_time_s&#39;: 17.327912725508213}
+</span><span data-line="2">train_stats={'loss': 0.0, 'advantage_mean': 0.0, 'response_len': 912.5625,
+</span><span data-line="3">             'rollout_logprobs_mean': -0.17456013709306717,
+</span><span data-line="4">             'train_logprobs_mean': -0.2500366196036339,
+</span><span data-line="5">             'logp_diff_mean': 0.07547648251056671,
+</span><span data-line="6">             'step_rollout_time_s': 213.92972119152546,
+</span><span data-line="7">             'step_train_time_s': 17.327912725508213}
 </span></pre></div>
 </div>
 <p>read it as: the sampled batch achieved low positive reward on average, the

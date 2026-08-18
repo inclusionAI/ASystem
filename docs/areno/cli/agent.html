@@ -78,6 +78,7 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l1"><a class="reference internal" href="../concepts/backend-topology.html">Backend Topology</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../concepts/chat-templates.html">Chat Templates</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../concepts/dataset-formats.html">Dataset Formats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../concepts/multimodal-inputs.html">Multimodal Inputs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../concepts/reward-functions.html">Reward Functions</a></li>
 </ul>
 <p class="caption" role="heading" aria-level="3"><span class="caption-text">Cookbook</span></p>
@@ -156,7 +157,7 @@ the current machine.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span data-line="1">areno<span class="w"> </span>agent<span class="w"> </span>--set<span class="w"> </span><span class="se">\</span>
 </span><span data-line="2"><span class="w">  </span>--base-url<span class="w"> </span>http://127.0.0.1:8000/v1<span class="w"> </span><span class="se">\</span>
 </span><span data-line="3"><span class="w">  </span>--model<span class="w"> </span>deepseek-v4-flash<span class="w"> </span><span class="se">\</span>
-</span><span data-line="4"><span class="w">  </span>--api-key<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$OPENAI_API_KEY</span><span class="s2">&quot;</span>
+</span><span data-line="4"><span class="w">  </span>--api-key<span class="w"> </span><span class="s2">"</span><span class="nv">$OPENAI_API_KEY</span><span class="s2">"</span>
 </span></pre></div>
 </div>
 <p>The config is stored under <code class="docutils literal notranslate"><span class="pre">~/.areno</span></code>. After this, normal agent runs do not
@@ -165,7 +166,7 @@ need <code class="docutils literal notranslate"><span class="pre">--base-url</sp
 <section id="run-an-agent-task">
 <h2>Run an agent task<a class="headerlink" href="#run-an-agent-task" title="Link to this heading">#</a></h2>
 <p>Pass the requested job as one natural-language argument:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span data-line="1">areno<span class="w"> </span>agent<span class="w"> </span><span class="s2">&quot;Give me a complete command to run the math demo with n-samples=8, fitting the current GPU and using as much GPU memory as practical.&quot;</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span data-line="1">areno<span class="w"> </span>agent<span class="w"> </span><span class="s2">"Give me a complete command to run the math demo with n-samples=8, fitting the current GPU and using as much GPU memory as practical."</span>
 </span></pre></div>
 </div>
 <p>The agent can inspect GPUs, read example files, run <code class="docutils literal notranslate"><span class="pre">areno</span> <span class="pre">check</span></code> and
@@ -173,7 +174,7 @@ need <code class="docutils literal notranslate"><span class="pre">--base-url</sp
 required value is missing, and stream command output while it works.</p>
 <p>From a source checkout, use the repository-local wrapper when AReno is not
 installed:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span data-line="1">./agent.sh<span class="w"> </span><span class="s2">&quot;Give me a complete command to run the math demo with n-samples=8, fitting the current GPU and using as much GPU memory as practical.&quot;</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span data-line="1">./agent.sh<span class="w"> </span><span class="s2">"Give me a complete command to run the math demo with n-samples=8, fitting the current GPU and using as much GPU memory as practical."</span>
 </span></pre></div>
 </div>
 </section>

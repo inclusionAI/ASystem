@@ -78,6 +78,7 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l1"><a class="reference internal" href="../concepts/backend-topology.html">Backend Topology</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../concepts/chat-templates.html">Chat Templates</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../concepts/dataset-formats.html">Dataset Formats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../concepts/multimodal-inputs.html">Multimodal Inputs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../concepts/reward-functions.html">Reward Functions</a></li>
 </ul>
 <p class="caption" role="heading" aria-level="3"><span class="caption-text">Cookbook</span></p>
@@ -162,19 +163,23 @@ data-aria-dark="Switch to auto color mode">
 <td><p>Routed expert checkpoints with Areno MoE kernels.</p></td>
 </tr>
 <tr class="row-odd"><td><p>Qwen3.5</p></td>
-<td><p>Dense Qwen3.5 text checkpoints.</p></td>
+<td><p>Dense text and Qwen3.5-VL image checkpoints.</p></td>
 </tr>
 <tr class="row-even"><td><p>Qwen3.5-MoE</p></td>
-<td><p>Qwen3.5 routed expert checkpoints, including <code class="docutils literal notranslate"><span class="pre">qwen3_5_moe</span></code> text/MoE layouts, with Areno MoE kernels.</p></td>
+<td><p>Qwen3.5 routed expert text and VL checkpoints, including
+<code class="docutils literal notranslate"><span class="pre">qwen3_5_moe</span></code> layouts, with Areno MoE kernels.</p></td>
 </tr>
 <tr class="row-odd"><td><p>Bailing MoE Linear v2</p></td>
 <td><p>Local model adapter for Bailing MoE Linear v2 checkpoints.</p></td>
 </tr>
-<tr class="row-even"><td><p>Gemma4 text models</p></td>
-<td><p>Gemma4 text-only checkpoints used by the local training stack.</p></td>
+<tr class="row-even"><td><p>Gemma4</p></td>
+<td><p>Gemma4 text and conditional-generation checkpoints. Native Gemma4 and
+Gemma4 Unified processors support image, audio, and video inputs for
+serving and training.</p></td>
 </tr>
 <tr class="row-odd"><td><p>MiniCPM-family adapters</p></td>
-<td><p>MiniCPM-family adapters used by the local training stack.</p></td>
+<td><p>MiniCPM-family text and vision adapters used by the local training
+stack.</p></td>
 </tr>
 </tbody>
 </table>
@@ -185,6 +190,8 @@ data-aria-dark="Switch to auto color mode">
 adapter. Some model families may support inference before every training or
 save path is fully optimized.</p>
 </div>
+<p>For the common media message format and runtime behavior, see
+<a class="reference internal" href="../concepts/multimodal-inputs.html"><span class="doc">Multimodal inputs</span></a>.</p>
 </section>
 
         </article><button class="back-to-top" type="button">

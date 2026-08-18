@@ -78,6 +78,7 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l1"><a class="reference internal" href="../concepts/backend-topology.html">Backend Topology</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../concepts/chat-templates.html">Chat Templates</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../concepts/dataset-formats.html">Dataset Formats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../concepts/multimodal-inputs.html">Multimodal Inputs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../concepts/reward-functions.html">Reward Functions</a></li>
 </ul>
 <p class="caption" role="heading" aria-level="3"><span class="caption-text">Cookbook</span></p>
@@ -146,7 +147,7 @@ usually point to compiler, CUDA, PyTorch, or architecture mismatch.</p>
 </span></pre></div>
 </div>
 <p>For a targeted developer build, pass build overrides to the same installer:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="nv">TORCH_CUDA_ARCH_LIST</span><span class="o">=</span><span class="s2">&quot;9.0&quot;</span><span class="w"> </span><span class="nv">MAX_JOBS</span><span class="o">=</span><span class="m">64</span><span class="w"> </span>bash<span class="w"> </span>scripts/install.sh
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="nv">TORCH_CUDA_ARCH_LIST</span><span class="o">=</span><span class="s2">"9.0"</span><span class="w"> </span><span class="nv">MAX_JOBS</span><span class="o">=</span><span class="m">64</span><span class="w"> </span>bash<span class="w"> </span>scripts/install.sh
 </span></pre></div>
 </div>
 </section>

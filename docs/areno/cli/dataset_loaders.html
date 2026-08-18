@@ -78,6 +78,7 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l1"><a class="reference internal" href="../concepts/backend-topology.html">Backend Topology</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../concepts/chat-templates.html">Chat Templates</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../concepts/dataset-formats.html">Dataset Formats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../concepts/multimodal-inputs.html">Multimodal Inputs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../concepts/reward-functions.html">Reward Functions</a></li>
 </ul>
 <p class="caption" role="heading" aria-level="3"><span class="caption-text">Cookbook</span></p>
@@ -169,8 +170,8 @@ dataset layer; trainers own tokenizer-specific rendering and token limits.</p>
 </span><span data-line="5">        <span class="n">record</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
 </span><span data-line="6">        <span class="n">records</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
 </span><span data-line="7">            <span class="p">{</span>
-</span><span data-line="8">                <span class="s2">&quot;prompt&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;Instruction: </span><span class="si">{</span><span class="n">record</span><span class="p">[</span><span class="s1">&#39;instruction&#39;</span><span class="p">]</span><span class="si">}</span><span class="se">\n</span><span class="s2">Answer:&quot;</span><span class="p">,</span>
-</span><span data-line="9">                <span class="s2">&quot;response&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">record</span><span class="p">[</span><span class="s2">&quot;answer&quot;</span><span class="p">]),</span>
+</span><span data-line="8">                <span class="s2">"prompt"</span><span class="p">:</span> <span class="sa">f</span><span class="s2">"Instruction: </span><span class="si">{</span><span class="n">record</span><span class="p">[</span><span class="s1">'instruction'</span><span class="p">]</span><span class="si">}</span><span class="se">\n</span><span class="s2">Answer:"</span><span class="p">,</span>
+</span><span data-line="9">                <span class="s2">"response"</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">record</span><span class="p">[</span><span class="s2">"answer"</span><span class="p">]),</span>
 </span><span data-line="10">            <span class="p">}</span>
 </span><span data-line="11">        <span class="p">)</span>
 </span><span data-line="12">    <span class="k">return</span> <span class="n">records</span>
