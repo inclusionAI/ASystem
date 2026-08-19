@@ -70,6 +70,7 @@ data-aria-dark="Switch to auto color mode">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../getting-started/welcome.html">Welcome</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../getting-started/installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting-started/backends.html">Backends</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../getting-started/quickstart.html">Quickstart</a></li>
 </ul>
 <p class="caption" role="heading" aria-level="3"><span class="caption-text">Conceptual Guides</span></p>
@@ -141,6 +142,10 @@ data-aria-dark="Switch to auto color mode">
           <section id="supported-models">
 <h1>Supported models<a class="headerlink" href="#supported-models" title="Link to this heading">#</a></h1>
 <p>areno currently supports the following checkpoint families:</p>
+<p>The table describes CUDA model adapters. Apple Silicon support is determined
+by the installed <code class="docutils literal notranslate"><span class="pre">mlx-lm</span></code> or <code class="docutils literal notranslate"><span class="pre">mlx-vlm</span></code> version and the checkpoint’s model
+type; consult <a class="reference internal" href="../getting-started/mlx.html"><span class="doc">Apple Silicon and MLX</span></a> before assuming that the same
+family is available on both backends.</p>
 <div class="table-wrapper colwidths-given docutils container">
 <table class="docutils align-default">
 <colgroup>
@@ -189,6 +194,10 @@ stack.</p></td>
 <p>Model support means the checkpoint can be loaded through an Areno model
 adapter. Some model families may support inference before every training or
 save path is fully optimized.</p>
+<p>On MLX, AReno delegates model construction and weight sanitization to
+<code class="docutils literal notranslate"><span class="pre">mlx-lm</span></code>/<code class="docutils literal notranslate"><span class="pre">mlx-vlm</span></code> and saves a native MLX checkpoint. Backend support
+must be validated independently, especially for quantized and multimodal
+checkpoints.</p>
 </div>
 <p>For the common media message format and runtime behavior, see
 <a class="reference internal" href="../concepts/multimodal-inputs.html"><span class="doc">Multimodal inputs</span></a>.</p>

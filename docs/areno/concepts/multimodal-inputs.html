@@ -70,6 +70,7 @@ data-aria-dark="Switch to auto color mode">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../getting-started/welcome.html">Welcome</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../getting-started/installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting-started/backends.html">Backends</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../getting-started/quickstart.html">Quickstart</a></li>
 </ul>
 <p class="caption" role="heading" aria-level="3"><span class="caption-text">Conceptual Guides</span></p>
@@ -157,6 +158,11 @@ and MiniCPM-V accept visual input, while Gemma4 conditional-generation
 checkpoints can expose image, audio, and video inputs. Consult
 <a class="reference internal" href="../models/supported.html"><span class="doc">Supported models</span></a> and the checkpoint’s processor configuration before
 building a dataset.</p>
+<p>They also depend on the selected backend. CUDA support is defined by AReno’s
+model adapters. On Apple Silicon, the checkpoint must be implemented by
+<code class="docutils literal notranslate"><span class="pre">mlx-vlm</span></code> and its processor must support the requested modality. A family
+working on CUDA does not automatically imply an MLX implementation, or vice
+versa.</p>
 <section id="message-format">
 <h2>Message format<a class="headerlink" href="#message-format" title="Link to this heading">#</a></h2>
 <p>A multimodal user message has a list of typed content parts. AReno accepts the
@@ -247,6 +253,17 @@ generation, rollout, and serving.</p>
 model. This avoids updating large encoders and keeps frozen modules in
 evaluation mode, while their output features still condition the trainable
 language model. The exact trainable parameter set is model-specific.</p>
+<p>Towers and projectors/mergers are frozen by default. Use
+<code class="docutils literal notranslate"><span class="pre">--unfreeze-mm-tower</span></code> and <code class="docutils literal notranslate"><span class="pre">--unfreeze-mm-projector</span></code> to train them, with
+optional independent schedules through <code class="docutils literal notranslate"><span class="pre">--mm-tower-lr</span></code> and
+<code class="docutils literal notranslate"><span class="pre">--mm-projector-lr</span></code>. Unfreezing either group adds activation, gradient, and
+optimizer-state memory; start with the projector before unfreezing a large
+encoder tower.</p>
+<p>On MLX, processor output uses NumPy as the interchange format and is converted
+to MLX arrays by the provider. Supported PIL image processors therefore do not
+require Torch. Multimodal training uses the native lazy MLX graph rather than
+compiling the full media forward, while text training may compile its train
+step.</p>
 <p>Media features can make the processor-expanded prompt much longer than its
 text. Choose <code class="docutils literal notranslate"><span class="pre">--max-prompt-tokens</span></code> and <code class="docutils literal notranslate"><span class="pre">--max-context-len</span></code> from the encoded
 sequence length rather than from text token counts alone. Start with
@@ -264,6 +281,9 @@ container. Validate the file in the same Python environment used by AReno.</p></
 remuxing when their container omits it.</p></li>
 <li><p>Set <code class="docutils literal notranslate"><span class="pre">ARENO_LOG_COMPLETIONS=1</span></code> during agentic smoke tests to verify output
 and tool-call formatting before launching a long run.</p></li>
+<li><p>On Apple Silicon, reduce <code class="docutils literal notranslate"><span class="pre">--mini-bs</span></code> and <code class="docutils literal notranslate"><span class="pre">--max-running-prompts</span></code> first;
+use <code class="docutils literal notranslate"><span class="pre">--drop-rollout-state</span></code> when retained KV/cache state competes with
+training activations. See <a class="reference internal" href="../getting-started/mlx.html"><span class="doc">Apple Silicon and MLX</span></a>.</p></li>
 </ul>
 </section>
 </section>

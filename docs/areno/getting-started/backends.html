@@ -2,7 +2,7 @@
 <html lang="en" data-accent-color="gray" data-content_root="../">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>areno_accel issues - AReno docs</title><link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Backends - AReno docs</title><link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Quickstart" href="quickstart.html" /><link rel="prev" title="Installation" href="installation.html" /><script>
     function setColorMode(t){let e=document.documentElement;e.setAttribute("data-color-mode",t);let a=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,s=t;"auto"===t&&(s=a?"dark":"light"),"light"===s?(e.classList.remove("dark"),e.classList.add("light")):(e.classList.remove("light"),e.classList.add("dark"))}
     setColorMode(localStorage._theme||"auto");
   </script><link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=e1a1ceaf" />
@@ -16,7 +16,7 @@
 }
 </style>
     
-  <meta property="og:type" content="website"/><meta property="og:title" content="areno_accel issues"/>
+  <meta property="og:type" content="website"/><meta property="og:title" content="Backends"/>
     <meta name="twitter:card" content="summary"/>
   </head>
 <body><div class="sy-head">
@@ -28,7 +28,7 @@
       <strong>AReno</strong>
     </a>
     <div class="sy-head-nav" id="head-nav">
-      <nav class="sy-head-links"><ul><li class="link"><a href="../getting-started/welcome.html">Get Started</a></li><li class="link"><a href="../concepts/training-loop.html">Concepts</a></li><li class="link"><a href="../cookbook/math-rlvr.html">Cookbook</a></li><li class="link"><a href="../reference/cli.html">Reference</a></li><li class="link"><a href="index.html">Troubleshooting</a></li></ul></nav>
+      <nav class="sy-head-links"><ul><li class="link"><a href="welcome.html">Get Started</a></li><li class="link"><a href="../concepts/training-loop.html">Concepts</a></li><li class="link"><a href="../cookbook/math-rlvr.html">Cookbook</a></li><li class="link"><a href="../reference/cli.html">Reference</a></li><li class="link"><a href="../troubleshooting/index.html">Troubleshooting</a></li></ul></nav>
       <div class="sy-head-extra flex items-center print:hidden"><div class="sy-head-socials"></div></div>
     </div>
     <div class="sy-head-actions flex items-center shrink-0 print:hidden">
@@ -67,11 +67,11 @@ data-aria-dark="Switch to auto color mode">
     <kbd aria-hidden="true">⌘K</kbd>
   </form></div>
         <div class="globaltoc" data-expand-depth="0"><p class="caption" role="heading" aria-level="3"><span class="caption-text">Get Started</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../getting-started/welcome.html">Welcome</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../getting-started/installation.html">Installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../getting-started/backends.html">Backends</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../getting-started/quickstart.html">Quickstart</a></li>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="welcome.html">Welcome</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Backends</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
 </ul>
 <p class="caption" role="heading" aria-level="3"><span class="caption-text">Conceptual Guides</span></p>
 <ul>
@@ -96,9 +96,9 @@ data-aria-dark="Switch to auto color mode">
 </ul>
 <p class="caption" role="heading" aria-level="3"><span class="caption-text">Troubleshooting &amp; FAQ</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="index.html">Troubleshooting</a></li>
-<li class="toctree-l1"><a class="reference internal" href="faq.html">FAQ</a></li>
-<li class="toctree-l1"><a class="reference internal" href="report-issue.html">Report an issue</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../troubleshooting/index.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../troubleshooting/faq.html">FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../troubleshooting/report-issue.html">Report an issue</a></li>
 </ul>
 
         </div>
@@ -110,7 +110,12 @@ data-aria-dark="Switch to auto color mode">
     <button class="rside-close js-menu xl:hidden" aria-label="Close Table of Contents" type="button" aria-controls="rside" aria-expanded="false">
       <i class="i-lucide close"></i>
     </button>
-    <div class="sy-scrollbar sy-rside-inner px-6 xl:top-16 xl:sticky xl:pl-0 pt-6 pb-4"></div>
+    <div class="sy-scrollbar sy-rside-inner px-6 xl:top-16 xl:sticky xl:pl-0 pt-6 pb-4"><div class="localtoc"><h3>On this page</h3><ul>
+<li><a class="reference internal" href="#linux-and-cuda">Linux and CUDA</a></li>
+<li><a class="reference internal" href="#apple-silicon-and-mlx">Apple Silicon and MLX</a></li>
+<li><a class="reference internal" href="#shared-contract">Shared contract</a></li>
+</ul>
+</div></div>
   </aside>
   <div class="rside-overlay js-menu" role="button" aria-label="Close Table of Contents" aria-controls="rside" aria-expanded="false"></div>
   <main class="sy-main w-full max-sm:max-w-full print:pt-6">
@@ -126,7 +131,7 @@ data-aria-dark="Switch to auto color mode">
         <span>/</span>
         <meta itemprop="position" content="1" />
       </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-        <strong itemprop="name">areno_accel issues</strong>
+        <strong itemprop="name">Backends</strong>
         <meta itemprop="position" content="2" />
       </li></ol>
     <div class="xl:hidden ml-1">
@@ -139,18 +144,73 @@ data-aria-dark="Switch to auto color mode">
 </div><div class="flex flex-col break-words justify-between">
       <div class="relative min-w-0 max-w-6xl px-6 pb-6 pt-8 xl:px-12">
   <article class="yue" role="main">
-          <section id="areno-accel-issues">
-<h1>areno_accel issues<a class="headerlink" href="#areno-accel-issues" title="Link to this heading">#</a></h1>
-<p><code class="docutils literal notranslate"><span class="pre">areno_accel</span></code> contains AReno-owned CUDA extension paths. Build failures
-usually point to compiler, CUDA, PyTorch, or architecture mismatch.</p>
-<p>Rerun the installer to rebuild the extension against the selected environment:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span data-line="1">bash<span class="w"> </span>scripts/install.sh
-</span></pre></div>
+          <section id="backends">
+<h1>Backends<a class="headerlink" href="#backends" title="Link to this heading">#</a></h1>
+<p>AReno exposes one training, serving, checkpoint, dataset, reward, and agentic
+rollout interface over two native execution backends. The CLI selects the
+backend from the host platform and never silently falls back to another
+runtime.</p>
+<div class="table-wrapper colwidths-given docutils container">
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 24.0%" />
+<col style="width: 28.0%" />
+<col style="width: 24.0%" />
+<col style="width: 24.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Host</p></th>
+<th class="head"><p>Backend</p></th>
+<th class="head"><p>Execution model</p></th>
+<th class="head"><p>Native checkpoint</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Linux or WSL2 with NVIDIA GPU</p></td>
+<td><p>CUDA and PyTorch</p></td>
+<td><p>Multi-process, TP/DP, optional separate rollout GPUs</p></td>
+<td><p>Hugging Face-oriented AReno layout</p></td>
+</tr>
+<tr class="row-odd"><td><p>Apple Silicon macOS</p></td>
+<td><p>MLX</p></td>
+<td><p>Single-process unified-memory runtime</p></td>
+<td><p>MLX safetensors and processor assets</p></td>
+</tr>
+</tbody>
+</table>
 </div>
-<p>For a targeted developer build, pass build overrides to the same installer:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="nv">TORCH_CUDA_ARCH_LIST</span><span class="o">=</span><span class="s2">"9.0"</span><span class="w"> </span><span class="nv">MAX_JOBS</span><span class="o">=</span><span class="m">64</span><span class="w"> </span>bash<span class="w"> </span>scripts/install.sh
-</span></pre></div>
-</div>
+<section id="linux-and-cuda">
+<h2>Linux and CUDA<a class="headerlink" href="#linux-and-cuda" title="Link to this heading">#</a></h2>
+<p>The CUDA backend owns AReno’s process workers, tensor/data parallel layout,
+fused <code class="docutils literal notranslate"><span class="pre">areno_accel</span></code> kernels, optional FlashAttention, CUDA graph decode, and
+NCCL policy synchronization. Use it for Linux <code class="docutils literal notranslate"><span class="pre">x86_64</span></code> or <code class="docutils literal notranslate"><span class="pre">aarch64</span></code> with
+a CUDA-enabled PyTorch 2.6 or newer installation.</p>
+<p>Read <a class="reference internal" href="cuda.html"><span class="doc">Linux and CUDA</span></a> for installation, distributed training, memory controls,
+continuous-batch serving, checkpoint behavior, model support, and
+<code class="docutils literal notranslate"><span class="pre">CudaConfig</span></code>.</p>
+</section>
+<section id="apple-silicon-and-mlx">
+<h2>Apple Silicon and MLX<a class="headerlink" href="#apple-silicon-and-mlx" title="Link to this heading">#</a></h2>
+<p>The MLX backend owns one in-process model for rollout, scoring, and training,
+plus a long-lived continuous-batch scheduler. It installs only the Apple
+Silicon dependency set and does not require Torch or CUDA. MLX runs with
+<code class="docutils literal notranslate"><span class="pre">world-size=1</span></code> and <code class="docutils literal notranslate"><span class="pre">tp-size=1</span></code> and saves native MLX checkpoints.</p>
+<p>Read <a class="reference internal" href="mlx.html"><span class="doc">Apple Silicon and MLX</span></a> for installation, unified-memory controls, continuous-batch
+serving, checkpoint behavior, <code class="docutils literal notranslate"><span class="pre">mlx-lm</span></code>/<code class="docutils literal notranslate"><span class="pre">mlx-vlm</span></code> model support, and
+<code class="docutils literal notranslate"><span class="pre">MlxConfig</span></code>.</p>
+</section>
+<section id="shared-contract">
+<h2>Shared contract<a class="headerlink" href="#shared-contract" title="Link to this heading">#</a></h2>
+<p>Both backends support the built-in SFT, DPO, GRPO, GSPO, and PPO trainer paths
+through the same CLI and <code class="docutils literal notranslate"><span class="pre">Trainer</span></code> methods. They share algorithm schemas,
+<code class="docutils literal notranslate"><span class="pre">TrainSequence</span></code> batches, microbatch semantics, role APIs, multimodal message
+format, rollout-session lifecycle, and OpenAI-compatible serving API.</p>
+<p>Backend-native model implementations, kernels, distributed topology, and
+checkpoint formats remain intentionally separate. A model supported by an
+AReno CUDA adapter is not automatically supported by <code class="docutils literal notranslate"><span class="pre">mlx-lm</span></code> or
+<code class="docutils literal notranslate"><span class="pre">mlx-vlm</span></code>, and an MLX checkpoint is not automatically a portable CUDA
+checkpoint.</p>
+</section>
 </section>
 
         </article><button class="back-to-top" type="button">
@@ -158,7 +218,21 @@ usually point to compiler, CUDA, PyTorch, or architecture mismatch.</p>
     <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
   </svg>
   <span>Back to top</span>
-</button><div class="navigation flex print:hidden"></div></div>
+</button><div class="navigation flex print:hidden"><div class="navigation-prev">
+    <a href="installation.html">
+      <i class="i-lucide chevron-left"></i>
+      <div class="page-info">
+        <span>Previous</span><div class="title">Installation</div></div>
+    </a>
+  </div><div class="navigation-next">
+    <a href="quickstart.html">
+      <div class="page-info">
+        <span>Next</span>
+        <div class="title">Quickstart</div>
+      </div>
+      <i class="i-lucide chevron-right"></i>
+    </a>
+  </div></div></div>
     </div>
   </main>
 </div>

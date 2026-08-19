@@ -70,6 +70,7 @@ data-aria-dark="Switch to auto color mode">
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Welcome</a></li>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="backends.html">Backends</a></li>
 <li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
 </ul>
 <p class="caption" role="heading" aria-level="3"><span class="caption-text">Conceptual Guides</span></p>
@@ -149,7 +150,7 @@ data-aria-dark="Switch to auto color mode">
 <div class="areno-hero">
   <div class="areno-hero-copy">
     <p class="areno-eyebrow">Local post-training and serving</p>
-    <h1>Train and serve local LLMs with one CUDA-native loop.</h1>
+    <h1>Train and serve local LLMs with one native loop.</h1>
     <p class="areno-lede">AReno keeps rollout, reward scoring, inference, optimizer steps, and checkpoint I/O in one compact engine for SFT, DPO, GSPO, GRPO, PPO, and agentic RL workflows.</p>
     <div class="areno-hero-actions" aria-label="Primary documentation links">
      <a class="areno-button areno-button-primary" href="installation.html">Get started</a>
@@ -161,20 +162,23 @@ data-aria-dark="Switch to auto color mode">
 <div class="areno-command-grid">
   <div class="areno-command-card">
     <p class="areno-card-kicker">Install</p>
-    <h3>Run one installer.</h3>
-   <pre><code>bash scripts/install.sh</code></pre>
-    <p>AReno prepares the environment, builds the CUDA runtime, verifies the result, and explains the next action if a step fails.</p>
+    <h3>Install the native runtime.</h3>
+   <pre><code># Linux / CUDA
+bash scripts/install.sh
+# Apple Silicon / MLX
+python -m pip install -e .</code></pre>
+    <p>Use the CUDA installer on Linux or the native MLX pip path on Apple Silicon.</p>
   </div>
   <div class="areno-command-card">
     <p class="areno-card-kicker">Check</p>
     <h3>Verify the local runtime before training.</h3>
    <pre><code>areno check
 areno env --json</code></pre>
-    <p><code>areno check</code> reports common CUDA, PyTorch, extension, and platform setup issues with next steps.</p>
+    <p>Confirm CUDA readiness on Linux or the selected MLX backend on Apple Silicon before loading a checkpoint.</p>
   </div>
-</div><p>The installer selects the attention setup automatically: it prepares
-FlashAttention for supported GPUs and leaves older GPUs on AReno’s native
-compatibility backend.</p>
+</div><p>AReno selects CUDA on Linux and MLX on Apple Silicon. The CUDA installer also
+selects the attention setup, preparing FlashAttention for supported GPUs and
+leaving older GPUs on AReno’s native compatibility backend.</p>
 </section>
 <section id="core-workflows">
 <h2>Core workflows<a class="headerlink" href="#core-workflows" title="Link to this heading">#</a></h2>
@@ -222,9 +226,10 @@ compatibility backend.</p>
   --world-size 1 \
   --port 8000</code></pre>
   </div>
-</div><p>Training and serving require a CUDA-capable NVIDIA GPU. CPU-only machines can
-run docs, packaging checks, and lightweight CPU tests, but cannot run the AReno
-training or serving engine.</p>
+</div><p>Training and serving require a CUDA-capable NVIDIA GPU on Linux or Apple
+Silicon with MLX. Other CPU-only machines can run docs, packaging checks, and
+lightweight tests, but cannot run an AReno training or serving backend. See
+<a class="reference internal" href="mlx.html"><span class="doc">mlx</span></a> for the Apple Silicon path.</p>
 </section>
 <section id="agentic-rollout">
 <h2>Agentic rollout<a class="headerlink" href="#agentic-rollout" title="Link to this heading">#</a></h2>
@@ -278,10 +283,10 @@ loader, reward function, OpenAI-compatible agent, and browser UI.</p>
 <section id="what-areno-owns">
 <h2>What AReno owns<a class="headerlink" href="#what-areno-owns" title="Link to this heading">#</a></h2>
 <div class="areno-layer-list">
-  <div><span>Kernels</span><p>Fused CUDA paths in <code>areno_accel</code> for runtime hot paths.</p></div>
-  <div><span>Engine</span><p>Tensor-parallel workers, KV/cache layout, CUDA graph support, rollout state, scoring, optimizer steps, and checkpoint I/O.</p></div>
+  <div><span>Kernels</span><p>Fused <code>areno_accel</code> CUDA paths on Linux and native MLX execution on Apple Silicon.</p></div>
+  <div><span>Engine</span><p>Backend-native KV/cache layout, rollout state, scoring, optimizer steps, continuous batching, and checkpoint I/O.</p></div>
   <div><span>Algorithms</span><p>SFT, DPO, GSPO, GRPO, PPO, and agentic rollouts implemented inside the project rather than delegated to a separate trainer framework.</p></div>
-  <div><span>Checkpoints</span><p>Hugging Face-compatible load/save adapters for supported model families.</p></div>
+  <div><span>Checkpoints</span><p>Hugging Face-oriented CUDA checkpoints and native MLX checkpoints with tokenizer and processor assets.</p></div>
 </div></section>
 </section>
 

@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en" data-accent-color="gray" data-content_root="../">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Apple Silicon and MLX - AReno docs</title><link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><script>
+    function setColorMode(t){let e=document.documentElement;e.setAttribute("data-color-mode",t);let a=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,s=t;"auto"===t&&(s=a?"dark":"light"),"light"===s?(e.classList.remove("dark"),e.classList.add("light")):(e.classList.remove("light"),e.classList.add("dark"))}
+    setColorMode(localStorage._theme||"auto");
+  </script><link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=e1a1ceaf" />
+    <link rel="stylesheet" type="text/css" href="../_static/shibuya.css?v=2ceb65ce" />
+    <link media="print" rel="stylesheet" type="text/css" href="../_static/print.css?v=20ff2c19" />
+    <link rel="stylesheet" type="text/css" href="../_static/areno.css?v=02a4506f" />
+    <style>
+:root {
+  --sy-f-text: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --sy-f-heading: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+</style>
+    
+  <meta property="og:type" content="website"/><meta property="og:title" content="Apple Silicon and MLX"/>
+    <meta name="twitter:card" content="summary"/>
+  </head>
+<body><div class="sy-head">
+  <div class="sy-head-blur"></div>
+  <div class="sy-head-inner sy-container mx-auto">
+    <a class="sy-head-brand sy-head-brand-mobile" href="../index.html">
+      <img class="light-logo" src="../_static/areno-logo.svg" alt="AReno" height="28" loading="lazy" />
+      <img class="dark-logo" src="../_static/areno-logo-dark.svg" alt="AReno" height="28" loading="lazy" />
+      <strong>AReno</strong>
+    </a>
+    <div class="sy-head-nav" id="head-nav">
+      <nav class="sy-head-links"><ul><li class="link"><a href="welcome.html">Get Started</a></li><li class="link"><a href="../concepts/training-loop.html">Concepts</a></li><li class="link"><a href="../cookbook/math-rlvr.html">Cookbook</a></li><li class="link"><a href="../reference/cli.html">Reference</a></li><li class="link"><a href="../troubleshooting/index.html">Troubleshooting</a></li></ul></nav>
+      <div class="sy-head-extra flex items-center print:hidden"><div class="sy-head-socials"></div></div>
+    </div>
+    <div class="sy-head-actions flex items-center shrink-0 print:hidden">
+      <button class="md:hidden flex items-center js-menu" aria-label="Menu" type="button" aria-controls="head-nav" aria-expanded="false">
+        <div class="hamburger">
+          <span class="hamburger_1"></span>
+          <span class="hamburger_2"></span>
+          <span class="hamburger_3"></span>
+        </div>
+      </button>
+    </div>
+  </div>
+</div>
+<div class="sy-page sy-container flex mx-auto">
+  <aside id="lside" class="sy-lside md:w-72 md:shrink-0 print:hidden">
+    <div class="sy-lside-inner md:sticky">
+      <div class="sy-scrollbar p-6"><div class="sidebar-chrome">
+  <div class="sidebar-brand-row">
+    <a class="sidebar-brand" href="../index.html">
+      <img class="light-logo" src="../_static/areno-logo.svg" alt="AReno" height="28" loading="lazy" />
+      <img class="dark-logo" src="../_static/areno-logo-dark.svg" alt="AReno" height="28" loading="lazy" />
+      <strong>AReno</strong>
+    </a>
+    <div class="sidebar-theme"><button class="js-theme theme-switch flex items-center"
+data-aria-auto="Switch to light color mode"
+data-aria-light="Switch to dark color mode"
+data-aria-dark="Switch to auto color mode">
+<i class="i-lucide theme-icon"></i>
+</button></div>
+  </div><form class="searchbox sidebar-searchbox flex items-center" action="../search.html" method="get" role="search" aria-label="Search documentation">
+    <svg class="sidebar-search-icon" aria-hidden="true" focusable="false" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="11" cy="11" r="8"></circle>
+      <path d="m21 21-4.3-4.3"></path>
+    </svg>
+    <input type="search" name="q" placeholder="Search documentation" autocomplete="off" />
+    <kbd aria-hidden="true">⌘K</kbd>
+  </form></div>
+        <div class="globaltoc" data-expand-depth="0"><p class="caption" role="heading" aria-level="3"><span class="caption-text">Get Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="welcome.html">Welcome</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="backends.html">Backends</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
+</ul>
+<p class="caption" role="heading" aria-level="3"><span class="caption-text">Conceptual Guides</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../concepts/training-loop.html">Training Loop</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../concepts/backend-topology.html">Backend Topology</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../concepts/chat-templates.html">Chat Templates</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../concepts/dataset-formats.html">Dataset Formats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../concepts/multimodal-inputs.html">Multimodal Inputs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../concepts/reward-functions.html">Reward Functions</a></li>
+</ul>
+<p class="caption" role="heading" aria-level="3"><span class="caption-text">Cookbook</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../cookbook/math-rlvr.html">Math RLVR recipe</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cookbook/tictactoe-agentic-rl.html">TicTacToe agentic RL</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cookbook/duelgrid-visual-agent.html">DuelGrid visual agent</a></li>
+</ul>
+<p class="caption" role="heading" aria-level="3"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../reference/cli.html">CLI Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sdk/trainer.html">SDK Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models/supported.html">Supported Models</a></li>
+</ul>
+<p class="caption" role="heading" aria-level="3"><span class="caption-text">Troubleshooting &amp; FAQ</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../troubleshooting/index.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../troubleshooting/faq.html">FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../troubleshooting/report-issue.html">Report an issue</a></li>
+</ul>
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="lside-overlay js-menu" role="button" aria-label="Close left sidebar" aria-controls="lside" aria-expanded="false"></div>
+  <aside id="rside" class="sy-rside pb-3 w-64 shrink-0 order-last">
+    <button class="rside-close js-menu xl:hidden" aria-label="Close Table of Contents" type="button" aria-controls="rside" aria-expanded="false">
+      <i class="i-lucide close"></i>
+    </button>
+    <div class="sy-scrollbar sy-rside-inner px-6 xl:top-16 xl:sticky xl:pl-0 pt-6 pb-4"><div class="localtoc"><h3>On this page</h3><ul>
+<li><a class="reference internal" href="#requirements-and-installation">Requirements and installation</a></li>
+<li><a class="reference internal" href="#training">Training</a><ul>
+<li><a class="reference internal" href="#memory-controls">Memory controls</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#serving-and-continuous-batching">Serving and continuous batching</a></li>
+<li><a class="reference internal" href="#checkpoints">Checkpoints</a></li>
+<li><a class="reference internal" href="#models-and-multimodal-input">Models and multimodal input</a></li>
+<li><a class="reference internal" href="#sdk-configuration">SDK configuration</a></li>
+</ul>
+</div></div>
+  </aside>
+  <div class="rside-overlay js-menu" role="button" aria-label="Close Table of Contents" aria-controls="rside" aria-expanded="false"></div>
+  <main class="sy-main w-full max-sm:max-w-full print:pt-6">
+<div class="sy-breadcrumbs" role="navigation">
+  <div class="sy-breadcrumbs-inner flex items-center">
+    <div class="md:hidden mr-3">
+      <button class="js-menu" aria-label="Menu" type="button" aria-controls="lside" aria-expanded="false">
+        <i class="i-lucide menu"></i>
+      </button>
+    </div>
+    <ol class="flex-1" itemscope itemtype="https://schema.org/BreadcrumbList"><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <a itemprop="item" href="../index.html"><span itemprop="name">AReno</span></a>
+        <span>/</span>
+        <meta itemprop="position" content="1" />
+      </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <strong itemprop="name">Apple Silicon and MLX</strong>
+        <meta itemprop="position" content="2" />
+      </li></ol>
+    <div class="xl:hidden ml-1">
+      <button class="js-menu" aria-label="Show table of contents" type="button" aria-controls="rside"
+        aria-expanded="false">
+        <i class="i-lucide outdent"></i>
+      </button>
+    </div>
+  </div>
+</div><div class="flex flex-col break-words justify-between">
+      <div class="relative min-w-0 max-w-6xl px-6 pb-6 pt-8 xl:px-12">
+  <article class="yue" role="main">
+          <section id="apple-silicon-and-mlx">
+<h1>Apple Silicon and MLX<a class="headerlink" href="#apple-silicon-and-mlx" title="Link to this heading">#</a></h1>
+<p>AReno uses its native MLX backend on Apple Silicon. The same <code class="docutils literal notranslate"><span class="pre">areno</span> <span class="pre">train</span></code>,
+<code class="docutils literal notranslate"><span class="pre">areno</span> <span class="pre">serve</span></code>, dataset-loader, reward-function, agentic-rollout, and
+<code class="docutils literal notranslate"><span class="pre">Trainer</span></code> interfaces are shared with CUDA; only the backend implementation
+changes. Backend selection is automatic and does not fall back across
+platforms:</p>
+<ul class="simple">
+<li><p>Linux selects CUDA.</p></li>
+<li><p>macOS on <code class="docutils literal notranslate"><span class="pre">arm64</span></code> selects MLX.</p></li>
+<li><p>Other host/platform combinations fail early with an explicit error.</p></li>
+</ul>
+<section id="requirements-and-installation">
+<h2>Requirements and installation<a class="headerlink" href="#requirements-and-installation" title="Link to this heading">#</a></h2>
+<p>Use an Apple Silicon Mac running a native <code class="docutils literal notranslate"><span class="pre">arm64</span></code> Python 3.10 or newer. A
+Python process launched through Rosetta reports <code class="docutils literal notranslate"><span class="pre">x86_64</span></code> and is not a
+supported MLX runtime. Unified-memory capacity limits the checkpoint size,
+optimizer state, KV cache, and media features that can be resident together.</p>
+<p>The CUDA-oriented <code class="docutils literal notranslate"><span class="pre">scripts/install.sh</span></code> is not the macOS installation path.
+Install from the source checkout with pip:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span data-line="1">git<span class="w"> </span>clone<span class="w"> </span>https://github.com/inclusionAI/AReno.git
+</span><span data-line="2"><span class="nb">cd</span><span class="w"> </span>AReno
+</span><span data-line="3">python3<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>.venv
+</span><span data-line="4"><span class="nb">source</span><span class="w"> </span>.venv/bin/activate
+</span><span data-line="5">python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>--upgrade<span class="w"> </span>pip
+</span><span data-line="6">python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.
+</span></pre></div>
+</div>
+<p>Platform markers install <code class="docutils literal notranslate"><span class="pre">mlx</span></code>, <code class="docutils literal notranslate"><span class="pre">mlx-lm</span></code>, and <code class="docutils literal notranslate"><span class="pre">mlx-vlm</span></code> on Apple
+Silicon without installing the Linux-only PyTorch, CUDA, Flash Linear
+Attention, torchvision, or media-decoding dependency set. Verify the selected
+runtime from Python:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span data-line="1">python<span class="w"> </span>-c<span class="w"> </span><span class="s2">"from areno.api import DefaultBackend; print(DefaultBackend)"</span>
+</span></pre></div>
+</div>
+<p>The result is <code class="docutils literal notranslate"><span class="pre">BackendType.MLX</span></code>.</p>
+</section>
+<section id="training">
+<h2>Training<a class="headerlink" href="#training" title="Link to this heading">#</a></h2>
+<p>The CLI selects MLX automatically; there is no backend flag:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span data-line="1">areno<span class="w"> </span>train<span class="w"> </span><span class="se">\</span>
+</span><span data-line="2"><span class="w">  </span>--ckpt<span class="w"> </span>/path/to/model<span class="w"> </span><span class="se">\</span>
+</span><span data-line="3"><span class="w">  </span>--dataset-path<span class="w"> </span>/path/to/train.jsonl<span class="w"> </span><span class="se">\</span>
+</span><span data-line="4"><span class="w">  </span>--dataset-loader-fn<span class="w"> </span>/path/to/dataset_loader.py<span class="w"> </span><span class="se">\</span>
+</span><span data-line="5"><span class="w">  </span>--reward-fn-path<span class="w"> </span>/path/to/reward.py<span class="w"> </span><span class="se">\</span>
+</span><span data-line="6"><span class="w">  </span>--algo<span class="w"> </span>gspo<span class="w"> </span><span class="se">\</span>
+</span><span data-line="7"><span class="w">  </span>--batch-size<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+</span><span data-line="8"><span class="w">  </span>--n-samples<span class="w"> </span><span class="m">8</span><span class="w"> </span><span class="se">\</span>
+</span><span data-line="9"><span class="w">  </span>--mini-bs<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+</span><span data-line="10"><span class="w">  </span>--max-running-prompts<span class="w"> </span><span class="m">8</span>
+</span></pre></div>
+</div>
+<p>MLX supports the built-in SFT, DPO, GRPO, GSPO, and PPO trainer paths. It runs
+in one process on the Mac’s unified-memory device, so tensor/data parallelism,
+CUDA device lists, a separate rollout device partition, NCCL policy sync,
+CUDA graphs, and FlashAttention selection do not apply. The CLI normalizes its
+default <code class="docutils literal notranslate"><span class="pre">world-size</span></code> and <code class="docutils literal notranslate"><span class="pre">tp-size</span></code> values to one on MLX; when specifying
+them explicitly, use <code class="docutils literal notranslate"><span class="pre">--world-size</span> <span class="pre">1</span> <span class="pre">--tp-size</span> <span class="pre">1</span></code>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">--mini-bs</span></code> has the same meaning on both backends: it is the number of
+training rows in one gradient microbatch. <code class="docutils literal notranslate"><span class="pre">--gradient-accumulation-steps</span></code>
+controls how many such microbatches contribute to an optimizer update.</p>
+<section id="memory-controls">
+<h3>Memory controls<a class="headerlink" href="#memory-controls" title="Link to this heading">#</a></h3>
+<p>Start with conservative sequence lengths and concurrency. The following
+options have the largest effect on MLX unified-memory use:</p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">--mini-bs</span> <span class="pre">1</span></code></dt><dd><p>Limits temporary training activations to one row at a time. It does not
+change the rollout sample count.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">--max-running-prompts</span> <span class="pre">N</span></code></dt><dd><p>Caps active rollout sequences. Reduce it when KV cache or multimodal
+prefill features dominate memory.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">--drop-rollout-state</span></code></dt><dd><p>Releases completed rollout KV/cache state at the rollout-session boundary
+instead of retaining it for the next rollout.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">--adam-8bit</span></code></dt><dd><p>Stores Adam moment state in the MLX backend’s 8-bit representation. This
+reduces optimizer memory; validate convergence for the target task.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">--activation-checkpointing</span></code></dt><dd><p>Recomputes supported decoder activations during backward. It is enabled by
+default.</p>
+</dd>
+</dl>
+<p>For multimodal models, towers and projectors/mergers are frozen by default.
+Use <code class="docutils literal notranslate"><span class="pre">--unfreeze-mm-tower</span></code> or <code class="docutils literal notranslate"><span class="pre">--unfreeze-mm-projector</span></code> only when the task
+requires those parameters to learn; each adds gradients and optimizer state.
+Their learning-rate schedules can be controlled independently with
+<code class="docutils literal notranslate"><span class="pre">--mm-tower-lr</span></code> and <code class="docutils literal notranslate"><span class="pre">--mm-projector-lr</span></code> plus the corresponding
+<code class="docutils literal notranslate"><span class="pre">*-min-lr</span></code>, <code class="docutils literal notranslate"><span class="pre">*-lr-steps</span></code>, and <code class="docutils literal notranslate"><span class="pre">*-lr-style</span></code> options.</p>
+</section>
+</section>
+<section id="serving-and-continuous-batching">
+<h2>Serving and continuous batching<a class="headerlink" href="#serving-and-continuous-batching" title="Link to this heading">#</a></h2>
+<p>Start the same OpenAI-compatible server used on CUDA:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span data-line="1">areno<span class="w"> </span>serve<span class="w"> </span><span class="se">\</span>
+</span><span data-line="2"><span class="w">  </span>--model-path<span class="w"> </span>/path/to/model<span class="w"> </span><span class="se">\</span>
+</span><span data-line="3"><span class="w">  </span>--world-size<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+</span><span data-line="4"><span class="w">  </span>--tp-size<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+</span><span data-line="5"><span class="w">  </span>--max-running-prompts<span class="w"> </span><span class="m">16</span><span class="w"> </span><span class="se">\</span>
+</span><span data-line="6"><span class="w">  </span>--port<span class="w"> </span><span class="m">8000</span>
+</span></pre></div>
+</div>
+<p>The MLX runtime keeps one rollout scheduler alive for the server lifetime.
+Compatible requests submitted while decoding is active are admitted into the
+continuous batch. Requests with different generation settings are scheduled
+separately. <code class="docutils literal notranslate"><span class="pre">--eager-decode</span></code>, <code class="docutils literal notranslate"><span class="pre">--attn-backend</span></code>, and CUDA graph progress
+fields are CUDA-specific and do not configure MLX execution.</p>
+<p>To verify refill rather than only concurrent HTTP success, submit long
+requests followed by short probes. Continuous batching is demonstrated when
+the probes are submitted while long requests remain active and at least one
+probe completes before the earlier long-request group has drained.</p>
+</section>
+<section id="checkpoints">
+<h2>Checkpoints<a class="headerlink" href="#checkpoints" title="Link to this heading">#</a></h2>
+<p>The MLX providers can load compatible Hugging Face-layout and MLX-native
+checkpoints supported by <code class="docutils literal notranslate"><span class="pre">mlx-lm</span></code> or <code class="docutils literal notranslate"><span class="pre">mlx-vlm</span></code>. AReno saves the trained
+policy in native MLX format, including model configuration, safetensors,
+tokenizer or processor assets, and <code class="docutils literal notranslate"><span class="pre">areno_mlx_state.json</span></code>. Reload the saved
+directory directly with either <code class="docutils literal notranslate"><span class="pre">--ckpt</span></code> or <code class="docutils literal notranslate"><span class="pre">--model-path</span></code>.</p>
+<p>An MLX checkpoint is not advertised as a portable CUDA/Transformers export.
+Some unquantized model layouts may happen to be compatible, but MLX model
+sanitization, tensor layout, and quantization are model-family concerns. Test
+the target loader instead of renaming metadata. Optimizer and scheduler state
+are not part of the current MLX checkpoint round trip.</p>
+</section>
+<section id="models-and-multimodal-input">
+<h2>Models and multimodal input<a class="headerlink" href="#models-and-multimodal-input" title="Link to this heading">#</a></h2>
+<p>Text model availability follows <code class="docutils literal notranslate"><span class="pre">mlx-lm</span></code> and multimodal availability
+follows <code class="docutils literal notranslate"><span class="pre">mlx-vlm</span></code>. A model must have both a supported MLX implementation and
+a compatible tokenizer or processor. This differs from CUDA, where AReno’s
+own model adapters define support; support on one backend does not imply
+support on the other.</p>
+<p>The shared message schema accepts image, audio, video, and combined media.
+Actual modality support still depends on the loaded <code class="docutils literal notranslate"><span class="pre">mlx-vlm</span></code> model and its
+processor. MLX uses processor-native NumPy features before converting them to
+MLX arrays, so a Torch installation is not required for supported PIL image
+processors. Validate each audio/video codec in the same environment before a
+long run.</p>
+</section>
+<section id="sdk-configuration">
+<h2>SDK configuration<a class="headerlink" href="#sdk-configuration" title="Link to this heading">#</a></h2>
+<p>Omitting <code class="docutils literal notranslate"><span class="pre">backend_type</span></code> is recommended because it selects the native
+backend. Advanced SDK users can configure MLX explicitly without changing the
+shared Trainer API:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="kn">from</span><span class="w"> </span><span class="nn">areno</span><span class="w"> </span><span class="kn">import</span> <span class="n">Trainer</span>
+</span><span data-line="2"><span class="kn">from</span><span class="w"> </span><span class="nn">areno.api</span><span class="w"> </span><span class="kn">import</span> <span class="n">MLX</span><span class="p">,</span> <span class="n">MlxConfig</span>
+</span><span data-line="3">
+</span><span data-line="4"><span class="n">trainer</span> <span class="o">=</span> <span class="n">Trainer</span><span class="p">(</span>
+</span><span data-line="5">    <span class="n">world_size</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+</span><span data-line="6">    <span class="n">model_path</span><span class="o">=</span><span class="s2">"/path/to/model"</span><span class="p">,</span>
+</span><span data-line="7">    <span class="n">backend_type</span><span class="o">=</span><span class="n">MLX</span><span class="p">,</span>
+</span><span data-line="8">    <span class="n">custom_config</span><span class="o">=</span><span class="n">MlxConfig</span><span class="p">(</span>
+</span><span data-line="9">        <span class="n">max_running_prompts</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>
+</span><span data-line="10">        <span class="n">prefill_batch_size</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+</span><span data-line="11">        <span class="n">completion_batch_size</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>
+</span><span data-line="12">        <span class="n">max_kv_size</span><span class="o">=</span><span class="mi">4096</span><span class="p">,</span>
+</span><span data-line="13">        <span class="n">keep_rollout_state</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+</span><span data-line="14">        <span class="n">logits_chunk_size</span><span class="o">=</span><span class="mi">2048</span><span class="p">,</span>
+</span><span data-line="15">        <span class="n">gradient_checkpointing</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+</span><span data-line="16">    <span class="p">),</span>
+</span><span data-line="17"><span class="p">)</span>
+</span><span data-line="18"><span class="n">trainer</span><span class="o">.</span><span class="n">init</span><span class="p">()</span>
+</span></pre></div>
+</div>
+<p>Do not pass <code class="docutils literal notranslate"><span class="pre">CudaConfig</span></code> with <code class="docutils literal notranslate"><span class="pre">backend_type=MLX</span></code> or <code class="docutils literal notranslate"><span class="pre">MlxConfig</span></code>
+with <code class="docutils literal notranslate"><span class="pre">backend_type=CUDA</span></code>; typed configuration mismatches fail during
+construction.</p>
+</section>
+</section>
+
+        </article><button class="back-to-top" type="button">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+    <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+  </svg>
+  <span>Back to top</span>
+</button><div class="navigation flex print:hidden"></div></div>
+    </div>
+  </main>
+</div>
+<footer class="sy-foot">
+  <div class="sy-foot-inner sy-container mx-auto">
+    <div class="sy-foot-reserved md:flex justify-between items-center">
+      
+      <div class="sy-foot-socials"></div>
+    </div>
+  </div>
+</footer>
+      <script src="../_static/documentation_options.js?v=7f41d439"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../_static/shibuya.js?v=50760d75"></script>
+      <script src="../_static/areno-sidebar.js?v=648fdd7d"></script></body>
+</html>

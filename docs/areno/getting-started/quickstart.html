@@ -2,7 +2,7 @@
 <html lang="en" data-accent-color="gray" data-content_root="../">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Quickstart - AReno docs</title><link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Training Loop" href="../concepts/training-loop.html" /><link rel="prev" title="Installation" href="installation.html" /><script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Quickstart - AReno docs</title><link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Training Loop" href="../concepts/training-loop.html" /><link rel="prev" title="Backends" href="backends.html" /><script>
     function setColorMode(t){let e=document.documentElement;e.setAttribute("data-color-mode",t);let a=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,s=t;"auto"===t&&(s=a?"dark":"light"),"light"===s?(e.classList.remove("dark"),e.classList.add("light")):(e.classList.remove("light"),e.classList.add("dark"))}
     setColorMode(localStorage._theme||"auto");
   </script><link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=e1a1ceaf" />
@@ -70,6 +70,7 @@ data-aria-dark="Switch to auto color mode">
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="welcome.html">Welcome</a></li>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="backends.html">Backends</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Quickstart</a></li>
 </ul>
 <p class="caption" role="heading" aria-level="3"><span class="caption-text">Conceptual Guides</span></p>
@@ -146,7 +147,9 @@ data-aria-dark="Switch to auto color mode">
           <section id="quickstart">
 <h1>Quickstart<a class="headerlink" href="#quickstart" title="Link to this heading">#</a></h1>
 <p>Use these commands after installation to validate the main AReno paths. Full
-training and agentic rollout require a CUDA-capable NVIDIA GPU.</p>
+training and agentic rollout require either a CUDA-capable NVIDIA GPU on Linux
+or Apple Silicon with MLX. The CLI selects the native backend automatically.
+Use <a class="reference internal" href="backends.html"><span class="doc">Backends</span></a> for the shared contract and platform-specific setup.</p>
 <section id="training-smoke-test">
 <h2>Training smoke test<a class="headerlink" href="#training-smoke-test" title="Link to this heading">#</a></h2>
 <p>Run the smallest official training task to verify that the CLI can load a
@@ -179,6 +182,9 @@ math example is the fastest way to see that path end to end.</p>
 </div>
 <p>Read <a class="reference internal" href="../concepts/training-loop.html"><span class="doc">Training Loop</span></a> for the mental model and
 <a class="reference internal" href="../cookbook/math-rlvr.html"><span class="doc">Math RLVR recipe</span></a> for the runnable recipe shape.</p>
+<p>On Apple Silicon, use a checkpoint supported by <code class="docutils literal notranslate"><span class="pre">mlx-lm</span></code> and add
+<code class="docutils literal notranslate"><span class="pre">--world-size</span> <span class="pre">1</span> <span class="pre">--tp-size</span> <span class="pre">1</span> <span class="pre">--mini-bs</span> <span class="pre">1</span></code> for the first run. See
+<a class="reference internal" href="mlx.html"><span class="doc">Apple Silicon and MLX</span></a> for memory controls and MLX-specific checkpoint behavior.</p>
 </section>
 <section id="agentic-rollout-path">
 <h2>Agentic rollout path<a class="headerlink" href="#agentic-rollout-path" title="Link to this heading">#</a></h2>
@@ -201,10 +207,10 @@ services, or an environment before AReno scores the trajectory.</p>
   </svg>
   <span>Back to top</span>
 </button><div class="navigation flex print:hidden"><div class="navigation-prev">
-    <a href="installation.html">
+    <a href="backends.html">
       <i class="i-lucide chevron-left"></i>
       <div class="page-info">
-        <span>Previous</span><div class="title">Installation</div></div>
+        <span>Previous</span><div class="title">Backends</div></div>
     </a>
   </div><div class="navigation-next">
     <a href="../concepts/training-loop.html">

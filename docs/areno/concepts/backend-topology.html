@@ -70,6 +70,7 @@ data-aria-dark="Switch to auto color mode">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../getting-started/welcome.html">Welcome</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../getting-started/installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting-started/backends.html">Backends</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../getting-started/quickstart.html">Quickstart</a></li>
 </ul>
 <p class="caption" role="heading" aria-level="3"><span class="caption-text">Conceptual Guides</span></p>
@@ -110,7 +111,9 @@ data-aria-dark="Switch to auto color mode">
       <i class="i-lucide close"></i>
     </button>
     <div class="sy-scrollbar sy-rside-inner px-6 xl:top-16 xl:sticky xl:pl-0 pt-6 pb-4"><div class="localtoc"><h3>On this page</h3><ul>
-<li><a class="reference internal" href="#colocated-and-partitioned-engines">Colocated and partitioned engines</a></li>
+<li><a class="reference internal" href="#cuda-colocated-and-partitioned-engines">CUDA colocated and partitioned engines</a></li>
+<li><a class="reference internal" href="#mlx-integrated-runtime">MLX integrated runtime</a></li>
+<li><a class="reference internal" href="#shared-behavior">Shared behavior</a></li>
 </ul>
 </div></div>
   </aside>
@@ -143,11 +146,12 @@ data-aria-dark="Switch to auto color mode">
   <article class="yue" role="main">
           <section id="backend-topology">
 <h1>Backend Topology<a class="headerlink" href="#backend-topology" title="Link to this heading">#</a></h1>
-<p>The current SDK runtime follows one AReno backend path:</p>
+<p>The SDK keeps one public training and serving contract with two native backend
+implementations:</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span><span data-line="1">Trainer
 </span><span data-line="2">  -&gt; Backend
-</span><span data-line="3">    -&gt; ArenoBackend
-</span><span data-line="4">      -&gt; ArenoEngine
+</span><span data-line="3">    +-&gt; CudaBackend -&gt; ArenoEngine -&gt; process/GPU workers
+</span><span data-line="4">    +-&gt; MlxBackend  -&gt; MLX model   -&gt; in-process Metal runtime
 </span></pre></div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">Trainer</span></code> is the public coordinator. In <code class="docutils literal notranslate"><span class="pre">areno/api/trainer.py</span></code>,
@@ -155,16 +159,22 @@ data-aria-dark="Switch to auto color mode">
 <code class="docutils literal notranslate"><span class="pre">Trainer.rollout_token_batch</span></code> and <code class="docutils literal notranslate"><span class="pre">Trainer.train</span></code> delegate rollout and
 training to that backend.</p>
 <p><code class="docutils literal notranslate"><span class="pre">Backend</span></code> is the execution contract in <code class="docutils literal notranslate"><span class="pre">areno/api/backend/base.py</span></code>. Its
-<code class="docutils literal notranslate"><span class="pre">rollout_batch</span></code> and <code class="docutils literal notranslate"><span class="pre">train</span></code> methods define the operations required by the
-training loop. <code class="docutils literal notranslate"><span class="pre">ArenoBackend</span></code> is the registered AReno implementation in
-<code class="docutils literal notranslate"><span class="pre">areno/api/backend/areno/backend.py</span></code>.</p>
-<section id="colocated-and-partitioned-engines">
-<h2>Colocated and partitioned engines<a class="headerlink" href="#colocated-and-partitioned-engines" title="Link to this heading">#</a></h2>
-<p>By default, <code class="docutils literal notranslate"><span class="pre">ArenoBackend.initialize</span></code> creates one <code class="docutils literal notranslate"><span class="pre">ArenoEngine</span></code>. The same
+rollout, scoring, role, training, and checkpoint methods define the operations
+required by the shared trainer. <code class="docutils literal notranslate"><span class="pre">CudaBackend</span></code> lives in
+<code class="docutils literal notranslate"><span class="pre">areno/api/backend/cuda/</span></code> and <code class="docutils literal notranslate"><span class="pre">MlxBackend</span></code> lives in
+<code class="docutils literal notranslate"><span class="pre">areno/api/backend/mlx/</span></code>. Backend modules are imported lazily, so selecting
+MLX does not import Torch/CUDA and selecting CUDA does not import MLX.</p>
+<p>The CLI selects the backend from the host: Linux uses CUDA and native Apple
+Silicon uses MLX. There is no runtime fallback. SDK callers may pass
+<code class="docutils literal notranslate"><span class="pre">backend_type=CUDA</span></code> with <code class="docutils literal notranslate"><span class="pre">CudaConfig</span></code> or <code class="docutils literal notranslate"><span class="pre">backend_type=MLX</span></code> with
+<code class="docutils literal notranslate"><span class="pre">MlxConfig</span></code> explicitly. These backend symbols are exported by <code class="docutils literal notranslate"><span class="pre">areno.api</span></code>.</p>
+<section id="cuda-colocated-and-partitioned-engines">
+<h2>CUDA colocated and partitioned engines<a class="headerlink" href="#cuda-colocated-and-partitioned-engines" title="Link to this heading">#</a></h2>
+<p>By default, <code class="docutils literal notranslate"><span class="pre">CudaBackend.initialize</span></code> creates one <code class="docutils literal notranslate"><span class="pre">ArenoEngine</span></code>. The same
 engine handles both sides of the loop:</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">ArenoBackend.rollout_batch</span></code> calls <code class="docutils literal notranslate"><span class="pre">ArenoEngine.generate_rollout</span></code>.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">ArenoBackend.train</span></code> calls <code class="docutils literal notranslate"><span class="pre">ArenoEngine.step</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CudaBackend.rollout_batch</span></code> calls <code class="docutils literal notranslate"><span class="pre">ArenoEngine.generate_rollout</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CudaBackend.train</span></code> calls <code class="docutils literal notranslate"><span class="pre">ArenoEngine.step</span></code>.</p></li>
 </ul>
 <p><code class="docutils literal notranslate"><span class="pre">ArenoEngine</span></code> is implemented in <code class="docutils literal notranslate"><span class="pre">areno/engine/api.py</span></code>. It coordinates the
 worker cluster used by both rollout and training.</p>
@@ -189,6 +199,28 @@ bytes, tensor count, and effective throughput. The same values are emitted
 with the next training metrics as <code class="docutils literal notranslate"><span class="pre">policy_sync_time_s</span></code>,
 <code class="docutils literal notranslate"><span class="pre">policy_sync_transfer_time_s</span></code>, <code class="docutils literal notranslate"><span class="pre">policy_sync_bytes</span></code>,
 <code class="docutils literal notranslate"><span class="pre">policy_sync_tensors</span></code>, and <code class="docutils literal notranslate"><span class="pre">policy_sync_throughput_gbps</span></code>.</p>
+</section>
+<section id="mlx-integrated-runtime">
+<h2>MLX integrated runtime<a class="headerlink" href="#mlx-integrated-runtime" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">MlxBackend</span></code> owns one in-process model used by rollout, scoring, and
+training. A long-lived scheduler performs prefill and token generation with
+continuous batching. Training updates the same policy object after the rollout
+session closes, so there is no second rollout model and no cross-device weight
+copy. Reference, reward, and critic roles are backend-owned model roles for
+DPO and PPO.</p>
+<p>MLX runs with <code class="docutils literal notranslate"><span class="pre">world-size=1</span></code> and <code class="docutils literal notranslate"><span class="pre">tp-size=1</span></code> on unified memory. CUDA
+device lists, independent rollout partitions, NCCL policy synchronization,
+and CUDA graph capture do not apply. <code class="docutils literal notranslate"><span class="pre">--drop-rollout-state</span></code> controls whether
+completed rollout cache state is retained across session boundaries.</p>
+</section>
+<section id="shared-behavior">
+<h2>Shared behavior<a class="headerlink" href="#shared-behavior" title="Link to this heading">#</a></h2>
+<p>Both backends implement the same <code class="docutils literal notranslate"><span class="pre">TrainSequence</span></code> batches, algorithm loss
+names, microbatch semantics, role APIs, rollout-session lifecycle, metrics,
+and checkpoint entry point. The numerical kernels and native checkpoint
+formats differ. CUDA saves its Hugging Face-oriented checkpoint layout; MLX
+saves the model in native MLX format with tokenizer/processor assets and AReno
+metadata.</p>
 </section>
 </section>
 

@@ -70,6 +70,7 @@ data-aria-dark="Switch to auto color mode">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../getting-started/welcome.html">Welcome</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../getting-started/installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting-started/backends.html">Backends</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../getting-started/quickstart.html">Quickstart</a></li>
 </ul>
 <p class="caption" role="heading" aria-level="3"><span class="caption-text">Conceptual Guides</span></p>
@@ -156,10 +157,11 @@ data-aria-dark="Switch to auto color mode">
           <section id="inference-cli-reference">
 <h1>Inference CLI reference<a class="headerlink" href="#inference-cli-reference" title="Link to this heading">#</a></h1>
 <p><code class="docutils literal notranslate"><span class="pre">areno</span> <span class="pre">serve</span></code></p>
-<p>Start an OpenAI-compatible HTTP server backed by the Areno inference engine.
+<p>Start an OpenAI-compatible HTTP server backed by the native AReno runtime.
 The server exposes <code class="docutils literal notranslate"><span class="pre">/v1/chat/completions</span></code>, accepts standard chat-completion
 <code class="docutils literal notranslate"><span class="pre">tools</span></code> fields, and keeps one rollout session open for the process lifetime
-so rollout state and CUDA graph state can be reused across requests.</p>
+so rollout and scheduler state can be reused across requests. Linux selects
+CUDA; Apple Silicon selects MLX.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span data-line="1">areno<span class="w"> </span>serve<span class="w"> </span><span class="se">\</span>
 </span><span data-line="2"><span class="w">  </span>--model-path<span class="w"> </span>/path/to/hf/checkpoint<span class="w"> </span><span class="se">\</span>
 </span><span data-line="3"><span class="w">  </span>--tp-size<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
@@ -179,9 +181,9 @@ so rollout state and CUDA graph state can be reused across requests.</p>
 <code class="docutils literal notranslate"><span class="pre">--model-hub</span> <span class="pre">hf</span></code> for Hugging Face and <code class="docutils literal notranslate"><span class="pre">--model-hub</span> <span class="pre">modelscope</span></code> for
 ModelScope. Default: <code class="docutils literal notranslate"><span class="pre">modelscope</span></code>.</p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">--tp-size</span> <span class="pre">INTEGER</span></code></dt><dd><p>Tensor parallel size. Default: <code class="docutils literal notranslate"><span class="pre">1</span></code>.</p>
+<dt><code class="docutils literal notranslate"><span class="pre">--tp-size</span> <span class="pre">INTEGER</span></code></dt><dd><p>Tensor parallel size. Default: <code class="docutils literal notranslate"><span class="pre">1</span></code>. MLX requires <code class="docutils literal notranslate"><span class="pre">1</span></code>.</p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">--world-size</span> <span class="pre">INTEGER</span></code></dt><dd><p>Total number of local worker ranks. Default: <code class="docutils literal notranslate"><span class="pre">1</span></code>.</p>
+<dt><code class="docutils literal notranslate"><span class="pre">--world-size</span> <span class="pre">INTEGER</span></code></dt><dd><p>Total number of local worker ranks. Default: <code class="docutils literal notranslate"><span class="pre">1</span></code>. MLX requires <code class="docutils literal notranslate"><span class="pre">1</span></code>.</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">--host</span> <span class="pre">TEXT</span></code></dt><dd><p>HTTP bind host. Default: <code class="docutils literal notranslate"><span class="pre">0.0.0.0</span></code>.</p>
 </dd>
@@ -194,13 +196,16 @@ ModelScope. Default: <code class="docutils literal notranslate"><span class="pre
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">--decode-progress-interval-s</span> <span class="pre">FLOAT</span></code></dt><dd><p>Worker decode progress log interval. Default: <code class="docutils literal notranslate"><span class="pre">0.0</span></code>.</p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">--eager-decode</span></code></dt><dd><p>Disable decode CUDA graph and run rollout decode eagerly.</p>
+<dt><code class="docutils literal notranslate"><span class="pre">--eager-decode</span></code></dt><dd><p>Disable decode CUDA graph and run rollout decode eagerly. CUDA only; MLX
+does not use this setting.</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">--attn-backend</span> <span class="pre">[flash|native]</span></code></dt><dd><p>Attention backend. Default: <code class="docutils literal notranslate"><span class="pre">flash</span></code>. Use <code class="docutils literal notranslate"><span class="pre">native</span></code> to run without
 <code class="docutils literal notranslate"><span class="pre">flash-attn</span></code> on the areno_accel native compatibility path. AReno
 automatically falls back to <code class="docutils literal notranslate"><span class="pre">native</span></code> on flash-attn-unsupported GPUs such
 as Tesla T4 and prints a warning. <code class="docutils literal notranslate"><span class="pre">native</span></code> is slower than <code class="docutils literal notranslate"><span class="pre">flash</span></code> on
-supported GPUs.</p>
+supported GPUs.
+This setting is CUDA only; MLX uses the attention implementation supplied
+by the loaded MLX model.</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">--disable-thinking</span></code></dt><dd><p>Pass <code class="docutils literal notranslate"><span class="pre">enable_thinking=False</span></code> to tokenizer chat templates when supported.
 Use this when serving a model whose chat template supports a thinking-mode
@@ -373,6 +378,11 @@ compatible when these fields match:</p>
 <li><p>EOS token id</p></li>
 </ul>
 <p>Requests with different generation settings are scheduled separately.</p>
+<p>On MLX, the long-lived scheduler is in process and uses one model on unified
+memory. Continuous batching is not established merely by sending concurrent
+HTTP requests: a black-box test should submit short probes while earlier long
+requests are active and verify that a probe completes before the earlier group
+has drained.</p>
 </section>
 <section id="decode-progress-logs">
 <h2>Decode progress logs<a class="headerlink" href="#decode-progress-logs" title="Link to this heading">#</a></h2>
@@ -386,6 +396,8 @@ the reporting window. It excludes prefill and is not the same as end-to-end
 request throughput. <code class="docutils literal notranslate"><span class="pre">cuda_graph=True</span></code> means the worker used CUDA graph replay
 for at least one decode step in that window; <code class="docutils literal notranslate"><span class="pre">False</span></code> means the window ran
 eagerly.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">cuda_graph</span></code> field and DP-worker interpretation apply to CUDA logs. MLX
+does not report CUDA graph state.</p>
 </section>
 <section id="tool-calls">
 <h2>Tool calls<a class="headerlink" href="#tool-calls" title="Link to this heading">#</a></h2>
