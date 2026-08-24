@@ -452,6 +452,25 @@ mini-batches in one train call.</p>
 <dt><code class="docutils literal notranslate"><span class="pre">--activation-checkpointing</span> <span class="pre">/</span> <span class="pre">--no-activation-checkpointing</span></code></dt><dd><p>Enable decoder-layer activation recompute during training. Default:
 enabled.</p>
 </dd>
+<dt><code class="docutils literal notranslate"><span class="pre">--optimizer-state-offload</span> <span class="pre">[none|cpu|disk]</span></code></dt><dd><p>Select CUDA optimizer-state residency. <code class="docutils literal notranslate"><span class="pre">none</span></code> keeps state on the training
+device. <code class="docutils literal notranslate"><span class="pre">cpu</span></code> moves state to host memory between train calls. <code class="docutils literal notranslate"><span class="pre">disk</span></code>
+stages a bounded bucket group through host memory and stores the state in
+persistent writable raw-mmap files, copying each bucket back only when the
+next optimizer step needs it. Default: <code class="docutils literal notranslate"><span class="pre">none</span></code>. This option is supported
+only by the CUDA backend and applies to both FP32-master AdamW and
+<code class="docutils literal notranslate"><span class="pre">--adam-8bit</span></code>.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">--optimizer-state-offload-dir</span> <span class="pre">DIRECTORY</span></code></dt><dd><p>Required when <code class="docutils literal notranslate"><span class="pre">--optimizer-state-offload</span> <span class="pre">disk</span></code> is selected. Use a fast
+local NVMe filesystem with enough free capacity for the optimizer state.
+AReno creates a process-private subdirectory and removes it on normal
+optimizer onload or teardown. The mmap files are runtime scratch state,
+not restartable checkpoints; use <code class="docutils literal notranslate"><span class="pre">--save-path</span></code> for checkpointing.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">--optimizer-state-offload-batch-size</span> <span class="pre">INTEGER</span></code></dt><dd><p>Number of optimizer buckets assigned to each persistent mmap and flushed
+together. Default: <code class="docutils literal notranslate"><span class="pre">1</span></code>. A smaller value bounds CPU staging memory more
+tightly; a larger value creates fewer files and flush calls. This setting
+is used only by disk offload.</p>
+</dd>
 <dt><code class="docutils literal notranslate"><span class="pre">--lr</span> <span class="pre">FLOAT</span></code></dt><dd><p>Policy optimizer learning rate. Default: <code class="docutils literal notranslate"><span class="pre">1.0e-6</span></code>.</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">--min-lr</span> <span class="pre">FLOAT</span></code></dt><dd><p>Policy optimizer minimum learning rate. Default: <code class="docutils literal notranslate"><span class="pre">1.0e-7</span></code>.</p>

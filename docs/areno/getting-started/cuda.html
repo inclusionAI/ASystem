@@ -231,6 +231,15 @@ retaining reusable cache and graph state for the next rollout.</p>
 <dt><code class="docutils literal notranslate"><span class="pre">--activation-checkpointing</span></code></dt><dd><p>Recomputes supported decoder activations during backward. It is enabled by
 default.</p>
 </dd>
+<dt><code class="docutils literal notranslate"><span class="pre">--optimizer-state-offload</span> <span class="pre">cpu</span></code></dt><dd><p>Moves optimizer state to host memory between train calls.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">--optimizer-state-offload</span> <span class="pre">disk</span></code></dt><dd><p>Keeps optimizer state in process-private persistent raw-mmap files and
+lazily copies buckets back for updates. Also pass
+<code class="docutils literal notranslate"><span class="pre">--optimizer-state-offload-dir</span> <span class="pre">/path/to/local-nvme</span></code>. Disk offload is
+runtime scratch storage rather than a checkpoint. The default
+<code class="docutils literal notranslate"><span class="pre">--optimizer-state-offload-batch-size</span> <span class="pre">1</span></code> groups mmap files and flushes;
+reduce it to lower CPU staging memory or increase it to reduce I/O calls.</p>
+</dd>
 <dt><code class="docutils literal notranslate"><span class="pre">--attn-backend</span> <span class="pre">flash</span></code></dt><dd><p>Uses FlashAttention when the model and GPU support it. Use <code class="docutils literal notranslate"><span class="pre">native</span></code> for
 compatibility diagnostics or unsupported GPUs.</p>
 </dd>
