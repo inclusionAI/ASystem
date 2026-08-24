@@ -110,7 +110,10 @@ data-aria-dark="Switch to auto color mode">
     <button class="rside-close js-menu xl:hidden" aria-label="Close Table of Contents" type="button" aria-controls="rside" aria-expanded="false">
       <i class="i-lucide close"></i>
     </button>
-    <div class="sy-scrollbar sy-rside-inner px-6 xl:top-16 xl:sticky xl:pl-0 pt-6 pb-4"></div>
+    <div class="sy-scrollbar sy-rside-inner px-6 xl:top-16 xl:sticky xl:pl-0 pt-6 pb-4"><div class="localtoc"><h3>On this page</h3><ul>
+<li><a class="reference internal" href="#sequence-parallel-precedence">Sequence-parallel precedence</a></li>
+</ul>
+</div></div>
   </aside>
   <div class="rside-overlay js-menu" role="button" aria-label="Close Table of Contents" aria-controls="rside" aria-expanded="false"></div>
   <main class="sy-main w-full max-sm:max-w-full print:pt-6">
@@ -152,6 +155,14 @@ runtime observability fields.</p>
 <li><p><a class="reference internal" href="../cli/observability.html"><span class="doc">Observability</span></a></p></li>
 <li><p><a class="reference internal" href="../cli/diagnostics.html"><span class="doc">Diagnostics CLI reference</span></a></p></li>
 </ul>
+<section id="sequence-parallel-precedence">
+<h2>Sequence-parallel precedence<a class="headerlink" href="#sequence-parallel-precedence" title="Link to this heading">#</a></h2>
+<p>For <code class="docutils literal notranslate"><span class="pre">areno</span> <span class="pre">train</span></code>, <code class="docutils literal notranslate"><span class="pre">--sequence-parallel</span></code> and
+<code class="docutils literal notranslate"><span class="pre">--no-sequence-parallel</span></code> explicitly override the checkpoint model
+configuration. If neither flag is present, AReno uses the checkpoint’s
+<code class="docutils literal notranslate"><span class="pre">sequence_parallel</span></code> value. TP1 execution never activates sequence
+parallelism. See <a class="reference internal" href="../cli/training.html"><span class="doc">Training CLI reference</span></a> for the complete training option list.</p>
+</section>
 </section>
 
         </article><button class="back-to-top" type="button">

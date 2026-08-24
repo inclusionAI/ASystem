@@ -243,6 +243,12 @@ explicitly supplied MLX values must be <code class="docutils literal notranslate
 </dl>
 <p><code class="docutils literal notranslate"><span class="pre">world-size</span></code> must be divisible by <code class="docutils literal notranslate"><span class="pre">tp-size</span></code>.</p>
 <dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">--sequence-parallel</span> <span class="pre">/</span> <span class="pre">--no-sequence-parallel</span></code></dt><dd><p>Explicitly enable or disable sequence parallelism for CUDA training. When
+neither flag is passed, AReno uses <code class="docutils literal notranslate"><span class="pre">sequence_parallel</span></code> from the loaded
+checkpoint’s model configuration. The CLI value takes precedence over the
+model configuration. Sequence parallelism is inactive when <code class="docutils literal notranslate"><span class="pre">tp-size</span></code> is
+<code class="docutils literal notranslate"><span class="pre">1</span></code> even if it is requested.</p>
+</dd>
 <dt><code class="docutils literal notranslate"><span class="pre">--train-devices</span> <span class="pre">TEXT</span></code></dt><dd><p>Comma-separated logical CUDA device indices or inclusive ranges used by
 training. For example, <code class="docutils literal notranslate"><span class="pre">0..8,11..29</span></code> includes both endpoints. AReno
 derives <code class="docutils literal notranslate"><span class="pre">world-size</span></code> from the expanded count. When omitted, AReno uses
