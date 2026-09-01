@@ -231,7 +231,9 @@ the logical rollout batch.</p>
 retaining reusable cache and graph state for the next rollout.</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">--activation-checkpointing</span></code></dt><dd><p>Recomputes supported decoder activations during backward. It is enabled by
-default.</p>
+default. Ling/Bailing V3 checkpoints attention in every decoder layer and
+both dense and routed expert MLP blocks. Sparse routing remains outside
+recomputation so routing load counters are updated exactly once.</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">--optimizer-state-offload</span> <span class="pre">cpu</span></code></dt><dd><p>Moves optimizer state to host memory between train calls.</p>
 </dd>
