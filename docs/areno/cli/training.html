@@ -92,6 +92,7 @@ data-aria-dark="Switch to auto color mode">
 <p class="caption" role="heading" aria-level="3"><span class="caption-text">Reference</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../reference/cli.html">CLI Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/adamw-4bit.html">4-bit AdamW</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../sdk/trainer.html">SDK Reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../models/supported.html">Supported Models</a></li>
 </ul>
@@ -466,7 +467,7 @@ stages a bounded bucket group through host memory and stores the state in
 persistent writable raw-mmap files, copying each bucket back only when the
 next optimizer step needs it. Default: <code class="docutils literal notranslate"><span class="pre">none</span></code>. This option is supported
 only by the CUDA backend and applies to both FP32-master AdamW and
-<code class="docutils literal notranslate"><span class="pre">--adam-8bit</span></code>.</p>
+<code class="docutils literal notranslate"><span class="pre">--adam-8bit</span></code> or <code class="docutils literal notranslate"><span class="pre">--adam-4bit</span></code>.</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">--optimizer-state-offload-dir</span> <span class="pre">DIRECTORY</span></code></dt><dd><p>Required when <code class="docutils literal notranslate"><span class="pre">--optimizer-state-offload</span> <span class="pre">disk</span></code> is selected. Use a fast
 local NVMe filesystem with enough free capacity for the optimizer state.
@@ -493,6 +494,10 @@ is used only by disk offload.</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">--adam-8bit</span></code></dt><dd><p>Use 8-bit Adam moment states instead of FP32 Adam states. Supported by both
 native backends; validate convergence when changing optimizer precision.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">--adam-4bit</span></code></dt><dd><p>Use packed block-wise 4-bit Adam moment states. This option is CUDA-only
+and cannot be combined with <code class="docutils literal notranslate"><span class="pre">--adam-8bit</span></code>. See
+<a class="reference internal" href="../reference/adamw-4bit.html"><span class="doc">Using 4-bit AdamW</span></a> for complete usage examples.</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">--unfreeze-mm-tower</span></code></dt><dd><p>Train recognized vision/audio encoder tower parameters. Towers are frozen
 by default.</p>
