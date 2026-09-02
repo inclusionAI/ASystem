@@ -227,8 +227,12 @@ prefill features dominate memory.</p>
 <dt><code class="docutils literal notranslate"><span class="pre">--drop-rollout-state</span></code></dt><dd><p>Releases completed rollout KV/cache state at the rollout-session boundary
 instead of retaining it for the next rollout.</p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">--adam-8bit</span></code></dt><dd><p>Stores Adam moment state in the MLX backend’s 8-bit representation. This
-reduces optimizer memory; validate convergence for the target task.</p>
+<dt><code class="docutils literal notranslate"><span class="pre">--adam-8bit</span></code></dt><dd><p>Stores non-embedding Adam moments in the same block-wise dynamic 8-bit
+representation used by the CUDA backend. Token-embedding optimizer moments
+stay FP32, selected by parameter identity rather than name matching; model
+weights, gradients, and forward behavior are unchanged. This reduces
+optimizer memory for the remaining parameters; validate convergence for the
+target task.</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">--activation-checkpointing</span></code></dt><dd><p>Recomputes supported decoder activations during backward. It is enabled by
 default.</p>

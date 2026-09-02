@@ -450,7 +450,7 @@ is capped by <code class="docutils literal notranslate"><span class="pre">tune-m
 memory, the policy optimizer, reference/critic models, and the per-algorithm
 loss knobs. Each algorithm-specific flag applies only to the algorithms named
 in its description; flags for other algorithms are ignored.</p>
-<dl class="simple">
+<dl>
 <dt><code class="docutils literal notranslate"><span class="pre">--mini-bs</span> <span class="pre">INTEGER</span></code></dt><dd><p>Number of training rows in one backend gradient microbatch. Default:
 <code class="docutils literal notranslate"><span class="pre">16</span></code>. The meaning is identical on CUDA and MLX; reducing it limits
 activation memory but does not change <code class="docutils literal notranslate"><span class="pre">batch-size</span></code> or <code class="docutils literal notranslate"><span class="pre">n-samples</span></code>.</p>
@@ -492,8 +492,21 @@ is used only by disk offload.</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">--adam-beta2</span> <span class="pre">FLOAT</span></code></dt><dd><p>Policy optimizer Adam beta2. Default: <code class="docutils literal notranslate"><span class="pre">0.999</span></code>.</p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">--adam-8bit</span></code></dt><dd><p>Use 8-bit Adam moment states instead of FP32 Adam states. Supported by both
-native backends; validate convergence when changing optimizer precision.</p>
+<dt><code class="docutils literal notranslate"><span class="pre">--adam-8bit</span></code></dt><dd><p>Use block-wise 8-bit Adam moment states instead of FP32 Adam states.
+CUDA and MLX use the signed dynamic-tree codebook for the first moment and
+the unsigned dynamic codebook for the second moment from <em>8-Bit Optimizers
+via Block-wise Quantization</em>. Token-embedding weights and gradients retain
+their normal model precision, while their optimizer moments remain FP32 to
+avoid quantizing embedding-gradient outliers. Other initialized moment
+state uses two bytes per parameter plus FP32 block scales.
+CUDA training metrics expose <code class="docutils literal notranslate"><span class="pre">adam8_quantized_state_bytes</span></code>,
+<code class="docutils literal notranslate"><span class="pre">adam8_fp32_exempt_bytes</span></code>, <code class="docutils literal notranslate"><span class="pre">adam8_block_metadata_bytes</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">adam8_total_bytes</span></code> for initialized DP-local optimizer state.</p>
+<p>This option does not insert a normalization layer or reinitialize a loaded
+embedding. The paper’s Stable Embedding forward architecture is not enabled
+for AReno’s current RoPE-only language models because they do not expose the
+compatible additive-position-embedding boundary. Supported by both native
+backends; validate convergence when changing optimizer precision.</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">--adam-4bit</span></code></dt><dd><p>Use packed block-wise 4-bit Adam moment states. This option is CUDA-only
 and cannot be combined with <code class="docutils literal notranslate"><span class="pre">--adam-8bit</span></code>. See
