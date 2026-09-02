@@ -508,8 +508,10 @@ for AReno’s current RoPE-only language models because they do not expose the
 compatible additive-position-embedding boundary. Supported by both native
 backends; validate convergence when changing optimizer precision.</p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">--adam-4bit</span></code></dt><dd><p>Use packed block-wise 4-bit Adam moment states. This option is CUDA-only
-and cannot be combined with <code class="docutils literal notranslate"><span class="pre">--adam-8bit</span></code>. See
+<dt><code class="docutils literal notranslate"><span class="pre">--adam-4bit</span></code></dt><dd><p>Use packed 4-bit first moments, factored row/column second moments for
+tensors of rank two or greater, B128 fallback for vectors, and BF16 streamed
+DP gradient shards. This option is CUDA-only and cannot be combined with
+<code class="docutils literal notranslate"><span class="pre">--adam-8bit</span></code>. See
 <a class="reference internal" href="../reference/adamw-4bit.html"><span class="doc">Using 4-bit AdamW</span></a> for complete usage examples.</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">--unfreeze-mm-tower</span></code></dt><dd><p>Train recognized vision/audio encoder tower parameters. Towers are frozen

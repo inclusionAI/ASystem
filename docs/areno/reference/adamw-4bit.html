@@ -113,6 +113,7 @@ data-aria-dark="Switch to auto color mode">
       <i class="i-lucide close"></i>
     </button>
     <div class="sy-scrollbar sy-rside-inner px-6 xl:top-16 xl:sticky xl:pl-0 pt-6 pb-4"><div class="localtoc"><h3>On this page</h3><ul>
+<li><a class="reference internal" href="#state-representation">State representation</a></li>
 <li><a class="reference internal" href="#command-line">Command line</a></li>
 <li><a class="reference internal" href="#optimizer-state-offload">Optimizer-state offload</a></li>
 <li><a class="reference internal" href="#trainer-configuration">Trainer configuration</a></li>
@@ -150,8 +151,27 @@ data-aria-dark="Switch to auto color mode">
           <section id="using-4-bit-adamw">
 <h1>Using 4-bit AdamW<a class="headerlink" href="#using-4-bit-adamw" title="Link to this heading">#</a></h1>
 <p>AReno provides an opt-in packed 4-bit AdamW optimizer for CUDA training. It
-changes optimizer-state storage only; the model checkpoint and training data
-format are unchanged.</p>
+changes optimizer-state storage and gradient accumulation precision; the model
+checkpoint and training data format are unchanged.</p>
+<section id="state-representation">
+<h2>State representation<a class="headerlink" href="#state-representation" title="Link to this heading">#</a></h2>
+<p>The first moment uses parameter-local blocks and the signed dynamic-exponent
+4-bit map. Matrix and higher-rank parameters use Adafactor-style row and column
+means for the second moment, with every local tensor interpreted as
+<code class="docutils literal notranslate"><span class="pre">[shape[0],</span> <span class="pre">-1]</span></code>. One-dimensional parameters retain packed 4-bit second
+moments with 128-element block normalization. The second-moment 4-bit map used
+for those vectors excludes zero.</p>
+<p>For data-parallel training, partial row and column sums are combined across the
+DP group before their exponential update. Tensor-parallel parameters use each
+rank’s local model-tensor shape; this does not add a TP collective. The fused
+update uses bounded block-local FP32 work and does not materialize a
+parameter-sized FP32 moment tensor.</p>
+<p>Enabling <code class="docutils literal notranslate"><span class="pre">--adam-4bit</span></code> also streams every microbatch into BF16 DP gradient
+shards instead of retaining a full-model FP32 <code class="docutils literal notranslate"><span class="pre">main_grad</span></code> copy. Gradient norm
+and clipping operate directly on those shards. This behavior belongs to the
+4-bit mode only; AdamW8bit and FP32 AdamW keep their existing FP32 gradient
+accumulation path. The internal quantization block size defaults to 128.</p>
+</section>
 <section id="command-line">
 <h2>Command line<a class="headerlink" href="#command-line" title="Link to this heading">#</a></h2>
 <p>Add <code class="docutils literal notranslate"><span class="pre">--adam-4bit</span></code> to any CUDA <code class="docutils literal notranslate"><span class="pre">areno</span> <span class="pre">train</span></code> command:</p>
@@ -258,7 +278,12 @@ scratch files and are not restartable checkpoints.</p>
 fused 4-bit optimizer kernel.</p></li>
 <li><p>A saved 4-bit optimizer state must be resumed with the 4-bit optimizer. The
 separately saved model weights remain usable without <code class="docutils literal notranslate"><span class="pre">--adam-4bit</span></code>.</p></li>
+<li><p>Optimizer-state checkpoints from the earlier block-only or rank-normalized
+representations are intentionally incompatible. Model-weight checkpoints
+remain portable.</p></li>
 </ul>
+<p>Initialized state is reported as <code class="docutils literal notranslate"><span class="pre">adam4_quantized_state_bytes</span></code>,
+<code class="docutils literal notranslate"><span class="pre">adam4_scale_metadata_bytes</span></code>, and <code class="docutils literal notranslate"><span class="pre">adam4_total_bytes</span></code>.</p>
 <p>Confirm that the option is available with:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span data-line="1">areno<span class="w"> </span>train<span class="w"> </span>--help<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>adam-4bit
 </span></pre></div>
