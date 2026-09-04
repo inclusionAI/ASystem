@@ -116,6 +116,7 @@ data-aria-dark="Switch to auto color mode">
     <div class="sy-scrollbar sy-rside-inner px-6 xl:top-16 xl:sticky xl:pl-0 pt-6 pb-4"><div class="localtoc"><h3>On this page</h3><ul>
 <li><a class="reference internal" href="#requirements-and-installation">Requirements and installation</a></li>
 <li><a class="reference internal" href="#training">Training</a><ul>
+<li><a class="reference internal" href="#lora">LoRA</a></li>
 <li><a class="reference internal" href="#memory-controls">Memory controls</a></li>
 </ul>
 </li>
@@ -214,6 +215,31 @@ them explicitly, use <code class="docutils literal notranslate"><span class="pre
 <p><code class="docutils literal notranslate"><span class="pre">--mini-bs</span></code> has the same meaning on both backends: it is the number of
 training rows in one gradient microbatch. <code class="docutils literal notranslate"><span class="pre">--gradient-accumulation-steps</span></code>
 controls how many such microbatches contribute to an optimizer update.</p>
+<section id="lora">
+<h3>LoRA<a class="headerlink" href="#lora" title="Link to this heading">#</a></h3>
+<p>Dense Qwen3 text checkpoints support the same standard PEFT-compatible LoRA
+configuration used by the CUDA backend. The base model stays frozen and only
+the requested adapter A/B arrays are optimized:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span data-line="1">areno<span class="w"> </span>train<span class="w"> </span><span class="se">\</span>
+</span><span data-line="2"><span class="w">  </span>--ckpt<span class="w"> </span>/path/to/qwen3-model<span class="w"> </span><span class="se">\</span>
+</span><span data-line="3"><span class="w">  </span>--dataset-path<span class="w"> </span>/path/to/train.jsonl<span class="w"> </span><span class="se">\</span>
+</span><span data-line="4"><span class="w">  </span>--dataset-loader-fn<span class="w"> </span>/path/to/dataset_loader.py<span class="w"> </span><span class="se">\</span>
+</span><span data-line="5"><span class="w">  </span>--algo<span class="w"> </span>sft<span class="w"> </span><span class="se">\</span>
+</span><span data-line="6"><span class="w">  </span>--lora-rank<span class="w"> </span><span class="m">8</span><span class="w"> </span><span class="se">\</span>
+</span><span data-line="7"><span class="w">  </span>--lora-alpha<span class="w"> </span><span class="m">16</span><span class="w"> </span><span class="se">\</span>
+</span><span data-line="8"><span class="w">  </span>--save-path<span class="w"> </span>/path/to/adapters<span class="w"> </span><span class="se">\</span>
+</span><span data-line="9"><span class="w">  </span>--save-interval<span class="w"> </span><span class="m">100</span>
+</span></pre></div>
+</div>
+<p>Use <code class="docutils literal notranslate"><span class="pre">--lora-adapter-path</span> <span class="pre">/path/to/peft-adapter</span></code> to initialize training from
+an existing standard PEFT directory. The adapter metadata is authoritative for
+rank, alpha, dropout, and target modules. The same option can serve an exported
+adapter with <code class="docutils literal notranslate"><span class="pre">areno</span> <span class="pre">serve</span></code> while <code class="docutils literal notranslate"><span class="pre">--model-path</span></code> continues to identify its
+base checkpoint.</p>
+<p>MLX LoRA currently requires an unquantized Qwen3 Dense text checkpoint,
+<code class="docutils literal notranslate"><span class="pre">--lora-dropout</span> <span class="pre">0</span></code>, and <code class="docutils literal notranslate"><span class="pre">--reference-mode</span> <span class="pre">independent</span></code>. QLoRA, Qwen3 MoE,
+multimodal LoRA, multiple adapters, and <code class="docutils literal notranslate"><span class="pre">reuse_actor_base</span></code> are not supported.</p>
+</section>
 <section id="memory-controls">
 <h3>Memory controls<a class="headerlink" href="#memory-controls" title="Link to this heading">#</a></h3>
 <p>Start with conservative sequence lengths and concurrency. The following
@@ -271,15 +297,24 @@ probe completes before the earlier long-request group has drained.</p>
 <section id="checkpoints">
 <h2>Checkpoints<a class="headerlink" href="#checkpoints" title="Link to this heading">#</a></h2>
 <p>The MLX providers can load compatible Hugging Face-layout and MLX-native
-checkpoints supported by <code class="docutils literal notranslate"><span class="pre">mlx-lm</span></code> or <code class="docutils literal notranslate"><span class="pre">mlx-vlm</span></code>. AReno saves the trained
-policy in native MLX format, including model configuration, safetensors,
-tokenizer or processor assets, and <code class="docutils literal notranslate"><span class="pre">areno_mlx_state.json</span></code>. Reload the saved
+checkpoints supported by <code class="docutils literal notranslate"><span class="pre">mlx-lm</span></code> or <code class="docutils literal notranslate"><span class="pre">mlx-vlm</span></code>. Full-weight training saves
+the policy in native MLX format, including model configuration, safetensors,
+tokenizer or processor assets, and <code class="docutils literal notranslate"><span class="pre">areno_mlx_state.json</span></code>. Reload that saved
 directory directly with either <code class="docutils literal notranslate"><span class="pre">--ckpt</span></code> or <code class="docutils literal notranslate"><span class="pre">--model-path</span></code>.</p>
-<p>An MLX checkpoint is not advertised as a portable CUDA/Transformers export.
-Some unquantized model layouts may happen to be compatible, but MLX model
-sanitization, tensor layout, and quantization are model-family concerns. Test
-the target loader instead of renaming metadata. Optimizer and scheduler state
-are not part of the current MLX checkpoint round trip.</p>
+<p>LoRA training instead saves an adapter-only standard PEFT directory containing
+<code class="docutils literal notranslate"><span class="pre">adapter_config.json</span></code> and <code class="docutils literal notranslate"><span class="pre">adapter_model.safetensors</span></code>. The frozen base
+checkpoint is not copied. Continue adapter training with the base checkpoint
+as <code class="docutils literal notranslate"><span class="pre">--ckpt</span></code> plus the saved directory as <code class="docutils literal notranslate"><span class="pre">--lora-adapter-path</span></code>; use the same
+pair with <code class="docutils literal notranslate"><span class="pre">--model-path</span></code> and <code class="docutils literal notranslate"><span class="pre">--lora-adapter-path</span></code> for serving. SDK callers
+can write the same artifact explicitly through <code class="docutils literal notranslate"><span class="pre">Trainer.export_adapter</span></code>.
+Optimizer and scheduler state restart with the new trainer process.</p>
+<p>An MLX full-weight checkpoint is not advertised as a portable
+CUDA/Transformers export. Some unquantized model layouts may happen to be
+compatible, but MLX model sanitization, tensor layout, and quantization are
+model-family concerns. Test the target loader instead of renaming metadata.
+This restriction does not apply to the standard PEFT LoRA artifact described
+above. Optimizer and scheduler state are not part of the current MLX checkpoint
+round trip.</p>
 </section>
 <section id="models-and-multimodal-input">
 <h2>Models and multimodal input<a class="headerlink" href="#models-and-multimodal-input" title="Link to this heading">#</a></h2>

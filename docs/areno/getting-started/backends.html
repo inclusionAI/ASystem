@@ -177,7 +177,7 @@ runtime.</p>
 <tr class="row-odd"><td><p>Apple Silicon macOS</p></td>
 <td><p>MLX</p></td>
 <td><p>Single-process unified-memory runtime</p></td>
-<td><p>MLX safetensors and processor assets</p></td>
+<td><p>MLX full weights or standard PEFT LoRA adapter</p></td>
 </tr>
 </tbody>
 </table>
@@ -197,7 +197,8 @@ continuous-batch serving, checkpoint behavior, model support, and
 <p>The MLX backend owns one in-process model for rollout, scoring, and training,
 plus a long-lived continuous-batch scheduler. It installs only the Apple
 Silicon dependency set and does not require Torch or CUDA. MLX runs with
-<code class="docutils literal notranslate"><span class="pre">world-size=1</span></code> and <code class="docutils literal notranslate"><span class="pre">tp-size=1</span></code> and saves native MLX checkpoints.</p>
+<code class="docutils literal notranslate"><span class="pre">world-size=1</span></code> and <code class="docutils literal notranslate"><span class="pre">tp-size=1</span></code> and saves either native full-weight
+checkpoints or standard PEFT adapters for supported LoRA training.</p>
 <p>Read <a class="reference internal" href="mlx.html"><span class="doc">Apple Silicon and MLX</span></a> for installation, unified-memory controls, continuous-batch
 serving, checkpoint behavior, <code class="docutils literal notranslate"><span class="pre">mlx-lm</span></code>/<code class="docutils literal notranslate"><span class="pre">mlx-vlm</span></code> model support, and
 <code class="docutils literal notranslate"><span class="pre">MlxConfig</span></code>.</p>
