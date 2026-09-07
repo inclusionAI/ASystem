@@ -2,7 +2,7 @@
 <html lang="en" data-accent-color="gray" data-content_root="../">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Reward functions - AReno docs</title><link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Writing dataset loaders and reward functions" href="../cookbook/writing-loaders-and-rewards.html" /><link rel="prev" title="Native LoRA" href="native-lora.html" /><script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Reward functions - AReno docs</title><link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Writing dataset loaders and reward functions" href="../cookbook/writing-loaders-and-rewards.html" /><link rel="prev" title="4-bit AdamW" href="adamw-4bit.html" /><script>
     function setColorMode(t){let e=document.documentElement;e.setAttribute("data-color-mode",t);let a=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,s=t;"auto"===t&&(s=a?"dark":"light"),"light"===s?(e.classList.remove("dark"),e.classList.add("light")):(e.classList.remove("light"),e.classList.add("dark"))}
     setColorMode(localStorage._theme||"auto");
   </script><link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=e1a1ceaf" />
@@ -81,6 +81,8 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l1"><a class="reference internal" href="dataset-formats.html">Dataset Formats</a></li>
 <li class="toctree-l1"><a class="reference internal" href="multimodal-inputs.html">Multimodal Inputs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="native-lora.html">Native LoRA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="adamw-8bit.html">8-bit AdamW</a></li>
+<li class="toctree-l1"><a class="reference internal" href="adamw-4bit.html">4-bit AdamW</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Reward Functions</a></li>
 </ul>
 <p class="caption" role="heading" aria-level="3"><span class="caption-text">Cookbook</span></p>
@@ -93,7 +95,6 @@ data-aria-dark="Switch to auto color mode">
 <p class="caption" role="heading" aria-level="3"><span class="caption-text">Reference</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../reference/cli.html">CLI Reference</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../reference/adamw-4bit.html">4-bit AdamW</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../sdk/trainer.html">SDK Reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../models/supported.html">Supported Models</a></li>
 </ul>
@@ -186,10 +187,10 @@ failed.</p>
   </svg>
   <span>Back to top</span>
 </button><div class="navigation flex print:hidden"><div class="navigation-prev">
-    <a href="native-lora.html">
+    <a href="adamw-4bit.html">
       <i class="i-lucide chevron-left"></i>
       <div class="page-info">
-        <span>Previous</span><div class="title">Native LoRA</div></div>
+        <span>Previous</span><div class="title">4-bit AdamW</div></div>
     </a>
   </div><div class="navigation-next">
     <a href="../cookbook/writing-loaders-and-rewards.html">
