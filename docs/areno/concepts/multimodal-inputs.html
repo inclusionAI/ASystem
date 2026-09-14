@@ -263,6 +263,21 @@ optional independent schedules through <code class="docutils literal notranslate
 <code class="docutils literal notranslate"><span class="pre">--mm-projector-lr</span></code>. Unfreezing either group adds activation, gradient, and
 optimizer-state memory; start with the projector before unfreezing a large
 encoder tower.</p>
+<p>On CUDA, Qwen3.5 and Qwen3.5 MoE share the same vision training controls:
+the tower group contains <code class="docutils literal notranslate"><span class="pre">visual.patch_embed</span></code>, <code class="docutils literal notranslate"><span class="pre">visual.pos_embed</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">visual.blocks</span></code>; the projector group contains all of <code class="docutils literal notranslate"><span class="pre">visual.merger</span></code>,
+including its normalization layer. Either group can be trained independently
+or both can be unfrozen together. For example, append these options to an
+existing multimodal training command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span data-line="1">--unfreeze-mm-tower<span class="w"> </span>--mm-tower-lr<span class="w"> </span>1e-6<span class="w"> </span><span class="se">\</span>
+</span><span data-line="2">--unfreeze-mm-projector<span class="w"> </span>--mm-projector-lr<span class="w"> </span>1e-5
+</span></pre></div>
+</div>
+<p>Frozen groups remain in evaluation mode. Training the tower alone still
+backpropagates through the frozen merger. Supply processor pixel features to
+train the vision path; precomputed <code class="docutils literal notranslate"><span class="pre">image_embeds</span></code> bypass both groups.
+Checkpoints retain all visual weights, and separate rollout workers receive
+updates for whichever visual groups are unfrozen.</p>
 <p>On MLX, processor output uses NumPy as the interchange format and is converted
 to MLX arrays by the provider. Supported PIL image processors therefore do not
 require Torch. Multimodal training uses the native lazy MLX graph rather than
