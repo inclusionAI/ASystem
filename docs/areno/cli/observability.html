@@ -87,6 +87,10 @@ data-aria-dark="Switch to auto color mode">
 </ul>
 <p class="caption" role="heading" aria-level="3"><span class="caption-text">Cookbook</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="dashboard.html">Dashboard</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="dashboard-modal.html">Modal jobs</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../cookbook/writing-loaders-and-rewards.html">Writing dataset loaders and reward functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../cookbook/math-rlvr.html">Math RLVR recipe</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../cookbook/tictactoe-agentic-rl.html">TicTacToe agentic RL</a></li>
@@ -157,6 +161,7 @@ diagnostics. The implementation is intentionally local and lightweight:
 metrics are recorded by <code class="docutils literal notranslate"><span class="pre">areno.api.metrics</span></code> and the CLI exposes the output
 directory through <code class="docutils literal notranslate"><span class="pre">--metrics-log-dir</span></code>. AReno does not currently provide a
 built-in wandb integration.</p>
+<p>For the dashboard and Modal job views, see <a class="reference internal" href="dashboard.html"><span class="doc">Dashboard</span></a>.</p>
 <section id="console-logs">
 <h2>Console logs<a class="headerlink" href="#console-logs" title="Link to this heading">#</a></h2>
 <p>The trainer logs a compact lifecycle for every epoch and step. For rollout
@@ -307,8 +312,9 @@ execution:</p>
 </div>
 <p>These lines are useful for checking whether the configured concurrency,
 trajectory length, and tool-call volume match expectations.</p>
-<p>Second, set <code class="docutils literal notranslate"><span class="pre">ARENO_LOG_COMPLETIONS</span></code> to a positive integer to log a bounded
-number of prompt/sample trajectories. For agentic rollouts this includes the
+<p>Second, one prompt/sample trajectory per step is logged and recorded for the
+dashboard by default. Set <code class="docutils literal notranslate"><span class="pre">ARENO_LOG_COMPLETIONS</span></code> to a positive integer to
+change this bound, or to <code class="docutils literal notranslate"><span class="pre">0</span></code> to disable sample capture. For agentic rollouts this includes the
 rendered prompt, message list, final answer, parsed tool calls, sampled tool
 results, token row prefix, and loss-mask summary:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="nv">ARENO_LOG_COMPLETIONS</span><span class="o">=</span><span class="m">2</span><span class="w"> </span>areno<span class="w"> </span>train<span class="w"> </span>...

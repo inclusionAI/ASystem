@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en" data-accent-color="gray" data-content_root="../">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Modal jobs - AReno docs</title><link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Writing dataset loaders and reward functions" href="../cookbook/writing-loaders-and-rewards.html" /><link rel="prev" title="Dashboard" href="dashboard.html" /><script>
+    function setColorMode(t){let e=document.documentElement;e.setAttribute("data-color-mode",t);let a=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,s=t;"auto"===t&&(s=a?"dark":"light"),"light"===s?(e.classList.remove("dark"),e.classList.add("light")):(e.classList.remove("light"),e.classList.add("dark"))}
+    setColorMode(localStorage._theme||"auto");
+  </script><link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=e1a1ceaf" />
+    <link rel="stylesheet" type="text/css" href="../_static/shibuya.css?v=2ceb65ce" />
+    <link media="print" rel="stylesheet" type="text/css" href="../_static/print.css?v=20ff2c19" />
+    <link rel="stylesheet" type="text/css" href="../_static/areno.css?v=02a4506f" />
+    <style>
+:root {
+  --sy-f-text: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --sy-f-heading: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+</style>
+    
+  <meta property="og:type" content="website"/><meta property="og:title" content="Modal jobs"/>
+    <meta name="twitter:card" content="summary"/>
+  </head>
+<body><div class="sy-head">
+  <div class="sy-head-blur"></div>
+  <div class="sy-head-inner sy-container mx-auto">
+    <a class="sy-head-brand sy-head-brand-mobile" href="../index.html">
+      <img class="light-logo" src="../_static/areno-logo.svg" alt="AReno" height="28" loading="lazy" />
+      <img class="dark-logo" src="../_static/areno-logo-dark.svg" alt="AReno" height="28" loading="lazy" />
+      <strong>AReno</strong>
+    </a>
+    <div class="sy-head-nav" id="head-nav">
+      <nav class="sy-head-links"><ul><li class="link"><a href="../getting-started/welcome.html">Get Started</a></li><li class="link"><a href="../concepts/training-loop.html">Concepts</a></li><li class="link"><a href="../cookbook/math-rlvr.html">Cookbook</a></li><li class="link"><a href="../reference/cli.html">Reference</a></li><li class="link"><a href="../troubleshooting/index.html">Troubleshooting</a></li></ul></nav>
+      <div class="sy-head-extra flex items-center print:hidden"><div class="sy-head-socials"></div></div>
+    </div>
+    <div class="sy-head-actions flex items-center shrink-0 print:hidden">
+      <button class="md:hidden flex items-center js-menu" aria-label="Menu" type="button" aria-controls="head-nav" aria-expanded="false">
+        <div class="hamburger">
+          <span class="hamburger_1"></span>
+          <span class="hamburger_2"></span>
+          <span class="hamburger_3"></span>
+        </div>
+      </button>
+    </div>
+  </div>
+</div>
+<div class="sy-page sy-container flex mx-auto">
+  <aside id="lside" class="sy-lside md:w-72 md:shrink-0 print:hidden">
+    <div class="sy-lside-inner md:sticky">
+      <div class="sy-scrollbar p-6"><div class="sidebar-chrome">
+  <div class="sidebar-brand-row">
+    <a class="sidebar-brand" href="../index.html">
+      <img class="light-logo" src="../_static/areno-logo.svg" alt="AReno" height="28" loading="lazy" />
+      <img class="dark-logo" src="../_static/areno-logo-dark.svg" alt="AReno" height="28" loading="lazy" />
+      <strong>AReno</strong>
+    </a>
+    <div class="sidebar-theme"><button class="js-theme theme-switch flex items-center"
+data-aria-auto="Switch to light color mode"
+data-aria-light="Switch to dark color mode"
+data-aria-dark="Switch to auto color mode">
+<i class="i-lucide theme-icon"></i>
+</button></div>
+  </div><form class="searchbox sidebar-searchbox flex items-center" action="../search.html" method="get" role="search" aria-label="Search documentation">
+    <svg class="sidebar-search-icon" aria-hidden="true" focusable="false" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="11" cy="11" r="8"></circle>
+      <path d="m21 21-4.3-4.3"></path>
+    </svg>
+    <input type="search" name="q" placeholder="Search documentation" autocomplete="off" />
+    <kbd aria-hidden="true">⌘K</kbd>
+  </form></div>
+        <div class="globaltoc" data-expand-depth="0"><p class="caption" role="heading" aria-level="3"><span class="caption-text">Get Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../getting-started/welcome.html">Welcome</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting-started/installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting-started/backends.html">Backends</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting-started/quickstart.html">Quickstart</a></li>
+</ul>
+<p class="caption" role="heading" aria-level="3"><span class="caption-text">Conceptual Guides</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../concepts/training-loop.html">Training Loop</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../concepts/backend-topology.html">Backend Topology</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../concepts/chat-templates.html">Chat Templates</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../concepts/dataset-formats.html">Dataset Formats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../concepts/multimodal-inputs.html">Multimodal Inputs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../concepts/native-lora.html">Native LoRA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../concepts/adamw-8bit.html">8-bit AdamW</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../concepts/adamw-4bit.html">4-bit AdamW</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../concepts/reward-functions.html">Reward Functions</a></li>
+</ul>
+<p class="caption" role="heading" aria-level="3"><span class="caption-text">Cookbook</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="dashboard.html">Dashboard</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Modal jobs</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../cookbook/writing-loaders-and-rewards.html">Writing dataset loaders and reward functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cookbook/math-rlvr.html">Math RLVR recipe</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cookbook/tictactoe-agentic-rl.html">TicTacToe agentic RL</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cookbook/duelgrid-visual-agent.html">DuelGrid visual agent</a></li>
+</ul>
+<p class="caption" role="heading" aria-level="3"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../reference/cli.html">CLI Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sdk/trainer.html">SDK Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models/supported.html">Supported Models</a></li>
+</ul>
+<p class="caption" role="heading" aria-level="3"><span class="caption-text">Troubleshooting &amp; FAQ</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../troubleshooting/index.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../troubleshooting/faq.html">FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../troubleshooting/report-issue.html">Report an issue</a></li>
+</ul>
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="lside-overlay js-menu" role="button" aria-label="Close left sidebar" aria-controls="lside" aria-expanded="false"></div>
+  <aside id="rside" class="sy-rside pb-3 w-64 shrink-0 order-last">
+    <button class="rside-close js-menu xl:hidden" aria-label="Close Table of Contents" type="button" aria-controls="rside" aria-expanded="false">
+      <i class="i-lucide close"></i>
+    </button>
+    <div class="sy-scrollbar sy-rside-inner px-6 xl:top-16 xl:sticky xl:pl-0 pt-6 pb-4"><div class="localtoc"><h3>On this page</h3><ul>
+<li><a class="reference internal" href="#configure-connections">Configure connections</a></li>
+<li><a class="reference internal" href="#prepare-datasets">Prepare datasets</a></li>
+<li><a class="reference internal" href="#launch-from-chat-or-the-launcher">Launch from chat or the launcher</a></li>
+<li><a class="reference internal" href="#gpu-recommendations-and-costs">GPU recommendations and costs</a></li>
+<li><a class="reference internal" href="#monitor-execution">Monitor execution</a></li>
+<li><a class="reference internal" href="#runtime-images-persistence-and-troubleshooting">Runtime images, persistence, and troubleshooting</a></li>
+</ul>
+</div></div>
+  </aside>
+  <div class="rside-overlay js-menu" role="button" aria-label="Close Table of Contents" aria-controls="rside" aria-expanded="false"></div>
+  <main class="sy-main w-full max-sm:max-w-full print:pt-6">
+<div class="sy-breadcrumbs" role="navigation">
+  <div class="sy-breadcrumbs-inner flex items-center">
+    <div class="md:hidden mr-3">
+      <button class="js-menu" aria-label="Menu" type="button" aria-controls="lside" aria-expanded="false">
+        <i class="i-lucide menu"></i>
+      </button>
+    </div>
+    <ol class="flex-1" itemscope itemtype="https://schema.org/BreadcrumbList"><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <a itemprop="item" href="../index.html"><span itemprop="name">AReno</span></a>
+        <span>/</span>
+        <meta itemprop="position" content="1" />
+      </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <a itemprop="item" href="dashboard.html"><span itemprop="name">Dashboard</span></a>
+        <span>/</span>
+        <meta itemprop="position" content="2" />
+      </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <strong itemprop="name">Modal jobs</strong>
+        <meta itemprop="position" content="3" />
+      </li></ol>
+    <div class="xl:hidden ml-1">
+      <button class="js-menu" aria-label="Show table of contents" type="button" aria-controls="rside"
+        aria-expanded="false">
+        <i class="i-lucide outdent"></i>
+      </button>
+    </div>
+  </div>
+</div><div class="flex flex-col break-words justify-between">
+      <div class="relative min-w-0 max-w-6xl px-6 pb-6 pt-8 xl:px-12">
+  <article class="yue" role="main">
+          <section id="modal-jobs">
+<h1>Modal jobs<a class="headerlink" href="#modal-jobs" title="Link to this heading">#</a></h1>
+<p>Modal training and serving use the same Launcher, Agent, and Jobs views as local
+tasks. Start the dashboard as described in <a class="reference internal" href="dashboard.html"><span class="doc">Dashboard</span></a>, then install the
+optional Modal SDK and dataset-preview dependencies in that Python environment
+from the repository checkout:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span data-line="1">python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>areno/dashboard/flow/requirements.txt
+</span></pre></div>
+</div>
+<p>The control plane does not need a local CUDA GPU. There is no separate Areno
+Flow application to start.</p>
+<section id="configure-connections">
+<h2>Configure connections<a class="headerlink" href="#configure-connections" title="Link to this heading">#</a></h2>
+<p>Open <strong>Settings</strong> using the dashboard gear or the Agent tab’s Settings button.
+Enter <strong>Modal Token ID</strong> and <strong>Modal Token Secret</strong>, then connect. The server can
+also read <code class="docutils literal notranslate"><span class="pre">MODAL_TOKEN_ID</span></code> and <code class="docutils literal notranslate"><span class="pre">MODAL_TOKEN_SECRET</span></code> from its environment.</p>
+<p><strong>Remember credentials on this server and reconnect automatically</strong> saves
+validated credentials in a server-side file with owner-only permissions. The
+dashboard reconnects on startup and retries transient connection failures.
+Uncheck it for a session-only connection, or use <strong>Forget saved credentials</strong>
+to delete the saved copy. Modal tokens are not stored in browser storage or
+included in chat and job records.</p>
+<p>Configure <strong>Agent provider</strong> in the same settings panel to use chat-based task
+planning. Modal credentials and the agent provider connection are separate.</p>
+</section>
+<section id="prepare-datasets">
+<h2>Prepare datasets<a class="headerlink" href="#prepare-datasets" title="Link to this heading">#</a></h2>
+<p>Use the <strong>+</strong> attachment button next to the Agent chat input to open dataset
+management. Choose <strong>Upload file</strong> for JSON, JSONL, CSV, TSV, Parquet, or Arrow
+files up to 16 MiB. For repository datasets, paste a dataset page URL such as:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span><span data-line="1">https://huggingface.co/datasets/owner/name
+</span><span data-line="2">https://modelscope.cn/datasets/owner/name
+</span></pre></div>
+</div>
+<p>These are dataset repository imports, not arbitrary file URL downloads.
+Repository downloads and previews run in the background. Wait for the dataset
+to be ready, then choose <strong>Use in chat</strong> to attach its managed ID. <strong>Remove</strong>
+removes the library entry without removing assets already snapshotted for jobs.</p>
+<p>Every agent training plan should include a compatible <code class="docutils literal notranslate"><span class="pre">dataset_loader_fn</span></code>.
+For RL, the loader must produce <code class="docutils literal notranslate"><span class="pre">prompt</span></code> and retain the reference answers or
+metadata used by the reward function and agent. A raw dataset with <code class="docutils literal notranslate"><span class="pre">question</span></code>
+instead of <code class="docutils literal notranslate"><span class="pre">prompt</span></code> needs normalization even if its download succeeded.
+See <a class="reference internal" href="../cookbook/writing-loaders-and-rewards.html"><span class="doc">Writing dataset loaders and reward functions</span></a> for loader examples.</p>
+<p>Explicit loader paths survive managed dataset selection, plan editing, and
+execution. A selected per-stage loader overrides the explicit path; an empty
+loader selector does not erase an explicit path. Loader files must be available
+inside the runtime, either from the image or staged as managed assets.</p>
+</section>
+<section id="launch-from-chat-or-the-launcher">
+<h2>Launch from chat or the launcher<a class="headerlink" href="#launch-from-chat-or-the-launcher" title="Link to this heading">#</a></h2>
+<p>In <strong>Agent</strong>, describe the Modal training or serving task and supply the model
+and dataset. The agent reads the catalog and prepares a plan. The existing
+Modal quick action also starts this workflow.</p>
+<p>Alternatively, open <strong>Launcher</strong>, select <strong>Train</strong> or <strong>Serve</strong>, and enable
+<strong>Run on Modal</strong>. The normal task form remains visible; the extra Modal fields
+specify the model adapter, GPU type/count, CPU cores, host memory, and maximum
+runtime. Model repository loading currently uses Hugging Face, even though
+managed datasets support both Hugging Face and ModelScope.</p>
+<p>Preparing a plan does not start a GPU sandbox. The plan appears inline in chat:</p>
+<ol class="arabic simple">
+<li><p>Review the commands, GPU reservation, memory assumptions, and estimated fee.</p></li>
+<li><p>Choose <strong>Edit parameters</strong> to change, add, or delete fields. Use AReno parameter
+names; required fields must remain valid. Choose <strong>Save changes &amp; estimate</strong>
+to validate the edited plan and refresh its estimates.</p></li>
+<li><p>Choose <strong>Confirm execution</strong> to start the billable sandbox.</p></li>
+</ol>
+<p>Plans can execute once and persist across dashboard restarts. A plan expires
+after 30 minutes; edit and save it to revalidate before execution. Scrolling up
+or focusing a plan field pauses chat auto-scroll.</p>
+</section>
+<section id="gpu-recommendations-and-costs">
+<h2>GPU recommendations and costs<a class="headerlink" href="#gpu-recommendations-and-costs" title="Link to this heading">#</a></h2>
+<p>The launcher can automatically select a GPU from the model and task settings.
+Agent plans use the same recommendation service. Training estimates default to
+Adam 4-bit, consistent with the default training optimizer. This reduces
+optimizer-state memory; it does not quantize the model weights to four bits.</p>
+<p>The estimate includes BF16 weights and gradients, compact master-weight
+metadata, packed first moments and factored variance, activation and KV-cache
+allowances, and 20% headroom. Sequence length, microbatch size, rollout
+concurrency, algorithm, and tensor parallelism affect the estimate. Increasing
+GPU count without increasing <code class="docutils literal notranslate"><span class="pre">tp_size</span></code> does not imply model sharding.</p>
+<p>The suggested GPU is the lowest GPU list cost among estimated fits at the
+configured world/TP size. You can select resources manually. Parameter counts
+inferred from model names are approximate; use <strong>Total model parameters</strong> to
+supply an override for custom models, including all experts for MoE models.
+Unknown sizes are reported rather than guessed.</p>
+<p>These are planning heuristics, not measurements from a CUDA probe. They do not
+deduct LoRA or data-parallel optimizer-sharding savings. Review the assumptions
+and actual GPU memory usage for the selected architecture.</p>
+<p>The fee estimate includes reserved GPUs, CPU, and host memory for the selected
+duration. If live public rates cannot be refreshed, the UI identifies cached
+rates and their verification date. <strong>Usage so far</strong> appears in the job list and
+job details. It is a compute estimate, not an invoice, and excludes storage,
+networking, and billing adjustments. Elapsed time stops advancing when a job
+stops, exits, fails, or succeeds.</p>
+</section>
+<section id="monitor-execution">
+<h2>Monitor execution<a class="headerlink" href="#monitor-execution" title="Link to this heading">#</a></h2>
+<p>Open a Modal job in <strong>Jobs</strong> to view its stage, configuration, metrics, runtime
+timeperf, rollout samples, logs, and usage. Multi-stage workflows keep metric
+series distinct and display each stage’s parameters separately.</p>
+<ul class="simple">
+<li><p>Metrics retain the full recorded scalar history while charts reduce the
+number of rendered points for long runs.</p></li>
+<li><p>Runtime timeperf derives per-step segments from reported timing metrics.
+No timing row appears before timing metrics are emitted.</p></li>
+<li><p>Trainer state updates drive the rollout, score, train, save, and done
+indicators. Older sandbox logs can supply compatible trainer state messages.</p></li>
+<li><p>One rollout sample per step is captured by default. Set
+<code class="docutils literal notranslate"><span class="pre">ARENO_LOG_COMPLETIONS=N</span></code> in the training environment to change the limit,
+or <code class="docutils literal notranslate"><span class="pre">0</span></code> to disable capture. See <a class="reference internal" href="observability.html"><span class="doc">Observability</span></a> for sample contents.</p></li>
+<li><p>Logs follow new output when you are at the bottom and preserve your position
+when you scroll up. New Modal sandboxes relay carriage-return progress output
+as flushed lines. Sandbox startup may precede any runtime output; the UI shows
+that waiting phase separately.</p></li>
+</ul>
+<p>For serving, the dashboard generates an endpoint API key and displays it once
+after execution. Save that key before dismissing the dialog; it is not persisted
+locally.</p>
+</section>
+<section id="runtime-images-persistence-and-troubleshooting">
+<h2>Runtime images, persistence, and troubleshooting<a class="headerlink" href="#runtime-images-persistence-and-troubleshooting" title="Link to this heading">#</a></h2>
+<p>New plans resolve <code class="docutils literal notranslate"><span class="pre">ghcr.io/inclusionai/areno:latest</span></code> to a digest. If the
+<code class="docutils literal notranslate"><span class="pre">latest</span></code> tag is absent, resolution falls back to the highest stable release.
+The reviewed digest remains pinned through execution. Modal image setup installs
+<code class="docutils literal notranslate"><span class="pre">tilelang</span></code> for the reported Hopper gated-backward issue with Triton versions
+from 3.4.0 up to, but excluding, 3.7.1. Existing sandboxes retain their original
+image; relaunch a failed job to use an updated setup.</p>
+<p>Job records, datasets, uploads, plans, and scalar history live under
+<code class="docutils literal notranslate"><span class="pre">.areno-modal/</span></code> by default. <code class="docutils literal notranslate"><span class="pre">ARENOFLOW_DATA_DIR</span></code> overrides that directory.
+Preserve it when restarting the server so saved credentials and job history
+remain available. Reconnection reattaches active sandboxes; it does not launch
+replacement jobs.</p>
+<p>If a fee request reports <code class="docutils literal notranslate"><span class="pre">Unsupported</span> <span class="pre">Modal</span> <span class="pre">route</span></code>, restart the updated Python
+backend. Refreshing only the frontend can leave an older server running. If
+training reports <code class="docutils literal notranslate"><span class="pre">dataset</span> <span class="pre">row</span> <span class="pre">must</span> <span class="pre">contain</span> <span class="pre">prompt</span></code>, check the selected loader
+and its output schema, then prepare a corrected plan. If logs or metrics remain
+empty, first inspect the job’s startup phase and status; failed or stopped jobs
+will not produce new training output.</p>
+</section>
+</section>
+
+        </article><button class="back-to-top" type="button">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+    <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+  </svg>
+  <span>Back to top</span>
+</button><div class="navigation flex print:hidden"><div class="navigation-prev">
+    <a href="dashboard.html">
+      <i class="i-lucide chevron-left"></i>
+      <div class="page-info">
+        <span>Previous</span><div class="title">Dashboard</div></div>
+    </a>
+  </div><div class="navigation-next">
+    <a href="../cookbook/writing-loaders-and-rewards.html">
+      <div class="page-info">
+        <span>Next</span>
+        <div class="title">Writing dataset loaders and reward functions</div>
+      </div>
+      <i class="i-lucide chevron-right"></i>
+    </a>
+  </div></div></div>
+    </div>
+  </main>
+</div>
+<footer class="sy-foot">
+  <div class="sy-foot-inner sy-container mx-auto">
+    <div class="sy-foot-reserved md:flex justify-between items-center">
+      
+      <div class="sy-foot-socials"></div>
+    </div>
+  </div>
+</footer>
+      <script src="../_static/documentation_options.js?v=7f41d439"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../_static/shibuya.js?v=50760d75"></script>
+      <script src="../_static/areno-sidebar.js?v=648fdd7d"></script></body>
+</html>
