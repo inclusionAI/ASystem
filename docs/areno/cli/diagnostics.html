@@ -82,7 +82,6 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l1"><a class="reference internal" href="../concepts/dataset-formats.html">Dataset Formats</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../concepts/multimodal-inputs.html">Multimodal Inputs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../concepts/native-lora.html">Native LoRA</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../concepts/cce.html">Cut Cross-Entropy</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../concepts/adamw-8bit.html">8-bit AdamW</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../concepts/adamw-4bit.html">4-bit AdamW</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../concepts/reward-functions.html">Reward Functions</a></li>
@@ -155,7 +154,7 @@ data-aria-dark="Switch to auto color mode">
           <section id="diagnostics-cli-reference">
 <h1>Diagnostics CLI reference<a class="headerlink" href="#diagnostics-cli-reference" title="Link to this heading">#</a></h1>
 <p><code class="docutils literal notranslate"><span class="pre">areno</span> <span class="pre">env</span></code> and <code class="docutils literal notranslate"><span class="pre">areno</span> <span class="pre">check</span></code> help diagnose setup problems before a user
-hits low-level Python, CUDA, or PyTorch errors.</p>
+hits low-level Python, MLX, CUDA, or PyTorch errors.</p>
 <p><code class="docutils literal notranslate"><span class="pre">areno</span> <span class="pre">env</span></code> is a descriptive support report. It does not initialize the AReno
 engine or load model weights. Use it when collecting information for an issue.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span data-line="1">areno<span class="w"> </span>env
@@ -165,7 +164,13 @@ engine or load model weights. Use it when collecting information for an issue.</
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span data-line="1">areno<span class="w"> </span>env<span class="w"> </span>--json
 </span></pre></div>
 </div>
-<p>The report includes:</p>
+<p>The report includes AReno and Python versions, platform details, selected
+environment variables, and runtime dependencies for the host platform.
+On Apple Silicon (macOS with native <code class="docutils literal notranslate"><span class="pre">arm64</span></code> or <code class="docutils literal notranslate"><span class="pre">aarch64</span></code> Python), it
+reports <code class="docutils literal notranslate"><span class="pre">mlx</span></code>, <code class="docutils literal notranslate"><span class="pre">mlx-lm</span></code>, <code class="docutils literal notranslate"><span class="pre">mlx-vlm</span></code>, and Metal availability without
+probing PyTorch or CUDA. The JSON report contains <code class="docutils literal notranslate"><span class="pre">dependencies</span></code> and
+<code class="docutils literal notranslate"><span class="pre">metal</span></code> instead of the CUDA-specific <code class="docutils literal notranslate"><span class="pre">torch</span></code>, <code class="docutils literal notranslate"><span class="pre">cuda</span></code>, and <code class="docutils literal notranslate"><span class="pre">gpus</span></code> fields.</p>
+<p>On Linux, the CUDA report includes:</p>
 <ul class="simple">
 <li><p>AReno version</p></li>
 <li><p>Python version and executable</p></li>
@@ -203,7 +208,14 @@ prints concrete next steps for failures.</p>
 <p><code class="docutils literal notranslate"><span class="pre">CUDA_HOME</span></code> and <code class="docutils literal notranslate"><span class="pre">nvcc</span></code> are only warnings when AReno needs to build its CUDA
 extension. If the installed <code class="docutils literal notranslate"><span class="pre">areno_accel</span></code> extension imports successfully,
 they are not required for runtime readiness.</p>
-<p>Checks include:</p>
+<p>All platforms check Python version, platform support, and writable cache/log
+locations. Apple Silicon checks <code class="docutils literal notranslate"><span class="pre">mlx</span></code> and <code class="docutils literal notranslate"><span class="pre">mlx-lm</span></code> imports and Metal
+availability. Missing or broken <code class="docutils literal notranslate"><span class="pre">mlx-vlm</span></code> produces a warning because it is
+needed for multimodal models. PyTorch, NVIDIA GPUs, CUDA tools, FlashAttention,
+FLA, and <code class="docutils literal notranslate"><span class="pre">areno_accel</span></code> are not required on MLX; <code class="docutils literal notranslate"><span class="pre">ARENO_BUILD_EXT=0</span></code> is not
+a failure on this platform. Intel Macs and Python running under Rosetta are
+not supported by the native MLX backend.</p>
+<p>Linux CUDA checks include:</p>
 <ul class="simple">
 <li><p>Python version</p></li>
 <li><p>supported platform</p></li>
@@ -217,7 +229,10 @@ they are not required for runtime readiness.</p>
 <li><p>writable cache/log locations</p></li>
 </ul>
 <p><code class="docutils literal notranslate"><span class="pre">WARN</span></code> items usually indicate degraded or incomplete setup. <code class="docutils literal notranslate"><span class="pre">FAIL</span></code> items
-mean AReno is not ready to run the CUDA training/inference engine.</p>
+mean AReno is not ready to run the checked training/inference backend.
+The command exits with status 1 when any check fails, otherwise 0. A successful
+check confirms basic runtime prerequisites; it does not load a model or validate
+a training or serving workload.</p>
 </section>
 </section>
 
