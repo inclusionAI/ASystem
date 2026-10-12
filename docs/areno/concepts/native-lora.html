@@ -170,6 +170,11 @@ training or inference.</p>
 <li><p>Qwen3-MoE</p></li>
 <li><p>Bailing-MoE V3 checkpoints with <code class="docutils literal notranslate"><span class="pre">no_kda_lora=true</span></code></p></li>
 </ul>
+<p>On Apple Silicon, the MLX backend supports dense Qwen3 LoRA and includes an
+experimental Ling-3.0-tiny attention-only resolver. Ling MLX numerical and
+real-checkpoint validation is pending. Its target subset differs from CUDA:
+see <a class="reference internal" href="../getting-started/mlx.html"><span class="doc">Apple Silicon and MLX</span></a> for the explicit target list, MLX-LM
+requirements and validation entry points.</p>
 <p>The default target modules are <code class="docutils literal notranslate"><span class="pre">q_proj</span></code>, <code class="docutils literal notranslate"><span class="pre">k_proj</span></code>, <code class="docutils literal notranslate"><span class="pre">v_proj</span></code>,
 <code class="docutils literal notranslate"><span class="pre">o_proj</span></code>, <code class="docutils literal notranslate"><span class="pre">gate_proj</span></code>, <code class="docutils literal notranslate"><span class="pre">up_proj</span></code>, and <code class="docutils literal notranslate"><span class="pre">down_proj</span></code>. Select a subset
 with <code class="docutils literal notranslate"><span class="pre">--lora-target-modules</span></code>. Bailing-MoE V3 additionally supports its

@@ -122,7 +122,10 @@ data-aria-dark="Switch to auto color mode">
     <div class="sy-scrollbar sy-rside-inner px-6 xl:top-16 xl:sticky xl:pl-0 pt-6 pb-4"><div class="localtoc"><h3>On this page</h3><ul>
 <li><a class="reference internal" href="#requirements-and-installation">Requirements and installation</a></li>
 <li><a class="reference internal" href="#training">Training</a><ul>
-<li><a class="reference internal" href="#lora">LoRA</a></li>
+<li><a class="reference internal" href="#lora">LoRA</a><ul>
+<li><a class="reference internal" href="#ling-3-0-tiny-attention-lora-experimental">Ling-3.0-tiny attention LoRA (experimental)</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#memory-controls">Memory controls</a></li>
 </ul>
 </li>
@@ -242,9 +245,70 @@ an existing standard PEFT directory. The adapter metadata is authoritative for
 rank, alpha, dropout, and target modules. The same option can serve an exported
 adapter with <code class="docutils literal notranslate"><span class="pre">areno</span> <span class="pre">serve</span></code> while <code class="docutils literal notranslate"><span class="pre">--model-path</span></code> continues to identify its
 base checkpoint.</p>
-<p>MLX LoRA currently requires an unquantized Qwen3 Dense text checkpoint,
+<p>MLX LoRA requires an unquantized text checkpoint,
 <code class="docutils literal notranslate"><span class="pre">--lora-dropout</span> <span class="pre">0</span></code>, and <code class="docutils literal notranslate"><span class="pre">--reference-mode</span> <span class="pre">independent</span></code>. QLoRA, Qwen3 MoE,
 multimodal LoRA, multiple adapters, and <code class="docutils literal notranslate"><span class="pre">reuse_actor_base</span></code> are not supported.</p>
+<section id="ling-3-0-tiny-attention-lora-experimental">
+<h4>Ling-3.0-tiny attention LoRA (experimental)<a class="headerlink" href="#ling-3-0-tiny-attention-lora-experimental" title="Link to this heading">#</a></h4>
+<p>The MLX LoRA resolver also implements Ling-3.0-tiny attention projections for
+<code class="docutils literal notranslate"><span class="pre">model_type=bailing_hybrid</span></code> with architecture <code class="docutils literal notranslate"><span class="pre">BailingMoeV3ForCausalLM</span></code>.
+Numerical and real-checkpoint validation on Apple Silicon is still pending;
+this is not yet a validated 48 GB training recipe.</p>
+<p>Use an MLX-LM version containing <code class="docutils literal notranslate"><span class="pre">mlx_lm.models.bailing_moe_v3</span></code> and its
+architecture mapping. The implementation was designed against upstream
+revision <code class="docutils literal notranslate"><span class="pre">1840cbba9cb3f8125b8cf7e137606256a2f162d1</span></code>. MLX-LM 0.31.3 in the
+development environment did not contain this module; satisfying AReno’s
+dependency lower bound alone does not establish Ling compatibility.</p>
+<p>Explicitly select a nonempty subset of these targets:</p>
+<ul class="simple">
+<li><p>KDA: <code class="docutils literal notranslate"><span class="pre">q_proj</span></code>, <code class="docutils literal notranslate"><span class="pre">k_proj</span></code>, <code class="docutils literal notranslate"><span class="pre">v_proj</span></code>, <code class="docutils literal notranslate"><span class="pre">f_proj</span></code>, <code class="docutils literal notranslate"><span class="pre">o_proj</span></code>.</p></li>
+<li><p>MLA: <code class="docutils literal notranslate"><span class="pre">q_a_proj</span></code>, <code class="docutils literal notranslate"><span class="pre">q_b_proj</span></code>, <code class="docutils literal notranslate"><span class="pre">kv_a_proj_with_mqa</span></code>, <code class="docutils literal notranslate"><span class="pre">dense</span></code>.</p></li>
+</ul>
+<p>For example, after the validation gates have passed, use a local non-quantized
+model and short Alpaca-format training data:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span data-line="1">areno<span class="w"> </span>train<span class="w"> </span><span class="se">\</span>
+</span><span data-line="2"><span class="w">  </span>--ckpt<span class="w"> </span><span class="s2">"</span><span class="nv">$MODEL_DIR</span><span class="s2">"</span><span class="w"> </span><span class="se">\</span>
+</span><span data-line="3"><span class="w">  </span>--dataset-path<span class="w"> </span><span class="s2">"</span><span class="nv">$TRAIN_JSONL</span><span class="s2">"</span><span class="w"> </span><span class="se">\</span>
+</span><span data-line="4"><span class="w">  </span>--dataset-loader-fn<span class="w"> </span>examples/sft/alpaca/dataset_loader.py<span class="w"> </span><span class="se">\</span>
+</span><span data-line="5"><span class="w">  </span>--algo<span class="w"> </span>sft<span class="w"> </span>--world-size<span class="w"> </span><span class="m">1</span><span class="w"> </span>--tp-size<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+</span><span data-line="6"><span class="w">  </span>--batch-size<span class="w"> </span><span class="m">1</span><span class="w"> </span>--mini-bs<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+</span><span data-line="7"><span class="w">  </span>--lora-rank<span class="w"> </span><span class="m">8</span><span class="w"> </span>--lora-alpha<span class="w"> </span><span class="m">16</span><span class="w"> </span><span class="se">\</span>
+</span><span data-line="8"><span class="w">  </span>--lora-target-modules<span class="w"> </span>q_proj,k_proj,v_proj,f_proj,o_proj,q_a_proj,q_b_proj,kv_a_proj_with_mqa,dense<span class="w"> </span><span class="se">\</span>
+</span><span data-line="9"><span class="w">  </span>--activation-checkpointing<span class="w"> </span>--max-steps<span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="se">\</span>
+</span><span data-line="10"><span class="w">  </span>--save-path<span class="w"> </span>outputs/ling-tiny-mlx-lora<span class="w"> </span>--save-interval<span class="w"> </span><span class="m">1</span>
+</span></pre></div>
+</div>
+<p>All applicable layers must contain the requested ordinary linear projections
+with the expected dimensions. The Qwen3 default target list includes MLP
+projections and is rejected for Ling. Expert/MLP targets, <code class="docutils literal notranslate"><span class="pre">g_proj</span></code> and
+<code class="docutils literal notranslate"><span class="pre">kv_b_proj</span></code> are deliberately excluded. In MLX, <code class="docutils literal notranslate"><span class="pre">kv_b_proj</span></code> is transformed
+into two head-specific modules; ordinary Linear LoRA cannot wrap it directly.
+The architectural setting <code class="docutils literal notranslate"><span class="pre">no_kda_lora=true</span></code> does not prohibit adding
+post-training adapters.</p>
+<p>Only adapter arrays are trainable. The base, routers, expert biases, experts,
+embeddings, norms and convolutions remain frozen. Adapter saving and loading
+use the same PEFT two-file format and metadata precedence as Qwen3. Actual
+CUDA/Transformers interoperability remains a separate validation gate.</p>
+<p>The opt-in validation entry points do not download assets:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="nv">ARENO_E2E_MLX_BAILING_SYNTHETIC</span><span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+</span><span data-line="2"><span class="w">  </span>python<span class="w"> </span>-m<span class="w"> </span>pytest<span class="w"> </span>-q<span class="w"> </span>tests/test_mlx_bailing_v3_lora_e2e.py<span class="w"> </span>-k<span class="w"> </span>reduced
+</span><span data-line="3">
+</span><span data-line="4"><span class="nv">ARENO_E2E_MLX_BAILING_MODEL</span><span class="o">=</span><span class="s2">"</span><span class="nv">$MODEL_DIR</span><span class="s2">"</span><span class="w"> </span><span class="se">\</span>
+</span><span data-line="5"><span class="w">  </span>python<span class="w"> </span>-m<span class="w"> </span>pytest<span class="w"> </span>-q<span class="w"> </span>-s<span class="w"> </span>tests/test_mlx_bailing_v3_lora_e2e.py<span class="w"> </span>-k<span class="w"> </span>real<span class="w"> </span><span class="se">\</span>
+</span><span data-line="6"><span class="w">    </span>--basetemp<span class="w"> </span>outputs/ling-lora-validation-new
+</span></pre></div>
+</div>
+<p>Choose a fresh <code class="docutils literal notranslate"><span class="pre">--basetemp</span></code> directory: pytest clears an existing directory
+at that path. The real-model gate defaults to 128 tokens and two optimizer
+steps, then reloads the adapter and trains another step. Set
+<code class="docutils literal notranslate"><span class="pre">ARENO_E2E_MLX_BAILING_STEPS=10</span></code> for the stability check or
+<code class="docutils literal notranslate"><span class="pre">ARENO_E2E_MLX_BAILING_TOKENS</span></code> for the bounded synthetic input length.
+Each real-model test directory contains <code class="docutils literal notranslate"><span class="pre">ling-validation.json</span></code> with step
+metrics and cumulative memory peaks. Memory-pressure/swap monitoring, a
+coherent-generation assessment, and the serve API check remain separate
+manual acceptance checks. These tests do not certify a memory budget by
+themselves.</p>
+</section>
 </section>
 <section id="memory-controls">
 <h3>Memory controls<a class="headerlink" href="#memory-controls" title="Link to this heading">#</a></h3>
