@@ -217,6 +217,13 @@ supported GPUs.
 This setting is CUDA only; MLX uses the attention implementation supplied
 by the loaded MLX model.</p>
 </dd>
+<dt><code class="docutils literal notranslate"><span class="pre">--speculative-draft-tokens</span> <span class="pre">INTEGER</span></code></dt><dd><p>Speculative decoding: draft this many tokens per step with the checkpoint’s
+MTP layer and verify them in one target forward. Default: <code class="docutils literal notranslate"><span class="pre">0</span></code> (off).
+Requires the CUDA backend, <code class="docutils literal notranslate"><span class="pre">--attn-backend</span> <span class="pre">flash</span></code>, and a checkpoint that
+ships MTP layers (<code class="docutils literal notranslate"><span class="pre">num_nextn_predict_layers</span> <span class="pre">&gt;</span> <span class="pre">0</span></code>, currently the bailing_v3
+family); serve rejects the flag otherwise. <code class="docutils literal notranslate"><span class="pre">2</span></code> is the practical setting for
+a single-layer MTP head.</p>
+</dd>
 <dt><code class="docutils literal notranslate"><span class="pre">--disable-thinking</span></code></dt><dd><p>Pass <code class="docutils literal notranslate"><span class="pre">enable_thinking=False</span></code> to tokenizer chat templates when supported.
 Use this when serving a model whose chat template supports a thinking-mode
 switch and you want normal responses without reasoning spans. Tokenizers
