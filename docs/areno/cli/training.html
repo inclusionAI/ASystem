@@ -468,6 +468,8 @@ mini-batches in one train call.</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">--activation-checkpointing</span> <span class="pre">/</span> <span class="pre">--no-activation-checkpointing</span></code></dt><dd><p>Enable decoder-layer activation recompute during training. Default:
 enabled.</p>
+<p>Supported CUDA training paths use fixed MST recomputation chunks of 256
+tokens by default. Chunk sizes do not adapt to memory pressure.</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">--optimizer-state-offload</span> <span class="pre">[none|cpu|disk]</span></code></dt><dd><p>Select CUDA optimizer-state residency. <code class="docutils literal notranslate"><span class="pre">none</span></code> keeps state on the training
 device. <code class="docutils literal notranslate"><span class="pre">cpu</span></code> moves state to host memory between train calls. <code class="docutils literal notranslate"><span class="pre">disk</span></code>
