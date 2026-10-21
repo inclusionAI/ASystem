@@ -169,6 +169,7 @@ training or inference.</p>
 <ul class="simple">
 <li><p>Qwen3</p></li>
 <li><p>Qwen3-MoE</p></li>
+<li><p>Qwen3.5 dense text and multimodal language backbones</p></li>
 <li><p>Bailing-MoE V3 checkpoints with <code class="docutils literal notranslate"><span class="pre">no_kda_lora=true</span></code></p></li>
 </ul>
 <p>On Apple Silicon, the MLX backend supports dense Qwen3 LoRA and includes an
@@ -181,6 +182,16 @@ requirements and validation entry points.</p>
 with <code class="docutils literal notranslate"><span class="pre">--lora-target-modules</span></code>. Bailing-MoE V3 additionally supports its
 native attention projection names, including <code class="docutils literal notranslate"><span class="pre">q_a_proj</span></code>, <code class="docutils literal notranslate"><span class="pre">q_b_proj</span></code>,
 <code class="docutils literal notranslate"><span class="pre">kv_a_proj_with_mqa</span></code>, and <code class="docutils literal notranslate"><span class="pre">kv_b_proj</span></code>.</p>
+<p>Qwen3.5 additionally supports the linear-attention projections
+<code class="docutils literal notranslate"><span class="pre">in_proj_qkv</span></code>, <code class="docutils literal notranslate"><span class="pre">in_proj_z</span></code>, <code class="docutils literal notranslate"><span class="pre">in_proj_b</span></code>, <code class="docutils literal notranslate"><span class="pre">in_proj_a</span></code>, and <code class="docutils literal notranslate"><span class="pre">out_proj</span></code>.
+Include these in <code class="docutils literal notranslate"><span class="pre">--lora-target-modules</span></code> to adapt the recurrent attention
+layers as well as full attention and MLPs. Adapter tensors use the canonical
+checkpoint names, including <code class="docutils literal notranslate"><span class="pre">linear_attn</span></code> and the <code class="docutils literal notranslate"><span class="pre">language_model</span></code> prefix
+for multimodal checkpoints. Combining these adapters with an unfrozen vision
+tower or projector is rejected.</p>
+<p>Use <code class="docutils literal notranslate"><span class="pre">--qlora</span> <span class="pre">--lora-rank</span> <span class="pre">8</span></code> for a frozen NF4 base with double quantization.
+QLoRA supports Qwen3 dense, Qwen3.5 dense language backbones, and Bailing-MoE V3.
+Qwen3.5-MoE LoRA and QLoRA are not supported by this adapter path.</p>
 <p>LoRA dropout must currently be zero. Standard PEFT LoRA adapters are accepted,
 but options that change the adapter structure, such as DoRA, RS-LoRA, bias
 training, rank patterns, alpha patterns, or <code class="docutils literal notranslate"><span class="pre">modules_to_save</span></code>, are rejected
