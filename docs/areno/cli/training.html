@@ -28,7 +28,7 @@
       <strong>AReno</strong>
     </a>
     <div class="sy-head-nav" id="head-nav">
-      <nav class="sy-head-links"><ul><li class="link"><a href="../getting-started/welcome.html">Get Started</a></li><li class="link"><a href="../concepts/training-loop.html">Concepts</a></li><li class="link"><a href="../cookbook/math-rlvr.html">Cookbook</a></li><li class="link"><a href="../reference/cli.html">Reference</a></li><li class="link"><a href="../troubleshooting/index.html">Troubleshooting</a></li></ul></nav>
+      <nav class="sy-head-links"><ul><li class="link"><a href="../getting-started/welcome.html">Get Started</a></li><li class="link"><a href="../concepts/training-loop.html">Concepts</a></li><li class="link"><a href="../cookbook/math-rlvr.html">Cookbook</a></li><li class="link"><a href="../integrations/index.html">Integration</a></li><li class="link"><a href="../reference/cli.html">Reference</a></li><li class="link"><a href="../troubleshooting/index.html">Troubleshooting</a></li></ul></nav>
       <div class="sy-head-extra flex items-center print:hidden"><div class="sy-head-socials"></div></div>
     </div>
     <div class="sy-head-actions flex items-center shrink-0 print:hidden">
@@ -96,6 +96,15 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l1"><a class="reference internal" href="../cookbook/math-rlvr.html">Math RLVR recipe</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../cookbook/tictactoe-agentic-rl.html">TicTacToe agentic RL</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../cookbook/duelgrid-visual-agent.html">DuelGrid visual agent</a></li>
+</ul>
+<p class="caption" role="heading" aria-level="3"><span class="caption-text">Integration</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../integrations/index.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../integrations/harbor.html">Harbor</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../integrations/harbor/tasks.html">Task adaptation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../integrations/harbor/pi.html">Pi SVG walkthrough</a></li>
+</ul>
+</li>
 </ul>
 <p class="caption" role="heading" aria-level="3"><span class="caption-text">Reference</span></p>
 <ul>
@@ -581,7 +590,28 @@ control each group’s schedule independently.</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">--save-interval</span> <span class="pre">INTEGER</span></code></dt><dd><p>Save checkpoint every N train steps. Default: <code class="docutils literal notranslate"><span class="pre">100</span></code>.</p>
 </dd>
+<dt><code class="docutils literal notranslate"><span class="pre">--export-gguf</span> <span class="pre">DIRECTORY</span></code></dt><dd><p>Export the final live policy directly to a new GGUF/Ollama package after
+successful training, including a normal stop at <code class="docutils literal notranslate"><span class="pre">--max-steps</span></code>. Currently
+supports registered text architectures on CUDA: Llama, OLMo2, Qwen3
+(dense/MoE), Qwen3.5 (dense/MoE), Gemma4 (dense/MoE), and Bailing V3
+(Ling 3). Export is disabled by default. Packed QLoRA, multimodal models,
+and unsupported architecture variants fail explicitly. Produces
+<code class="docutils literal notranslate"><span class="pre">model.gguf</span></code>, <code class="docutils literal notranslate"><span class="pre">Modelfile</span></code>, and <code class="docutils literal notranslate"><span class="pre">export.json</span></code> without an intermediate
+checkpoint or an external converter. Independent of <code class="docutils literal notranslate"><span class="pre">--save-path</span></code>.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">--gguf-file-type</span> <span class="pre">[f16|q8_0]</span></code></dt><dd><p>Weight encoding for <code class="docutils literal notranslate"><span class="pre">--export-gguf</span></code>. Default: <code class="docutils literal notranslate"><span class="pre">f16</span></code>. Vectors remain F32.</p>
+</dd>
 </dl>
+<p>For example, append the following options to an existing training command to
+perform one trainer step and export the updated policy:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span data-line="1">--max-steps<span class="w"> </span><span class="m">1</span><span class="w"> </span>--export-gguf<span class="w"> </span>./exports/qwen3<span class="w"> </span>--gguf-file-type<span class="w"> </span>f16
+</span></pre></div>
+</div>
+<p>Then import and run the package with Ollama:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span data-line="1">ollama<span class="w"> </span>create<span class="w"> </span>areno-qwen3<span class="w"> </span>-f<span class="w"> </span>./exports/qwen3/Modelfile
+</span><span data-line="2">ollama<span class="w"> </span>run<span class="w"> </span>areno-qwen3
+</span></pre></div>
+</div>
 </section>
 <section id="observability">
 <h3>Observability<a class="headerlink" href="#observability" title="Link to this heading">#</a></h3>

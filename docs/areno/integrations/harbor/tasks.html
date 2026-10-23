@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en" data-accent-color="gray" data-content_root="../../">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Adapt a task - AReno docs</title><link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="Pi SVG walkthrough" href="pi.html" /><link rel="prev" title="Integrate a harness with Harbor" href="../harbor.html" /><script>
+    function setColorMode(t){let e=document.documentElement;e.setAttribute("data-color-mode",t);let a=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,s=t;"auto"===t&&(s=a?"dark":"light"),"light"===s?(e.classList.remove("dark"),e.classList.add("light")):(e.classList.remove("light"),e.classList.add("dark"))}
+    setColorMode(localStorage._theme||"auto");
+  </script><link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=e1a1ceaf" />
+    <link rel="stylesheet" type="text/css" href="../../_static/shibuya.css?v=2ceb65ce" />
+    <link media="print" rel="stylesheet" type="text/css" href="../../_static/print.css?v=20ff2c19" />
+    <link rel="stylesheet" type="text/css" href="../../_static/areno.css?v=02a4506f" />
+    <style>
+:root {
+  --sy-f-text: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --sy-f-heading: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+</style>
+    
+  <meta property="og:type" content="website"/><meta property="og:title" content="Adapt a task"/>
+    <meta name="twitter:card" content="summary"/>
+  </head>
+<body><div class="sy-head">
+  <div class="sy-head-blur"></div>
+  <div class="sy-head-inner sy-container mx-auto">
+    <a class="sy-head-brand sy-head-brand-mobile" href="../../index.html">
+      <img class="light-logo" src="../../_static/areno-logo.svg" alt="AReno" height="28" loading="lazy" />
+      <img class="dark-logo" src="../../_static/areno-logo-dark.svg" alt="AReno" height="28" loading="lazy" />
+      <strong>AReno</strong>
+    </a>
+    <div class="sy-head-nav" id="head-nav">
+      <nav class="sy-head-links"><ul><li class="link"><a href="../../getting-started/welcome.html">Get Started</a></li><li class="link"><a href="../../concepts/training-loop.html">Concepts</a></li><li class="link"><a href="../../cookbook/math-rlvr.html">Cookbook</a></li><li class="link"><a href="../index.html">Integration</a></li><li class="link"><a href="../../reference/cli.html">Reference</a></li><li class="link"><a href="../../troubleshooting/index.html">Troubleshooting</a></li></ul></nav>
+      <div class="sy-head-extra flex items-center print:hidden"><div class="sy-head-socials"></div></div>
+    </div>
+    <div class="sy-head-actions flex items-center shrink-0 print:hidden">
+      <button class="md:hidden flex items-center js-menu" aria-label="Menu" type="button" aria-controls="head-nav" aria-expanded="false">
+        <div class="hamburger">
+          <span class="hamburger_1"></span>
+          <span class="hamburger_2"></span>
+          <span class="hamburger_3"></span>
+        </div>
+      </button>
+    </div>
+  </div>
+</div>
+<div class="sy-page sy-container flex mx-auto">
+  <aside id="lside" class="sy-lside md:w-72 md:shrink-0 print:hidden">
+    <div class="sy-lside-inner md:sticky">
+      <div class="sy-scrollbar p-6"><div class="sidebar-chrome">
+  <div class="sidebar-brand-row">
+    <a class="sidebar-brand" href="../../index.html">
+      <img class="light-logo" src="../../_static/areno-logo.svg" alt="AReno" height="28" loading="lazy" />
+      <img class="dark-logo" src="../../_static/areno-logo-dark.svg" alt="AReno" height="28" loading="lazy" />
+      <strong>AReno</strong>
+    </a>
+    <div class="sidebar-theme"><button class="js-theme theme-switch flex items-center"
+data-aria-auto="Switch to light color mode"
+data-aria-light="Switch to dark color mode"
+data-aria-dark="Switch to auto color mode">
+<i class="i-lucide theme-icon"></i>
+</button></div>
+  </div><form class="searchbox sidebar-searchbox flex items-center" action="../../search.html" method="get" role="search" aria-label="Search documentation">
+    <svg class="sidebar-search-icon" aria-hidden="true" focusable="false" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="11" cy="11" r="8"></circle>
+      <path d="m21 21-4.3-4.3"></path>
+    </svg>
+    <input type="search" name="q" placeholder="Search documentation" autocomplete="off" />
+    <kbd aria-hidden="true">⌘K</kbd>
+  </form></div>
+        <div class="globaltoc" data-expand-depth="0"><p class="caption" role="heading" aria-level="3"><span class="caption-text">Get Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../getting-started/welcome.html">Welcome</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../getting-started/installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../getting-started/backends.html">Backends</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../getting-started/quickstart.html">Quickstart</a></li>
+</ul>
+<p class="caption" role="heading" aria-level="3"><span class="caption-text">Conceptual Guides</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../concepts/training-loop.html">Training Loop</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../concepts/backend-topology.html">Backend Topology</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../concepts/npu.html">NPU</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../concepts/chat-templates.html">Chat Templates</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../concepts/dataset-formats.html">Dataset Formats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../concepts/multimodal-inputs.html">Multimodal Inputs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../concepts/native-lora.html">Native LoRA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../concepts/adamw-8bit.html">8-bit AdamW</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../concepts/adamw-4bit.html">4-bit AdamW</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../concepts/reward-functions.html">Reward Functions</a></li>
+</ul>
+<p class="caption" role="heading" aria-level="3"><span class="caption-text">Cookbook</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../cli/dashboard.html">Dashboard</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../cli/dashboard-modal.html">Modal jobs</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../cookbook/writing-loaders-and-rewards.html">Writing dataset loaders and reward functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../cookbook/math-rlvr.html">Math RLVR recipe</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../cookbook/tictactoe-agentic-rl.html">TicTacToe agentic RL</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../cookbook/duelgrid-visual-agent.html">DuelGrid visual agent</a></li>
+</ul>
+<p class="caption" role="heading" aria-level="3"><span class="caption-text">Integration</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Overview</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../harbor.html">Harbor</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Task adaptation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pi.html">Pi SVG walkthrough</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading" aria-level="3"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/cli.html">CLI Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../sdk/trainer.html">SDK Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../models/supported.html">Supported Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../models/phi4mm.html">Phi-4 Multimodal</a></li>
+</ul>
+<p class="caption" role="heading" aria-level="3"><span class="caption-text">Troubleshooting &amp; FAQ</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../troubleshooting/index.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../troubleshooting/faq.html">FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../troubleshooting/report-issue.html">Report an issue</a></li>
+</ul>
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="lside-overlay js-menu" role="button" aria-label="Close left sidebar" aria-controls="lside" aria-expanded="false"></div>
+  <aside id="rside" class="sy-rside pb-3 w-64 shrink-0 order-last">
+    <button class="rside-close js-menu xl:hidden" aria-label="Close Table of Contents" type="button" aria-controls="rside" aria-expanded="false">
+      <i class="i-lucide close"></i>
+    </button>
+    <div class="sy-scrollbar sy-rside-inner px-6 xl:top-16 xl:sticky xl:pl-0 pt-6 pb-4"><div class="localtoc"><h3>On this page</h3><ul>
+<li><a class="reference internal" href="#define-the-task-record">1. Define the task record</a></li>
+<li><a class="reference internal" href="#reuse-a-task-base-class">2. Reuse a task base class</a></li>
+<li><a class="reference internal" href="#load-your-own-dataset">3. Load your own dataset</a></li>
+<li><a class="reference internal" href="#connect-the-reward-and-verify-failures">4. Connect the reward and verify failures</a></li>
+<li><a class="reference internal" href="#persist-artifacts-and-clean-up">Persist artifacts and clean up</a></li>
+<li><a class="reference internal" href="#run-a-small-integration-check">Run a small integration check</a></li>
+</ul>
+</div></div>
+  </aside>
+  <div class="rside-overlay js-menu" role="button" aria-label="Close Table of Contents" aria-controls="rside" aria-expanded="false"></div>
+  <main class="sy-main w-full max-sm:max-w-full print:pt-6">
+<div class="sy-breadcrumbs" role="navigation">
+  <div class="sy-breadcrumbs-inner flex items-center">
+    <div class="md:hidden mr-3">
+      <button class="js-menu" aria-label="Menu" type="button" aria-controls="lside" aria-expanded="false">
+        <i class="i-lucide menu"></i>
+      </button>
+    </div>
+    <ol class="flex-1" itemscope itemtype="https://schema.org/BreadcrumbList"><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <a itemprop="item" href="../../index.html"><span itemprop="name">AReno</span></a>
+        <span>/</span>
+        <meta itemprop="position" content="1" />
+      </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <a itemprop="item" href="../harbor.html"><span itemprop="name">Integrate a harness with Harbor</span></a>
+        <span>/</span>
+        <meta itemprop="position" content="2" />
+      </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <strong itemprop="name">Adapt a task</strong>
+        <meta itemprop="position" content="3" />
+      </li></ol>
+    <div class="xl:hidden ml-1">
+      <button class="js-menu" aria-label="Show table of contents" type="button" aria-controls="rside"
+        aria-expanded="false">
+        <i class="i-lucide outdent"></i>
+      </button>
+    </div>
+  </div>
+</div><div class="flex flex-col break-words justify-between">
+      <div class="relative min-w-0 max-w-6xl px-6 pb-6 pt-8 xl:px-12">
+  <article class="yue" role="main">
+          <section id="adapt-a-task">
+<h1>Adapt a task<a class="headerlink" href="#adapt-a-task" title="Link to this heading">#</a></h1>
+<p>A task adapter defines what the agent receives and how its work is scored.
+It is independent of the harness: switching Pi to another agent does not
+require changing your dataset loader or grader. This guide completes the
+<code class="docutils literal notranslate"><span class="pre">my-shell</span></code> integration from <a class="reference internal" href="../harbor.html"><span class="doc">Integrate a harness with Harbor</span></a>, then shows how to
+substitute a custom data source and reward.</p>
+<section id="define-the-task-record">
+<h2>1. Define the task record<a class="headerlink" href="#define-the-task-record" title="Link to this heading">#</a></h2>
+<p>Every task needs a nonempty <code class="docutils literal notranslate"><span class="pre">prompt</span></code>. Other fields belong to your adapter;
+the core does not prescribe a dataset format or register a default dataset.
+For a file-editing task, a useful schema is:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+</span><span data-line="2"><span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+</span><span data-line="3">
+</span><span data-line="4"><span class="n">task</span> <span class="o">=</span> <span class="p">{</span>
+</span><span data-line="5">    <span class="s2">"prompt"</span><span class="p">:</span> <span class="s2">"Write the number 42 to result.txt in the task workspace."</span><span class="p">,</span>
+</span><span data-line="6">    <span class="s2">"files"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"result.txt"</span><span class="p">:</span> <span class="s2">""</span><span class="p">},</span>
+</span><span data-line="7">    <span class="s2">"grader"</span><span class="p">:</span> <span class="p">{</span>
+</span><span data-line="8">        <span class="s2">"entrypoint"</span><span class="p">:</span> <span class="s2">"grade.py"</span><span class="p">,</span>
+</span><span data-line="9">        <span class="s2">"files"</span><span class="p">:</span> <span class="p">{</span>
+</span><span data-line="10">            <span class="s2">"grade.py"</span><span class="p">:</span> <span class="p">(</span>
+</span><span data-line="11">                <span class="s2">"import json, sys</span><span class="se">\n</span><span class="s2">"</span>
+</span><span data-line="12">                <span class="s2">"from pathlib import Path</span><span class="se">\n</span><span class="s2">"</span>
+</span><span data-line="13">                <span class="s2">"answer = Path(sys.argv[1]) / 'result.txt'</span><span class="se">\n</span><span class="s2">"</span>
+</span><span data-line="14">                <span class="s2">"correct = answer.exists() and answer.read_text().strip() == '42'</span><span class="se">\n</span><span class="s2">"</span>
+</span><span data-line="15">                <span class="s2">"print(json.dumps({'reward': float(correct)}))</span><span class="se">\n</span><span class="s2">"</span>
+</span><span data-line="16">            <span class="p">),</span>
+</span><span data-line="17">        <span class="p">},</span>
+</span><span data-line="18">    <span class="p">},</span>
+</span><span data-line="19">    <span class="s2">"max_turns"</span><span class="p">:</span> <span class="mi">8</span><span class="p">,</span>
+</span><span data-line="20">    <span class="s2">"timeout"</span><span class="p">:</span> <span class="mi">900</span><span class="p">,</span>
+</span><span data-line="21">    <span class="s2">"verify_timeout"</span><span class="p">:</span> <span class="mi">120</span><span class="p">,</span>
+</span><span data-line="22"><span class="p">}</span>
+</span><span data-line="23"><span class="n">Path</span><span class="p">(</span><span class="s2">"tasks.jsonl"</span><span class="p">)</span><span class="o">.</span><span class="n">write_text</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">task</span><span class="p">)</span> <span class="o">+</span> <span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span>
+</span></pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">files</span></code> is the agent-visible starting workspace. <code class="docutils literal notranslate"><span class="pre">grader</span></code> is trusted
+verification input: the adapter uploads it after the agent finishes. Keep
+answers, reference images and judge credentials out of <code class="docutils literal notranslate"><span class="pre">files</span></code> and the
+prompt when the agent should not see them. With a local environment these
+paths still share the host filesystem; use isolation when that matters.</p>
+<p>The runner recognizes three optional budgets:</p>
+<div class="table-wrapper docutils container">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Field</p></th>
+<th class="head"><p>Generic default</p></th>
+<th class="head"><p>Scope</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">max_turns</span></code></p></td>
+<td><p>32</p></td>
+<td><p>Model requests for a sample. Also passed to native agents whose option
+schema supports a turn limit.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">timeout</span></code></p></td>
+<td><p>1800 seconds</p></td>
+<td><p>Agent execution and sample model requests.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">verify_timeout</span></code></p></td>
+<td><p>120 seconds</p></td>
+<td><p>Task grading, including any wait for a grading slot.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>An individual remote judge request can have a separate timeout. Dataset
+generators and adapters may choose different defaults.</p>
+</section>
+<section id="reuse-a-task-base-class">
+<h2>2. Reuse a task base class<a class="headerlink" href="#reuse-a-task-base-class" title="Link to this heading">#</a></h2>
+<p>Choose the smallest reusable contract that fits the task:</p>
+<div class="table-wrapper colwidths-given docutils container">
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 70.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Contract</p></th>
+<th class="head"><p>Implement</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">HarnessDataset</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">normalize(record)</span></code>, async <code class="docutils literal notranslate"><span class="pre">prepare(attempt)</span></code> and async
+<code class="docutils literal notranslate"><span class="pre">verify(attempt)</span></code>. Use this protocol for tasks without file workspaces.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">FileWorkspaceDataset</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">workspace_files(record)</span></code> and <code class="docutils literal notranslate"><span class="pre">verify(attempt)</span></code>. The base reuses
+relative-path validation and workspace transfer.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">WorkspaceDataset</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">workspace_files(record)</span></code> and <code class="docutils literal notranslate"><span class="pre">verification(attempt)</span></code>. The base also
+uploads trusted grader files and executes a <code class="docutils literal notranslate"><span class="pre">TaskVerification</span></code> command.
+Override <code class="docutils literal notranslate"><span class="pre">score(result)</span></code> for a continuous reward.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>The workspace bases and <code class="docutils literal notranslate"><span class="pre">TaskVerification</span></code> live in
+<code class="docutils literal notranslate"><span class="pre">areno.agent.harness_base</span></code>. They do not choose a dataset, agent or verifier.
+<code class="docutils literal notranslate"><span class="pre">WorkspaceDataset.score</span></code> defaults to one for command exit code zero and zero
+otherwise. For a grader returning JSON, save this adapter as <code class="docutils literal notranslate"><span class="pre">task_adapter.py</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+</span><span data-line="2"><span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">PurePosixPath</span>
+</span><span data-line="3">
+</span><span data-line="4"><span class="kn">from</span><span class="w"> </span><span class="nn">areno.agent.harness_base</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+</span><span data-line="5">    <span class="n">TaskVerification</span><span class="p">,</span>
+</span><span data-line="6">    <span class="n">WorkspaceDataset</span><span class="p">,</span>
+</span><span data-line="7">    <span class="n">workspace_path</span><span class="p">,</span>
+</span><span data-line="8"><span class="p">)</span>
+</span><span data-line="9"><span class="kn">from</span><span class="w"> </span><span class="nn">areno.api</span><span class="w"> </span><span class="kn">import</span> <span class="n">register_dataset</span>
+</span><span data-line="10">
+</span><span data-line="11">
+</span><span data-line="12"><span class="k">class</span><span class="w"> </span><span class="nc">FileTasks</span><span class="p">(</span><span class="n">WorkspaceDataset</span><span class="p">):</span>
+</span><span data-line="13">    <span class="k">def</span><span class="w"> </span><span class="nf">normalize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">record</span><span class="p">):</span>
+</span><span data-line="14">        <span class="n">record</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">record</span><span class="p">)</span>
+</span><span data-line="15">        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">record</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"prompt"</span><span class="p">),</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">record</span><span class="p">[</span><span class="s2">"prompt"</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">():</span>
+</span><span data-line="16">            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"task requires a nonempty prompt"</span><span class="p">)</span>
+</span><span data-line="17">        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">record</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"files"</span><span class="p">),</span> <span class="nb">dict</span><span class="p">):</span>
+</span><span data-line="18">            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"task requires a files mapping"</span><span class="p">)</span>
+</span><span data-line="19">        <span class="n">grader</span> <span class="o">=</span> <span class="n">record</span><span class="p">[</span><span class="s2">"grader"</span><span class="p">]</span>
+</span><span data-line="20">        <span class="n">workspace_path</span><span class="p">(</span><span class="n">grader</span><span class="p">[</span><span class="s2">"entrypoint"</span><span class="p">])</span>
+</span><span data-line="21">        <span class="k">if</span> <span class="n">grader</span><span class="p">[</span><span class="s2">"entrypoint"</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">grader</span><span class="p">[</span><span class="s2">"files"</span><span class="p">]:</span>
+</span><span data-line="22">            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"grader entrypoint must be supplied in grader files"</span><span class="p">)</span>
+</span><span data-line="23">        <span class="k">return</span> <span class="n">record</span>
+</span><span data-line="24">
+</span><span data-line="25">    <span class="k">def</span><span class="w"> </span><span class="nf">workspace_files</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">record</span><span class="p">):</span>
+</span><span data-line="26">        <span class="k">return</span> <span class="n">record</span><span class="p">[</span><span class="s2">"files"</span><span class="p">]</span>
+</span><span data-line="27">
+</span><span data-line="28">    <span class="k">def</span><span class="w"> </span><span class="nf">verification</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attempt</span><span class="p">):</span>
+</span><span data-line="29">        <span class="n">handle</span> <span class="o">=</span> <span class="n">attempt</span><span class="o">.</span><span class="n">environment</span>
+</span><span data-line="30">        <span class="n">grader</span> <span class="o">=</span> <span class="n">attempt</span><span class="o">.</span><span class="n">item</span><span class="o">.</span><span class="n">record</span><span class="p">[</span><span class="s2">"grader"</span><span class="p">]</span>
+</span><span data-line="31">        <span class="n">entrypoint</span> <span class="o">=</span> <span class="n">PurePosixPath</span><span class="p">(</span><span class="n">handle</span><span class="o">.</span><span class="n">control_dir</span><span class="p">)</span> <span class="o">/</span> <span class="n">grader</span><span class="p">[</span><span class="s2">"entrypoint"</span><span class="p">]</span>
+</span><span data-line="32">        <span class="k">return</span> <span class="n">TaskVerification</span><span class="p">(</span>
+</span><span data-line="33">            <span class="n">command</span><span class="o">=</span><span class="p">[</span><span class="n">handle</span><span class="o">.</span><span class="n">python</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">entrypoint</span><span class="p">),</span> <span class="n">handle</span><span class="o">.</span><span class="n">workspace</span><span class="p">],</span>
+</span><span data-line="34">            <span class="n">files</span><span class="o">=</span><span class="n">grader</span><span class="p">[</span><span class="s2">"files"</span><span class="p">],</span>
+</span><span data-line="35">        <span class="p">)</span>
+</span><span data-line="36">
+</span><span data-line="37">    <span class="k">def</span><span class="w"> </span><span class="nf">score</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">result</span><span class="p">):</span>
+</span><span data-line="38">        <span class="k">if</span> <span class="n">result</span><span class="o">.</span><span class="n">return_code</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+</span><span data-line="39">            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">"trusted task grader failed to execute"</span><span class="p">)</span>
+</span><span data-line="40">        <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">stdout</span><span class="p">)[</span><span class="s2">"reward"</span><span class="p">])</span>
+</span><span data-line="41">
+</span><span data-line="42">
+</span><span data-line="43"><span class="n">register_dataset</span><span class="p">(</span><span class="s2">"file-tasks"</span><span class="p">,</span> <span class="n">FileTasks</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span></pre></div>
+</div>
+<p>This adapter’s grader prints <code class="docutils literal notranslate"><span class="pre">{&quot;reward&quot;:</span> <span class="pre">score}</span></code> and exits successfully for
+both correct and incorrect submissions. A grader execution failure raises an
+error instead of being confused with an incorrect answer. It can return
+fractional credit, such as the proportion of checks passed, without changing
+the harness or trainer.</p>
+<p><code class="docutils literal notranslate"><span class="pre">normalize</span></code> runs during loading and again on a copied record for each
+sample, so keep it deterministic and safe to repeat. <code class="docutils literal notranslate"><span class="pre">prepare</span></code> and
+<code class="docutils literal notranslate"><span class="pre">verify</span></code> receive <code class="docutils literal notranslate"><span class="pre">attempt.item.record</span></code>, a temporary <code class="docutils literal notranslate"><span class="pre">attempt.root</span></code> and
+<code class="docutils literal notranslate"><span class="pre">attempt.environment</span></code>. The environment handle supplies workspace/control
+paths and Harbor’s <code class="docutils literal notranslate"><span class="pre">exec</span></code>, upload and download operations. A fresh adapter
+is created for every sample; put shared judge concurrency limits outside
+per-instance state.</p>
+</section>
+<section id="load-your-own-dataset">
+<h2>3. Load your own dataset<a class="headerlink" href="#load-your-own-dataset" title="Link to this heading">#</a></h2>
+<p>When your rows already use the adapter schema, use
+<code class="docutils literal notranslate"><span class="pre">workflow.dataset_loader(path,</span> <span class="pre">default_loader=...)</span></code> as in <code class="docutils literal notranslate"><span class="pre">hooks.py</span></code> from
+<a class="reference internal" href="../harbor.html"><span class="doc">Integrate a harness with Harbor</span></a>. The CLI supplies the default source loader; the
+runner applies your adapter’s normalization to each row.</p>
+<p>For a different source schema, add a reader to <code class="docutils literal notranslate"><span class="pre">my_loader.py</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+</span><span data-line="2">
+</span><span data-line="3">
+</span><span data-line="4"><span class="k">def</span><span class="w"> </span><span class="nf">read_tasks</span><span class="p">(</span><span class="n">dataset_path</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+</span><span data-line="5">    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">dataset_path</span><span class="p">)</span> <span class="k">as</span> <span class="n">source</span><span class="p">:</span>
+</span><span data-line="6">        <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">source</span><span class="p">):</span>
+</span><span data-line="7">            <span class="k">if</span> <span class="n">limit</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">index</span> <span class="o">&gt;=</span> <span class="n">limit</span><span class="p">:</span>
+</span><span data-line="8">                <span class="k">break</span>
+</span><span data-line="9">            <span class="n">row</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+</span><span data-line="10">            <span class="k">yield</span> <span class="p">{</span>
+</span><span data-line="11">                <span class="s2">"prompt"</span><span class="p">:</span> <span class="n">row</span><span class="p">[</span><span class="s2">"instruction"</span><span class="p">],</span>
+</span><span data-line="12">                <span class="s2">"files"</span><span class="p">:</span> <span class="n">row</span><span class="p">[</span><span class="s2">"starter_files"</span><span class="p">],</span>
+</span><span data-line="13">                <span class="s2">"grader"</span><span class="p">:</span> <span class="n">row</span><span class="p">[</span><span class="s2">"verification"</span><span class="p">],</span>
+</span><span data-line="14">                <span class="s2">"max_turns"</span><span class="p">:</span> <span class="n">row</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"turn_budget"</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span>
+</span><span data-line="15">            <span class="p">}</span>
+</span></pre></div>
+</div>
+<p>Append the reader configuration to <code class="docutils literal notranslate"><span class="pre">my_integration.py</span></code> so that all three
+CLI hooks use it:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="kn">from</span><span class="w"> </span><span class="nn">my_loader</span><span class="w"> </span><span class="kn">import</span> <span class="n">read_tasks</span>
+</span><span data-line="2">
+</span><span data-line="3"><span class="n">workflow</span><span class="o">.</span><span class="n">loader_fn</span> <span class="o">=</span> <span class="n">read_tasks</span>
+</span><span data-line="4"><span class="n">workflow</span><span class="o">.</span><span class="n">loader_kwargs</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"limit"</span><span class="p">:</span> <span class="mi">200</span><span class="p">}</span>
+</span></pre></div>
+</div>
+<p>Alternatively set <code class="docutils literal notranslate"><span class="pre">workflow.loader_fn</span> <span class="pre">=</span> <span class="pre">&quot;my_loader.py:read_tasks&quot;</span></code>. The
+default function name when the suffix is omitted is
+<code class="docutils literal notranslate"><span class="pre">load_training_dataset</span></code>. A reader can return an iterable of mappings,
+including a generator. <code class="docutils literal notranslate"><span class="pre">loader_kwargs</span></code> supplies defaults and invocation
+options override them. Framework helpers such as <code class="docutils literal notranslate"><span class="pre">default_loader</span></code> are
+passed only if the reader accepts them. With no custom reader, a
+<code class="docutils literal notranslate"><span class="pre">default_loader</span></code> is required; there is no hidden source fallback.</p>
+<p>Keep downloading, source columns and split selection in this reader. Keep
+task preparation and scoring in the dataset adapter. A custom CSV, database
+or ModelScope loader can then reuse the same adapter. See
+<a class="reference internal" href="../../reference/dataset-loader-api.html"><span class="doc">Dataset loader API</span></a> for the outer CLI hook and <a class="reference internal" href="pi.html"><span class="doc">Pi SVG walkthrough</span></a> for
+a custom CSV source using the SVG adapter.</p>
+</section>
+<section id="connect-the-reward-and-verify-failures">
+<h2>4. Connect the reward and verify failures<a class="headerlink" href="#connect-the-reward-and-verify-failures" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">verify(attempt)</span></code> must return a dictionary containing a finite numeric
+<code class="docutils literal notranslate"><span class="pre">reward</span></code>. Other entries are retained as grading details. The runner stores
+this result in the sampled row’s <code class="docutils literal notranslate"><span class="pre">harness_result</span></code>; its
+<code class="docutils literal notranslate"><span class="pre">reward_fn(record)</span></code> reads that scalar through <code class="docutils literal notranslate"><span class="pre">record.source_record</span></code>.
+Use the wrapper from <a class="reference internal" href="../harbor.html"><span class="doc">Integrate a harness with Harbor</span></a> with the one-record, one-float
+<a class="reference internal" href="../../reference/reward-function-api.html"><span class="doc">Reward function API</span></a> contract.</p>
+<p>Decide how to handle an agent that reaches its turn/time budget or exits
+unsuccessfully. The generic runner defaults to
+<code class="docutils literal notranslate"><span class="pre">require_agent_success=True</span></code>, which forces those outcomes to zero. With
+<code class="docutils literal notranslate"><span class="pre">False</span></code>, a trusted grader can score the submitted state. The Pi SVG example
+uses this setting to give partial credit to incomplete but useful work.</p>
+<p>An incorrect submission with a complete model trace is valid training data.
+An environment, proxy or judge exception invalidates the sample through
+<code class="docutils literal notranslate"><span class="pre">AgentTrajectory.invalid_items</span></code> and removes its reward. The current
+verification-budget timeout path instead returns reward zero and
+<code class="docutils literal notranslate"><span class="pre">verify_timed_out=True</span></code>; inspect that flag separately from task quality.</p>
+<p>Before training, exercise correct, partially correct and incorrect results,
+then a broken grader. Confirm that the first three produce the intended
+scores and the last produces an infrastructure error. For GSPO/GRPO, check
+reward variation among samples of the <strong>same prompt</strong>: identical rewards
+produce zero group-relative advantages, even if the batch mean is nonzero.</p>
+</section>
+<section id="persist-artifacts-and-clean-up">
+<h2>Persist artifacts and clean up<a class="headerlink" href="#persist-artifacts-and-clean-up" title="Link to this heading">#</a></h2>
+<p>Set <code class="docutils literal notranslate"><span class="pre">HarnessRunner.result_dir</span></code> to keep a summary JSON and a trial directory
+per attempt. The summary contains <code class="docutils literal notranslate"><span class="pre">prompt_index</span></code>, <code class="docutils literal notranslate"><span class="pre">sample_index</span></code>, <code class="docutils literal notranslate"><span class="pre">result</span></code>
+and the exact request/response <code class="docutils literal notranslate"><span class="pre">trace</span></code>. Native logs and, when supported,
+<code class="docutils literal notranslate"><span class="pre">agent/trajectory.json</span></code> are copied from Harbor; your adapter can save
+additional evidence in <code class="docutils literal notranslate"><span class="pre">attempt.root</span> <span class="pre">/</span> <span class="pre">&quot;artifacts&quot;</span></code>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">attempt_dir</span></code> selects the temporary staging parent. For a Docker daemon
+outside the controller, this parent must be on a path shared with the daemon
+host. Staging directories are removed after completion; use <code class="docutils literal notranslate"><span class="pre">result_dir</span></code>
+for persistent evidence. The runner waits for trial/proxy cleanup before
+returning to training. Harbor’s Docker provider defaults to removing its
+containers; configure its native retention options if needed.</p>
+</section>
+<section id="run-a-small-integration-check">
+<h2>Run a small integration check<a class="headerlink" href="#run-a-small-integration-check" title="Link to this heading">#</a></h2>
+<p>From the repository root, keep <code class="docutils literal notranslate"><span class="pre">my_harness.py</span></code>, <code class="docutils literal notranslate"><span class="pre">my_integration.py</span></code>,
+<code class="docutils literal notranslate"><span class="pre">task_adapter.py</span></code>, <code class="docutils literal notranslate"><span class="pre">hooks.py</span></code> and <code class="docutils literal notranslate"><span class="pre">tasks.jsonl</span></code> together. The initial
+task file uses the adapter schema, so use the default loader rather than the
+optional source-remapping reader in step 3. Check loading without a GPU:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span data-line="1">python<span class="w"> </span>.agents/skills/areno-run-training/scripts/inspect_dataset.py<span class="w"> </span><span class="se">\</span>
+</span><span data-line="2"><span class="w">  </span>--dataset-path<span class="w"> </span>tasks.jsonl<span class="w"> </span>--loader<span class="w"> </span>hooks.py<span class="w"> </span>--algo<span class="w"> </span>gspo
+</span></pre></div>
+</div>
+<p>Then use a local policy checkpoint that fits your GPU. This two-step check
+exercises the new harness and task through the public training hooks:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span data-line="1">:<span class="w"> </span><span class="s2">"</span><span class="si">${</span><span class="nv">MODEL_PATH</span><span class="p">:?Set the local policy checkpoint path</span><span class="si">}</span><span class="s2">"</span>
+</span><span data-line="2">python<span class="w"> </span>-m<span class="w"> </span>areno.cli.main<span class="w"> </span>train<span class="w"> </span><span class="se">\</span>
+</span><span data-line="3"><span class="w">  </span>--ckpt<span class="w"> </span><span class="s2">"</span><span class="nv">$MODEL_PATH</span><span class="s2">"</span><span class="w"> </span>--model-hub<span class="w"> </span>modelscope<span class="w"> </span>--algo<span class="w"> </span>gspo<span class="w"> </span><span class="se">\</span>
+</span><span data-line="4"><span class="w">  </span>--dataset-path<span class="w"> </span>tasks.jsonl<span class="w"> </span>--dataset-loader-fn<span class="w"> </span>hooks.py<span class="w"> </span><span class="se">\</span>
+</span><span data-line="5"><span class="w">  </span>--agent-fn<span class="w"> </span>hooks.py<span class="w"> </span>--reward-fn-path<span class="w"> </span>hooks.py<span class="w"> </span><span class="se">\</span>
+</span><span data-line="6"><span class="w">  </span>--world-size<span class="w"> </span><span class="m">1</span><span class="w"> </span>--tp-size<span class="w"> </span><span class="m">1</span><span class="w"> </span>--batch-size<span class="w"> </span><span class="m">1</span><span class="w"> </span>--n-samples<span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="se">\</span>
+</span><span data-line="7"><span class="w">  </span>--max-running-prompts<span class="w"> </span><span class="m">2</span><span class="w"> </span>--mini-bs<span class="w"> </span><span class="m">1</span><span class="w"> </span>--score-micro-bs<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+</span><span data-line="8"><span class="w">  </span>--max-context-len<span class="w"> </span><span class="m">8192</span><span class="w"> </span>--max-prompt-tokens<span class="w"> </span><span class="m">6144</span><span class="w"> </span>--max-new-tokens<span class="w"> </span><span class="m">1024</span><span class="w"> </span><span class="se">\</span>
+</span><span data-line="9"><span class="w">  </span>--max-steps<span class="w"> </span><span class="m">2</span><span class="w"> </span>--metrics-log-dir<span class="w"> </span>runs/my-harness/metrics
+</span></pre></div>
+</div>
+<p>This deliberately simple task checks wiring, not task difficulty. Replace it
+with tasks that produce different outcomes within prompt groups before
+evaluating learning. Inspect the saved traces and graders, then use the
+metric checks in <a class="reference internal" href="pi.html"><span class="doc">Pi SVG walkthrough</span></a>.</p>
+</section>
+</section>
+
+        </article><button class="back-to-top" type="button">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+    <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+  </svg>
+  <span>Back to top</span>
+</button><div class="navigation flex print:hidden"><div class="navigation-prev">
+    <a href="../harbor.html">
+      <i class="i-lucide chevron-left"></i>
+      <div class="page-info">
+        <span>Previous</span><div class="title">Integrate a harness with Harbor</div></div>
+    </a>
+  </div><div class="navigation-next">
+    <a href="pi.html">
+      <div class="page-info">
+        <span>Next</span>
+        <div class="title">Pi SVG walkthrough</div>
+      </div>
+      <i class="i-lucide chevron-right"></i>
+    </a>
+  </div></div></div>
+    </div>
+  </main>
+</div>
+<footer class="sy-foot">
+  <div class="sy-foot-inner sy-container mx-auto">
+    <div class="sy-foot-reserved md:flex justify-between items-center">
+      
+      <div class="sy-foot-socials"></div>
+    </div>
+  </div>
+</footer>
+      <script src="../../_static/documentation_options.js?v=7f41d439"></script>
+      <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../../_static/shibuya.js?v=50760d75"></script>
+      <script src="../../_static/areno-sidebar.js?v=648fdd7d"></script></body>
+</html>

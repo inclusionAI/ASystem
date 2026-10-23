@@ -28,7 +28,7 @@
       <strong>AReno</strong>
     </a>
     <div class="sy-head-nav" id="head-nav">
-      <nav class="sy-head-links"><ul><li class="link"><a href="../getting-started/welcome.html">Get Started</a></li><li class="link"><a href="training-loop.html">Concepts</a></li><li class="link"><a href="../cookbook/math-rlvr.html">Cookbook</a></li><li class="link"><a href="../reference/cli.html">Reference</a></li><li class="link"><a href="../troubleshooting/index.html">Troubleshooting</a></li></ul></nav>
+      <nav class="sy-head-links"><ul><li class="link"><a href="../getting-started/welcome.html">Get Started</a></li><li class="link"><a href="training-loop.html">Concepts</a></li><li class="link"><a href="../cookbook/math-rlvr.html">Cookbook</a></li><li class="link"><a href="../integrations/index.html">Integration</a></li><li class="link"><a href="../reference/cli.html">Reference</a></li><li class="link"><a href="../troubleshooting/index.html">Troubleshooting</a></li></ul></nav>
       <div class="sy-head-extra flex items-center print:hidden"><div class="sy-head-socials"></div></div>
     </div>
     <div class="sy-head-actions flex items-center shrink-0 print:hidden">
@@ -96,6 +96,15 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l1"><a class="reference internal" href="../cookbook/math-rlvr.html">Math RLVR recipe</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../cookbook/tictactoe-agentic-rl.html">TicTacToe agentic RL</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../cookbook/duelgrid-visual-agent.html">DuelGrid visual agent</a></li>
+</ul>
+<p class="caption" role="heading" aria-level="3"><span class="caption-text">Integration</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../integrations/index.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../integrations/harbor.html">Harbor</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../integrations/harbor/tasks.html">Task adaptation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../integrations/harbor/pi.html">Pi SVG walkthrough</a></li>
+</ul>
+</li>
 </ul>
 <p class="caption" role="heading" aria-level="3"><span class="caption-text">Reference</span></p>
 <ul>
@@ -173,10 +182,13 @@ training or inference.</p>
 <li><p>Bailing-MoE V3 checkpoints with <code class="docutils literal notranslate"><span class="pre">no_kda_lora=true</span></code></p></li>
 </ul>
 <p>On Apple Silicon, the MLX backend supports dense Qwen3 LoRA and includes an
-experimental Ling-3.0-tiny attention-only resolver. Ling MLX numerical and
-real-checkpoint validation is pending. Its target subset differs from CUDA:
+experimental Ling-3.0-tiny attention, dense MLP and MoE resolver. Reduced-model
+checks and a bounded real-checkpoint training/reload gate have passed on Metal.
+Its target subset differs from CUDA:
 see <a class="reference internal" href="../getting-started/mlx.html"><span class="doc">Apple Silicon and MLX</span></a> for the explicit target list, MLX-LM
-requirements and validation entry points.</p>
+requirements and validation entry points. These two MLX families also support
+SFT on prequantized 4-bit affine bases via <code class="docutils literal notranslate"><span class="pre">--qlora</span></code>; this format is distinct
+from CUDA NF4 and requires its MLX quantization metadata when reloading.</p>
 <p>The default target modules are <code class="docutils literal notranslate"><span class="pre">q_proj</span></code>, <code class="docutils literal notranslate"><span class="pre">k_proj</span></code>, <code class="docutils literal notranslate"><span class="pre">v_proj</span></code>,
 <code class="docutils literal notranslate"><span class="pre">o_proj</span></code>, <code class="docutils literal notranslate"><span class="pre">gate_proj</span></code>, <code class="docutils literal notranslate"><span class="pre">up_proj</span></code>, and <code class="docutils literal notranslate"><span class="pre">down_proj</span></code>. Select a subset
 with <code class="docutils literal notranslate"><span class="pre">--lora-target-modules</span></code>. Bailing-MoE V3 additionally supports its

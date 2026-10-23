@@ -28,7 +28,7 @@
       <strong>AReno</strong>
     </a>
     <div class="sy-head-nav" id="head-nav">
-      <nav class="sy-head-links"><ul><li class="link"><a href="welcome.html">Get Started</a></li><li class="link"><a href="../concepts/training-loop.html">Concepts</a></li><li class="link"><a href="../cookbook/math-rlvr.html">Cookbook</a></li><li class="link"><a href="../reference/cli.html">Reference</a></li><li class="link"><a href="../troubleshooting/index.html">Troubleshooting</a></li></ul></nav>
+      <nav class="sy-head-links"><ul><li class="link"><a href="welcome.html">Get Started</a></li><li class="link"><a href="../concepts/training-loop.html">Concepts</a></li><li class="link"><a href="../cookbook/math-rlvr.html">Cookbook</a></li><li class="link"><a href="../integrations/index.html">Integration</a></li><li class="link"><a href="../reference/cli.html">Reference</a></li><li class="link"><a href="../troubleshooting/index.html">Troubleshooting</a></li></ul></nav>
       <div class="sy-head-extra flex items-center print:hidden"><div class="sy-head-socials"></div></div>
     </div>
     <div class="sy-head-actions flex items-center shrink-0 print:hidden">
@@ -97,6 +97,15 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l1"><a class="reference internal" href="../cookbook/tictactoe-agentic-rl.html">TicTacToe agentic RL</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../cookbook/duelgrid-visual-agent.html">DuelGrid visual agent</a></li>
 </ul>
+<p class="caption" role="heading" aria-level="3"><span class="caption-text">Integration</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../integrations/index.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../integrations/harbor.html">Harbor</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../integrations/harbor/tasks.html">Task adaptation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../integrations/harbor/pi.html">Pi SVG walkthrough</a></li>
+</ul>
+</li>
+</ul>
 <p class="caption" role="heading" aria-level="3"><span class="caption-text">Reference</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../reference/cli.html">CLI Reference</a></li>
@@ -124,7 +133,8 @@ data-aria-dark="Switch to auto color mode">
 <li><a class="reference internal" href="#requirements-and-installation">Requirements and installation</a></li>
 <li><a class="reference internal" href="#training">Training</a><ul>
 <li><a class="reference internal" href="#lora">LoRA</a><ul>
-<li><a class="reference internal" href="#ling-3-0-tiny-attention-lora-experimental">Ling-3.0-tiny attention LoRA (experimental)</a></li>
+<li><a class="reference internal" href="#qlora-with-a-prequantized-base-experimental">QLoRA with a prequantized base (experimental)</a></li>
+<li><a class="reference internal" href="#ling-3-0-tiny-lora-experimental">Ling-3.0-tiny LoRA (experimental)</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#memory-controls">Memory controls</a></li>
@@ -246,15 +256,128 @@ an existing standard PEFT directory. The adapter metadata is authoritative for
 rank, alpha, dropout, and target modules. The same option can serve an exported
 adapter with <code class="docutils literal notranslate"><span class="pre">areno</span> <span class="pre">serve</span></code> while <code class="docutils literal notranslate"><span class="pre">--model-path</span></code> continues to identify its
 base checkpoint.</p>
-<p>MLX LoRA requires an unquantized text checkpoint,
-<code class="docutils literal notranslate"><span class="pre">--lora-dropout</span> <span class="pre">0</span></code>, and <code class="docutils literal notranslate"><span class="pre">--reference-mode</span> <span class="pre">independent</span></code>. QLoRA, Qwen3 MoE,
-multimodal LoRA, multiple adapters, and <code class="docutils literal notranslate"><span class="pre">reuse_actor_base</span></code> are not supported.</p>
-<section id="ling-3-0-tiny-attention-lora-experimental">
-<h4>Ling-3.0-tiny attention LoRA (experimental)<a class="headerlink" href="#ling-3-0-tiny-attention-lora-experimental" title="Link to this heading">#</a></h4>
-<p>The MLX LoRA resolver also implements Ling-3.0-tiny attention projections for
+<p>MLX LoRA requires a text checkpoint, <code class="docutils literal notranslate"><span class="pre">--lora-dropout</span> <span class="pre">0</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">--reference-mode</span> <span class="pre">independent</span></code>. Ordinary LoRA also supports MLX quantized
+layers, including the online quantization path selected by
+<code class="docutils literal notranslate"><span class="pre">--q4</span></code>. The explicit QLoRA path below adds stricter format
+validation and base-checkpoint fingerprints. Qwen3 MoE, multimodal LoRA, multiple adapters,
+and <code class="docutils literal notranslate"><span class="pre">reuse_actor_base</span></code> are not supported.</p>
+<section id="qlora-with-a-prequantized-base-experimental">
+<h4>QLoRA with a prequantized base (experimental)<a class="headerlink" href="#qlora-with-a-prequantized-base-experimental" title="Link to this heading">#</a></h4>
+<p><code class="docutils literal notranslate"><span class="pre">--qlora</span></code> supports SFT on dense Qwen3 and Ling-3.0-tiny with a local MLX
+4-bit affine checkpoint, group size 64. This uses MLX quantized matmuls with
+floating LoRA parameters; it is not CUDA NF4, double quantization or a paged
+optimizer. Other quantization formats, DPO/RL and auxiliary roles are rejected.</p>
+<p>Convert a local floating checkpoint once, before training:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span data-line="1">python<span class="w"> </span>-m<span class="w"> </span>mlx_lm<span class="w"> </span>convert<span class="w"> </span>--hf-path<span class="w"> </span><span class="s2">"</span><span class="nv">$MODEL_DIR</span><span class="s2">"</span><span class="w"> </span>--mlx-path<span class="w"> </span><span class="s2">"</span><span class="nv">$QUANTIZED_MODEL_DIR</span><span class="s2">"</span><span class="w"> </span><span class="se">\</span>
+</span><span data-line="2"><span class="w">  </span>-q<span class="w"> </span>--q-bits<span class="w"> </span><span class="m">4</span><span class="w"> </span>--q-group-size<span class="w"> </span><span class="m">64</span><span class="w"> </span>--q-mode<span class="w"> </span>affine
+</span></pre></div>
+</div>
+<p>Use the resulting directory as <code class="docutils literal notranslate"><span class="pre">--ckpt</span></code> and add <code class="docutils literal notranslate"><span class="pre">--qlora</span></code> to the LoRA SFT
+command. SDK callers use <code class="docutils literal notranslate"><span class="pre">MlxConfig(lora=LoraConfig(qlora=True,</span> <span class="pre">...))</span></code>.
+A floating checkpoint is not automatically quantized at training startup.
+Do not combine <code class="docutils literal notranslate"><span class="pre">--qlora</span></code> with <code class="docutils literal notranslate"><span class="pre">--q4</span></code>: online quantization
+uses ordinary LoRA and its own adapter metadata. Quantized inference without
+an adapter does not require <code class="docutils literal notranslate"><span class="pre">--qlora</span></code>.
+The converter respects the model’s quantization predicate: Ling keeps its
+embeddings, LM head and protected MLA/special projections floating. The LoRA
+target list is unchanged, including adapters on those floating MLA projections.</p>
+<p>Adapter exports add <code class="docutils literal notranslate"><span class="pre">areno_quantization_config.json</span></code> to the standard PEFT
+files. This records the actual per-layer quantization and SHA-256 hashes of
+the base config and safetensors files. Reload with the same base and
+<code class="docutils literal notranslate"><span class="pre">--lora-adapter-path</span></code>; QLoRA is inferred from the metadata. Files may be
+relocated, but changing, reformatting or resharding the base requires a new
+adapter identity. Startup hashes the base files to detect accidental mismatch.
+Do not remove the sidecar or treat an MLX affine adapter as a CUDA NF4 artifact.
+Only adapter weights are restored; continuing training creates fresh optimizer
+state, rather than resuming Adam moments or the original step counter.</p>
+<p>Quantization reduces frozen-weight storage. LoRA parameters, gradients,
+optimizer state and activations still consume memory; long-context capacity
+must be measured for the selected adapter scope and batch size.</p>
+<p>The implementation at <code class="docutils literal notranslate"><span class="pre">ebe415f</span></code> was validated on a 48 GiB M4 Pro Mac mini
+with MLX 0.32.3 and MLX-LM 0.32.0 on 2026-10-21. Qwen’s standalone test entry
+point was corrected at <code class="docutils literal notranslate"><span class="pre">36bff8f</span></code> without changing runtime code. Both real
+models used rank 8, alpha 16, batch/microbatch 1, AdamW at learning rate 0.001,
+gradient checkpointing enabled and compilation disabled. Inputs were bounded
+repetitions of “The capital of France is Paris.”, with the first token masked.
+These are correctness/capacity checks, not convergence or accuracy evaluations.</p>
+<div class="table-wrapper docutils container" id="id1">
+<table class="docutils align-default" id="id1">
+<caption><span class="caption-text">Real-checkpoint MLX allocation peaks (GiB)</span><a class="headerlink" href="#id1" title="Link to this table">#</a></caption>
+<thead>
+<tr class="row-odd"><th class="head"><p>Model</p></th>
+<th class="head"><p>Tokens</p></th>
+<th class="head"><p>QLoRA</p></th>
+<th class="head"><p>Prior floating LoRA</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Ling-3.0-tiny</p></td>
+<td><p>512</p></td>
+<td><p>10.59</p></td>
+<td><p>20.49</p></td>
+</tr>
+<tr class="row-odd"><td><p>Ling-3.0-tiny</p></td>
+<td><p>1024</p></td>
+<td><p>15.52</p></td>
+<td><p>25.32</p></td>
+</tr>
+<tr class="row-even"><td><p>Ling-3.0-tiny</p></td>
+<td><p>1536</p></td>
+<td><p>22.96</p></td>
+<td><p>32.73</p></td>
+</tr>
+<tr class="row-odd"><td><p>Ling-3.0-tiny</p></td>
+<td><p>2048</p></td>
+<td><p>32.93</p></td>
+<td><p>First-step Metal OOM</p></td>
+</tr>
+<tr class="row-even"><td><p>Qwen3-0.6B</p></td>
+<td><p>512</p></td>
+<td><p>2.19</p></td>
+<td><p>Not measured</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>All five QLoRA cases passed generation, two finite-gradient training steps,
+bitwise frozen-base checks, adapter export/reload with zero maximum absolute
+logprob difference, and another training step. Ling retained the expanded
+279-module scope (149,671,680 adapter parameters), with 255 quantized base
+modules. Qwen covered all seven projection targets over 28 layers (196 adapter
+modules, 5,046,272 adapter parameters). Ling’s 2048-token losses were
+0.39899 and 0.06770, followed by 0.02743 after reload. Qwen’s were 0.24959 and
+0.05839, followed by 0.16546 with fresh optimizer state after reload.</p>
+<p>The floating comparison is from the earlier <code class="docutils literal notranslate"><span class="pre">a811115</span></code> validation on the
+same host and adapter scope. Peaks are MLX allocations, not whole-machine
+memory. Five-second host samples showed no swap increase during any Ling
+QLoRA case (740.31 MiB throughout). The results do not establish sustained
+stability, larger batches, 4096-token support, or quantization quality parity.</p>
+<p>Reproduce with local checkpoints; the tests never download models:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="nv">ARENO_E2E_MLX_QLORA_SYNTHETIC</span><span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+</span><span data-line="2"><span class="w">  </span>python<span class="w"> </span>-m<span class="w"> </span>pytest<span class="w"> </span>-q<span class="w"> </span>tests/test_mlx_qlora_e2e.py<span class="w"> </span>-k<span class="w"> </span>upstream
+</span><span data-line="3">
+</span><span data-line="4"><span class="nv">ARENO_E2E_MLX_QLORA</span><span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+</span><span data-line="5"><span class="nv">ARENO_E2E_MLX_BAILING_EXPANDED</span><span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+</span><span data-line="6"><span class="nv">ARENO_E2E_MLX_BAILING_MODEL</span><span class="o">=</span><span class="s2">"</span><span class="nv">$QUANTIZED_LING_DIR</span><span class="s2">"</span><span class="w"> </span><span class="se">\</span>
+</span><span data-line="7"><span class="nv">ARENO_E2E_MLX_BAILING_TOKENS</span><span class="o">=</span><span class="m">2048</span><span class="w"> </span><span class="se">\</span>
+</span><span data-line="8"><span class="w">  </span>python<span class="w"> </span>-m<span class="w"> </span>pytest<span class="w"> </span>-q<span class="w"> </span>-s<span class="w"> </span>tests/test_mlx_bailing_v3_lora_e2e.py<span class="w"> </span>-k<span class="w"> </span>real<span class="w"> </span><span class="se">\</span>
+</span><span data-line="9"><span class="w">    </span>--basetemp<span class="w"> </span>outputs/ling-qlora-validation-new
+</span><span data-line="10">
+</span><span data-line="11"><span class="nv">ARENO_E2E_MLX_QWEN_QLORA_MODEL</span><span class="o">=</span><span class="s2">"</span><span class="nv">$QUANTIZED_QWEN_DIR</span><span class="s2">"</span><span class="w"> </span><span class="se">\</span>
+</span><span data-line="12"><span class="w">  </span>python<span class="w"> </span>-m<span class="w"> </span>pytest<span class="w"> </span>-q<span class="w"> </span>-s<span class="w"> </span>tests/test_mlx_qlora_e2e.py<span class="w"> </span>-k<span class="w"> </span>real<span class="w"> </span><span class="se">\</span>
+</span><span data-line="13"><span class="w">    </span>--basetemp<span class="w"> </span>outputs/qwen-qlora-validation-new
+</span></pre></div>
+</div>
+</section>
+<section id="ling-3-0-tiny-lora-experimental">
+<h4>Ling-3.0-tiny LoRA (experimental)<a class="headerlink" href="#ling-3-0-tiny-lora-experimental" title="Link to this heading">#</a></h4>
+<p>The MLX LoRA resolver also implements Ling-3.0-tiny attention and MLP projections for
 <code class="docutils literal notranslate"><span class="pre">model_type=bailing_hybrid</span></code> with architecture <code class="docutils literal notranslate"><span class="pre">BailingMoeV3ForCausalLM</span></code>.
-Numerical and real-checkpoint validation on Apple Silicon is still pending;
-this is not yet a validated 48 GB training recipe.</p>
+Attention-only and expanded adapters have passed reduced-model numerical,
+training and reload checks on Apple Silicon, including all four combinations
+of compilation and gradient checkpointing. This is not a long-context capacity
+or convergence guarantee.</p>
 <p>Use an MLX-LM version containing <code class="docutils literal notranslate"><span class="pre">mlx_lm.models.bailing_moe_v3</span></code> and its
 architecture mapping. The implementation was designed against upstream
 revision <code class="docutils literal notranslate"><span class="pre">1840cbba9cb3f8125b8cf7e137606256a2f162d1</span></code>. MLX-LM 0.31.3 in the
@@ -262,8 +385,11 @@ development environment did not contain this module; satisfying AReno’s
 dependency lower bound alone does not establish Ling compatibility.</p>
 <p>Explicitly select a nonempty subset of these targets:</p>
 <ul class="simple">
-<li><p>KDA: <code class="docutils literal notranslate"><span class="pre">q_proj</span></code>, <code class="docutils literal notranslate"><span class="pre">k_proj</span></code>, <code class="docutils literal notranslate"><span class="pre">v_proj</span></code>, <code class="docutils literal notranslate"><span class="pre">f_proj</span></code>, <code class="docutils literal notranslate"><span class="pre">o_proj</span></code>.</p></li>
-<li><p>MLA: <code class="docutils literal notranslate"><span class="pre">q_a_proj</span></code>, <code class="docutils literal notranslate"><span class="pre">q_b_proj</span></code>, <code class="docutils literal notranslate"><span class="pre">kv_a_proj_with_mqa</span></code>, <code class="docutils literal notranslate"><span class="pre">dense</span></code>.</p></li>
+<li><p>KDA: <code class="docutils literal notranslate"><span class="pre">q_proj</span></code>, <code class="docutils literal notranslate"><span class="pre">k_proj</span></code>, <code class="docutils literal notranslate"><span class="pre">v_proj</span></code>, <code class="docutils literal notranslate"><span class="pre">f_proj</span></code>, <code class="docutils literal notranslate"><span class="pre">o_proj</span></code>, <code class="docutils literal notranslate"><span class="pre">g_proj</span></code>.</p></li>
+<li><p>MLA: <code class="docutils literal notranslate"><span class="pre">q_a_proj</span></code>, <code class="docutils literal notranslate"><span class="pre">q_b_proj</span></code>, <code class="docutils literal notranslate"><span class="pre">kv_a_proj_with_mqa</span></code>, <code class="docutils literal notranslate"><span class="pre">dense</span></code>, <code class="docutils literal notranslate"><span class="pre">g_proj</span></code>.</p></li>
+<li><p>Ordinary MLP, shared experts and routed experts: <code class="docutils literal notranslate"><span class="pre">gate_proj</span></code>, <code class="docutils literal notranslate"><span class="pre">up_proj</span></code>,
+<code class="docutils literal notranslate"><span class="pre">down_proj</span></code>. Each suffix selects all three kinds of MLP; selecting only
+shared or only routed experts is not supported.</p></li>
 </ul>
 <p>For example, after the validation gates have passed, use a local non-quantized
 model and short Alpaca-format training data:</p>
@@ -280,23 +406,30 @@ model and short Alpaca-format training data:</p>
 </span></pre></div>
 </div>
 <p>All applicable layers must contain the requested ordinary linear projections
-with the expected dimensions. The Qwen3 default target list includes MLP
-projections and is rejected for Ling. Expert/MLP targets, <code class="docutils literal notranslate"><span class="pre">g_proj</span></code> and
-<code class="docutils literal notranslate"><span class="pre">kv_b_proj</span></code> are deliberately excluded. In MLX, <code class="docutils literal notranslate"><span class="pre">kv_b_proj</span></code> is transformed
+with the expected dimensions, or packed SwitchLinear projections for routed
+experts. The example above retains attention-only training. To enable the
+extended scope, append <code class="docutils literal notranslate"><span class="pre">g_proj,gate_proj,up_proj,down_proj</span></code> to its target list.
+Routed-expert adapters can be much larger than attention adapters; initialization
+logs module counts, adapter parameter count and trainable percentage.</p>
+<p><code class="docutils literal notranslate"><span class="pre">b_proj</span></code> and <code class="docutils literal notranslate"><span class="pre">kv_b_proj</span></code> remain excluded. In MLX, <code class="docutils literal notranslate"><span class="pre">kv_b_proj</span></code> is transformed
 into two head-specific modules; ordinary Linear LoRA cannot wrap it directly.
 The architectural setting <code class="docutils literal notranslate"><span class="pre">no_kda_lora=true</span></code> does not prohibit adding
 post-training adapters.</p>
-<p>Only adapter arrays are trainable. The base, routers, expert biases, experts,
+<p>Only adapter arrays are trainable. All base weights, including routers, expert biases, expert weights,
 embeddings, norms and convolutions remain frozen. Adapter saving and loading
 use the same PEFT two-file format and metadata precedence as Qwen3. Actual
-CUDA/Transformers interoperability remains a separate validation gate.</p>
+CUDA/Transformers interoperability remains a separate validation gate. Packed
+expert adapters are exported as per-expert <code class="docutils literal notranslate"><span class="pre">mlp.experts.&lt;id&gt;</span></code> A/B tensors.
+The file format alone does not imply CUDA target support: in particular the
+current CUDA Ling resolver does not inject MLA <code class="docutils literal notranslate"><span class="pre">g_proj</span></code> adapters.</p>
 <p>The opt-in validation entry points do not download assets:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="nv">ARENO_E2E_MLX_BAILING_SYNTHETIC</span><span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
 </span><span data-line="2"><span class="w">  </span>python<span class="w"> </span>-m<span class="w"> </span>pytest<span class="w"> </span>-q<span class="w"> </span>tests/test_mlx_bailing_v3_lora_e2e.py<span class="w"> </span>-k<span class="w"> </span>reduced
 </span><span data-line="3">
-</span><span data-line="4"><span class="nv">ARENO_E2E_MLX_BAILING_MODEL</span><span class="o">=</span><span class="s2">"</span><span class="nv">$MODEL_DIR</span><span class="s2">"</span><span class="w"> </span><span class="se">\</span>
-</span><span data-line="5"><span class="w">  </span>python<span class="w"> </span>-m<span class="w"> </span>pytest<span class="w"> </span>-q<span class="w"> </span>-s<span class="w"> </span>tests/test_mlx_bailing_v3_lora_e2e.py<span class="w"> </span>-k<span class="w"> </span>real<span class="w"> </span><span class="se">\</span>
-</span><span data-line="6"><span class="w">    </span>--basetemp<span class="w"> </span>outputs/ling-lora-validation-new
+</span><span data-line="4"><span class="nv">ARENO_E2E_MLX_BAILING_EXPANDED</span><span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+</span><span data-line="5"><span class="nv">ARENO_E2E_MLX_BAILING_MODEL</span><span class="o">=</span><span class="s2">"</span><span class="nv">$MODEL_DIR</span><span class="s2">"</span><span class="w"> </span><span class="se">\</span>
+</span><span data-line="6"><span class="w">  </span>python<span class="w"> </span>-m<span class="w"> </span>pytest<span class="w"> </span>-q<span class="w"> </span>-s<span class="w"> </span>tests/test_mlx_bailing_v3_lora_e2e.py<span class="w"> </span>-k<span class="w"> </span>real<span class="w"> </span><span class="se">\</span>
+</span><span data-line="7"><span class="w">    </span>--basetemp<span class="w"> </span>outputs/ling-lora-validation-new
 </span></pre></div>
 </div>
 <p>Choose a fresh <code class="docutils literal notranslate"><span class="pre">--basetemp</span></code> directory: pytest clears an existing directory
@@ -309,6 +442,17 @@ metrics and cumulative memory peaks. Memory-pressure/swap monitoring, a
 coherent-generation assessment, and the serve API check remain separate
 manual acceptance checks. These tests do not certify a memory budget by
 themselves.</p>
+<p>The expanded real-checkpoint gate passed on a 48 GiB Mac mini with MLX 0.32.3
+and MLX-LM 0.32.0 on 2026-10-21: all 24 layers, rank 8, alpha 16,
+gradient checkpointing enabled, compilation disabled, and 32 input tokens.
+It covered 279 runtime projection modules (including 69 packed routed-expert
+projections), with 149,671,680 trainable adapter parameters. Two optimizer
+steps produced losses 2.81108 and 1.27752; export/reload had zero maximum
+absolute logprob difference, and a further optimizer step completed with loss
+0.46292. Frozen base weights were unchanged. The cumulative MLX allocation
+peak was approximately 17.58 GiB; this is not total system memory usage or a
+budget for longer sequences. Cross-backend CUDA/Transformers loading was not
+exercised by this gate.</p>
 </section>
 </section>
 <section id="memory-controls">
@@ -383,9 +527,12 @@ Optimizer and scheduler state restart with the new trainer process.</p>
 CUDA/Transformers export. Some unquantized model layouts may happen to be
 compatible, but MLX model sanitization, tensor layout, and quantization are
 model-family concerns. Test the target loader instead of renaming metadata.
-This restriction does not apply to the standard PEFT LoRA artifact described
-above. Optimizer and scheduler state are not part of the current MLX checkpoint
-round trip.</p>
+LoRA tensors use standard PEFT layout, but model targets and base formats still
+need to match the destination runtime. MLX QLoRA additionally requires its exact
+quantized base and metadata sidecar; it is not a CUDA NF4 checkpoint. Its
+validated generation path is the Trainer rollout API; serving is a separate
+validation gate. Optimizer and scheduler state are not part of the current MLX
+checkpoint round trip.</p>
 </section>
 <section id="models-and-multimodal-input">
 <h2>Models and multimodal input<a class="headerlink" href="#models-and-multimodal-input" title="Link to this heading">#</a></h2>
