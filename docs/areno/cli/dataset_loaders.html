@@ -180,6 +180,11 @@ examples:</p>
 JSON/JSONL, Parquet, CSV/TSV, Arrow, <code class="docutils literal notranslate"><span class="pre">datasets.save_to_disk(...)</span></code> directories,
 and Hugging Face dataset references. Loaders should keep tokenization out of the
 dataset layer; trainers own tokenizer-specific rendering and token limits.</p>
+<p>Loaders that need checkpoint assets may declare an optional keyword-only
+<code class="docutils literal notranslate"><span class="pre">model_path</span></code> parameter. <code class="docutils literal notranslate"><span class="pre">areno</span> <span class="pre">train</span></code> passes the resolved local <code class="docutils literal notranslate"><span class="pre">--ckpt</span></code>
+directory to training and validation loaders that explicitly declare it.
+Existing loaders, including ones that forward <code class="docutils literal notranslate"><span class="pre">**kwargs</span></code>, keep their original
+helper arguments.</p>
 <section id="sft">
 <h2>SFT<a class="headerlink" href="#sft" title="Link to this heading">#</a></h2>
 <p>SFT always requires <code class="docutils literal notranslate"><span class="pre">--dataset-loader-fn</span></code>. The loader must return rows with

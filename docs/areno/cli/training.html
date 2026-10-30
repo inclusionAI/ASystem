@@ -228,6 +228,12 @@ not local paths. Use <code class="docutils literal notranslate"><span class="pre
 <p>Dataset references use <code class="docutils literal notranslate"><span class="pre">repo/name</span></code>, <code class="docutils literal notranslate"><span class="pre">repo/name:config</span></code>, or
 <code class="docutils literal notranslate"><span class="pre">repo/name:config:split</span></code>. Examples: <code class="docutils literal notranslate"><span class="pre">gsm8k:main</span></code> and
 <code class="docutils literal notranslate"><span class="pre">AI-MO/NuminaMath-TIR</span></code>.</p>
+<p>With <code class="docutils literal notranslate"><span class="pre">--model-hub</span> <span class="pre">hf</span></code>, models and datasets are downloaded automatically and
+reuse the Hugging Face cache. <code class="docutils literal notranslate"><span class="pre">repo/name::split</span></code> selects a split without
+specifying a configuration. For example, Ling payment SFT uses
+<code class="docutils literal notranslate"><span class="pre">--ckpt</span> <span class="pre">inclusionAI/Ling-3.0-tiny</span></code>,
+<code class="docutils literal notranslate"><span class="pre">--dataset-path</span> <span class="pre">AsystemAReno/Ling-Ting-SFT-Augment::train</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">--validation-dataset-path</span> <span class="pre">AsystemAReno/Ling-Ting-SFT-Augment::validation</span></code>.</p>
 <p><code class="docutils literal notranslate"><span class="pre">--dataset-path</span></code> also accepts JSON/JSONL, Parquet, CSV/TSV, Arrow, and
 <code class="docutils literal notranslate"><span class="pre">datasets.save_to_disk(...)</span></code> directories.</p>
 <dl class="simple">
@@ -240,6 +246,26 @@ trainer schema. Without a loader, Areno passes dataset rows through unchanged,
 except for SFT where a loader is required. See <a class="reference internal" href="dataset_loaders.html"><span class="doc">Dataset loaders</span></a> for the
 per-algorithm loader contracts.</p>
 <dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">--validation-dataset-path</span> <span class="pre">TEXT</span></code></dt><dd><p>Optional held-out SFT dataset. AReno loads it separately and never uses it
+for optimizer updates.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">--validation-dataset-loader-fn</span> <span class="pre">TEXT</span></code></dt><dd><p>Optional validation loader. Defaults to the training dataset loader.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">--eval-interval</span> <span class="pre">INTEGER</span></code>, <code class="docutils literal notranslate"><span class="pre">--eval-batches</span> <span class="pre">INTEGER</span></code></dt><dd><p>SFT validation runs every <code class="docutils literal notranslate"><span class="pre">50</span></code> optimizer updates by default. Limit each
+evaluation to this many batches, or omit <code class="docutils literal notranslate"><span class="pre">--eval-batches</span></code> to use all
+accepted validation rows. Loss is weighted by supervised target tokens.
+Results are saved as <code class="docutils literal notranslate"><span class="pre">validation/*</span></code> TensorBoard scalars and
+<code class="docutils literal notranslate"><span class="pre">validation_metrics.jsonl</span></code> in the metrics directory.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">--eval-before-step</span></code></dt><dd><p>Opt in to evaluating before scheduled SFT updates, including the initial
+update and the last update selected by <code class="docutils literal notranslate"><span class="pre">--max-steps</span></code>. For an interval of
+50 and 500 steps, validation occurs before updates 1, 50, 100, …, 500.
+Without this flag, evaluation occurs after scheduled updates.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">--shuffle</span> <span class="pre">/</span> <span class="pre">--no-shuffle</span></code>, <code class="docutils literal notranslate"><span class="pre">--seed</span> <span class="pre">INTEGER</span></code></dt><dd><p>SFT shuffling is disabled by default. When enabled, training and validation
+consume the same seeded NumPy sampler. The seed also controls MLX model and
+LoRA initialization; it does not change CUDA model initialization.</p>
+</dd>
 <dt><code class="docutils literal notranslate"><span class="pre">--algo</span> <span class="pre">TEXT</span></code></dt><dd><p>Training algorithm registered in <code class="docutils literal notranslate"><span class="pre">areno.api</span></code>. Default: <code class="docutils literal notranslate"><span class="pre">gspo</span></code>.</p>
 </dd>
 </dl>
@@ -481,6 +507,14 @@ enabled.</p>
 <p>Supported CUDA training paths use fixed MST recomputation chunks of 256
 tokens by default. Chunk sizes do not adapt to memory pressure.</p>
 </dd>
+<dt><code class="docutils literal notranslate"><span class="pre">--mlx-compile-train-step</span> <span class="pre">/</span> <span class="pre">--no-mlx-compile-train-step</span></code></dt><dd><p>Enable compilation of the MLX loss/gradient function. Default: enabled.
+Disabling this option requires the MLX backend.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">--lora-dropout</span> <span class="pre">FLOAT</span></code></dt><dd><p>LoRA branch dropout in <code class="docutils literal notranslate"><span class="pre">[0,</span> <span class="pre">1)</span></code>. Default: <code class="docutils literal notranslate"><span class="pre">0</span></code>. Nonzero dropout is
+supported by MLX dense and routed-expert LoRA. CUDA/NPU native LoRA still
+requires zero dropout. MLX scoring disables dropout and restores the
+previous model mode afterwards.</p>
+</dd>
 <dt><code class="docutils literal notranslate"><span class="pre">--optimizer-state-offload</span> <span class="pre">[none|cpu|disk]</span></code></dt><dd><p>Select CUDA optimizer-state residency. <code class="docutils literal notranslate"><span class="pre">none</span></code> keeps state on the training
 device. <code class="docutils literal notranslate"><span class="pre">cpu</span></code> moves state to host memory between train calls. <code class="docutils literal notranslate"><span class="pre">disk</span></code>
 stages a bounded bucket group through host memory and stores the state in
@@ -511,6 +545,9 @@ is used only by disk offload.</p>
 <dt><code class="docutils literal notranslate"><span class="pre">--adam-beta1</span> <span class="pre">FLOAT</span></code></dt><dd><p>Policy optimizer Adam beta1. Default: <code class="docutils literal notranslate"><span class="pre">0.9</span></code>.</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">--adam-beta2</span> <span class="pre">FLOAT</span></code></dt><dd><p>Policy optimizer Adam beta2. Default: <code class="docutils literal notranslate"><span class="pre">0.999</span></code>.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">--adam-bias-correction</span> <span class="pre">/</span> <span class="pre">--no-adam-bias-correction</span></code></dt><dd><p>Adam moment bias correction. Default: enabled. Disabling is supported by
+MLX FP32 and 8-bit AdamW; CUDA/NPU optimizer behavior is unchanged.</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">--adam-8bit</span></code></dt><dd><p>Use block-wise 8-bit Adam moment states instead of FP32 Adam states.
 CUDA and MLX use the signed dynamic-tree codebook for the first moment and
@@ -548,7 +585,10 @@ control each group’s schedule independently.</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">--weight-decay</span> <span class="pre">FLOAT</span></code></dt><dd><p>Policy optimizer weight decay. Default: <code class="docutils literal notranslate"><span class="pre">1.0e-2</span></code>.</p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">--grad-clip-norm</span> <span class="pre">FLOAT</span></code></dt><dd><p>Policy gradient clipping norm. Default: <code class="docutils literal notranslate"><span class="pre">1.0</span></code>.</p>
+<dt><code class="docutils literal notranslate"><span class="pre">--grad-clip-norm</span> <span class="pre">FLOAT</span></code></dt><dd><p>Policy gradient clipping norm. Default: <code class="docutils literal notranslate"><span class="pre">1.0</span></code>. Must be positive.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">--grad-clip</span> <span class="pre">/</span> <span class="pre">--no-grad-clip</span></code></dt><dd><p>Apply gradient clipping. Default: enabled. Disabling clipping currently
+requires MLX; use <code class="docutils literal notranslate"><span class="pre">--no-grad-clip</span></code> instead of changing the norm to zero.</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">--ref-ckpt</span> <span class="pre">TEXT</span></code></dt><dd><p>Optional PPO/DPO reference model checkpoint path or remote model repo ID.</p>
 </dd>
