@@ -536,6 +536,11 @@ is used only by disk offload.</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">--lr</span> <span class="pre">FLOAT</span></code></dt><dd><p>Policy optimizer learning rate. Default: <code class="docutils literal notranslate"><span class="pre">1.0e-6</span></code>.</p>
 </dd>
+<dt><code class="docutils literal notranslate"><span class="pre">--head-lr</span> <span class="pre">FLOAT</span></code></dt><dd><p>Independent JEV decision-head learning rate. Only valid with <code class="docutils literal notranslate"><span class="pre">--algo</span> <span class="pre">jev</span></code>;
+must be finite and positive. Default: <code class="docutils literal notranslate"><span class="pre">2e-4</span></code>. To continue fine-tuning a
+pretrained head more conservatively, use e.g. <code class="docutils literal notranslate"><span class="pre">--head-lr</span> <span class="pre">2e-5</span></code> alongside
+<code class="docutils literal notranslate"><span class="pre">--lr</span></code> for the backbone or LoRA adapters.</p>
+</dd>
 <dt><code class="docutils literal notranslate"><span class="pre">--min-lr</span> <span class="pre">FLOAT</span></code></dt><dd><p>Policy optimizer minimum learning rate. Default: <code class="docutils literal notranslate"><span class="pre">1.0e-7</span></code>.</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">--lr-decay-steps</span> <span class="pre">INTEGER</span></code></dt><dd><p>Policy LR decay steps. Default: <code class="docutils literal notranslate"><span class="pre">1000</span></code>.</p>
