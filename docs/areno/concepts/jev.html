@@ -191,8 +191,8 @@ L = -\sum_i t_i \log p_i + 0.5 \sum_i (p_i - t_i)^2.\]</div>
 </div>
 <p>The optimizer averages this objective over questions. Both one-hot and soft
 targets are supported. With LoRA enabled, the decision head and backbone
-adapters train together while base weights stay frozen. CUDA also supports
-full-parameter training by omitting LoRA. The MLX training path requires LoRA.</p>
+adapters train together while base weights stay frozen. Both CUDA and MLX
+support full-parameter training by omitting LoRA.</p>
 <p>The shared trainer, encoding, candidate packing, loss, and checkpoint metadata
 are reused across backends. Model execution stays in the backend’s
 <code class="docutils literal notranslate"><span class="pre">decision.py</span></code> module. CUDA uses the existing native optimizer, gradient
@@ -254,9 +254,8 @@ For CUDA QLoRA, add <code class="docutils literal notranslate"><span class="pre"
 can be added to select compressed AdamW state. Omitting these optimizer flags
 uses the native default AdamW. For full-parameter CUDA training, omit all
 LoRA and QLoRA options. Set <code class="docutils literal notranslate"><span class="pre">--world-size</span> <span class="pre">4</span> <span class="pre">--tp-size</span> <span class="pre">4</span></code> for TP4.</p>
-<p>On Apple Silicon, use <code class="docutils literal notranslate"><span class="pre">--backend</span> <span class="pre">mlx</span> <span class="pre">--world-size</span> <span class="pre">1</span> <span class="pre">--tp-size</span> <span class="pre">1</span></code> with LoRA.
-Add <code class="docutils literal notranslate"><span class="pre">--q4</span></code> for online 4-bit loading. This conversion happens in memory and
-preserves the source checkpoint files.</p>
+<p>On Apple Silicon, use <code class="docutils literal notranslate"><span class="pre">--backend</span> <span class="pre">mlx</span> <span class="pre">--world-size</span> <span class="pre">1</span> <span class="pre">--tp-size</span> <span class="pre">1</span></code>.
+Omit LoRA options for full-parameter training. <code class="docutils literal notranslate"><span class="pre">--q4</span></code> is supported.</p>
 <p>Batching controls have distinct units:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">--batch-size</span></code> counts questions per optimizer update.</p></li>
@@ -298,14 +297,13 @@ next position, and completed optimizer steps.</p></li>
 </span></pre></div>
 </div>
 <p>Adapter metadata restores rank, alpha, targets, and quantization mode. To
-continue a full-parameter CUDA checkpoint, set <code class="docutils literal notranslate"><span class="pre">--ckpt</span></code> to its directory
+continue a full-parameter CUDA or MLX checkpoint, set <code class="docutils literal notranslate"><span class="pre">--ckpt</span></code> to its directory
 and omit adapter options. The head and dataset state are restored alongside
 the backbone or adapters. Dataset content, seed, and batch size must match
 the saved iterator state; incompatible resumes raise an error.</p>
 <p><code class="docutils literal notranslate"><span class="pre">--max-steps</span></code> bounds additional updates in this invocation. The restored
-epoch must also remain below <code class="docutils literal notranslate"><span class="pre">--epochs</span></code>. Optimizer moments are initialized
-again on restart; current checkpoints restore weights, step scheduling, and
-data position rather than complete optimizer state.</p>
+epoch must also remain below <code class="docutils literal notranslate"><span class="pre">--epochs</span></code>. Full-parameter MLX checkpoints
+also restore optimizer moments; other modes initialize them again.</p>
 </section>
 <section id="serve-typed-decisions">
 <h2>Serve typed decisions<a class="headerlink" href="#serve-typed-decisions" title="Link to this heading">#</a></h2>
