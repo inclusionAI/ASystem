@@ -95,6 +95,7 @@ data-aria-dark="Switch to auto color mode">
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../cookbook/writing-loaders-and-rewards.html">Writing dataset loaders and reward functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../cookbook/math-rlvr.html">Math RLVR recipe</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cookbook/jev-training.html">Train and serve a JEV model</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../cookbook/tictactoe-agentic-rl.html">TicTacToe agentic RL</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../cookbook/duelgrid-visual-agent.html">DuelGrid visual agent</a></li>
 </ul>
@@ -173,6 +174,7 @@ decision. The backbone produces a hidden representation for each candidate;
 a shared scalar decision head scores it. AReno supports <code class="docutils literal notranslate"><span class="pre">choice</span></code>, <code class="docutils literal notranslate"><span class="pre">noul</span></code>
 (yes/no), and ordered <code class="docutils literal notranslate"><span class="pre">score</span></code> questions through the same model-independent
 training and serving path.</p>
+<p>For a runnable Qwen3-4B example, see <a class="reference internal" href="../cookbook/jev-training.html"><span class="doc">Train and serve a JEV model</span></a>.</p>
 <section id="objective-and-backbone-updates">
 <h2>Objective and backbone updates<a class="headerlink" href="#objective-and-backbone-updates" title="Link to this heading">#</a></h2>
 <p>Each candidate is encoded as an independent causal sequence containing the
