@@ -197,6 +197,11 @@ CUDA; Apple Silicon selects MLX.</p>
 <p>Serve chat completions.</p>
 <p>Options:</p>
 <dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">--sgl-jev</span></code></dt><dd><p>Serve SGLang-compatible typed decisions through the existing LM head on
+CUDA or MLX. Cannot be combined with the scalar-head
+<code class="docutils literal notranslate"><span class="pre">--decision-checkpoint</span></code> option. See <a class="reference internal" href="../concepts/jev.html"><span class="doc">JEV</span></a>
+for the distinction from scalar-head JEV.</p>
+</dd>
 <dt><code class="docutils literal notranslate"><span class="pre">--model-path</span> <span class="pre">TEXT</span></code></dt><dd><p>Local checkpoint/tokenizer path or remote model repo ID. Required.</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">--model-hub</span> <span class="pre">[hf|modelscope]</span></code></dt><dd><p>Remote hub used when <code class="docutils literal notranslate"><span class="pre">--model-path</span></code> is not a local path. Use

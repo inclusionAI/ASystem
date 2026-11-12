@@ -176,6 +176,13 @@ a shared scalar decision head scores it. AReno supports <code class="docutils li
 (yes/no), and ordered <code class="docutils literal notranslate"><span class="pre">score</span></code> questions through the same model-independent
 training and serving path.</p>
 <p>For a runnable Qwen3-4B example, see <a class="reference internal" href="../cookbook/jev-training.html"><span class="doc">Train and serve a JEV model</span></a>.</p>
+<p>For SGLang-compatible label-token scoring through the original LM head,
+use <code class="docutils literal notranslate"><span class="pre">train/serve</span> <span class="pre">--sgl-jev</span></code>. That mode uses CUDA or MLX, reads label-token
+logits through the pretrained LM head, and trains label-only cross-entropy.
+It accepts raw request/target JSONL; oversized prompts are rejected. Choice
+uses A–Z, noul uses yes/no, and score uses 0–9. Exported LoRA adapters may be
+merged with model-compatible tools for native SGLang serving. It does not use
+the scalar head described below.</p>
 <section id="objective-and-backbone-updates">
 <h2>Objective and backbone updates<a class="headerlink" href="#objective-and-backbone-updates" title="Link to this heading">#</a></h2>
 <p>Each candidate is encoded as an independent causal sequence containing the
