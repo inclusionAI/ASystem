@@ -202,6 +202,11 @@ CUDA or MLX. Cannot be combined with the scalar-head
 <code class="docutils literal notranslate"><span class="pre">--decision-checkpoint</span></code> option. See <a class="reference internal" href="../concepts/jev.html"><span class="doc">JEV</span></a>
 for the distinction from scalar-head JEV.</p>
 </dd>
+<dt><code class="docutils literal notranslate"><span class="pre">--bi-attn</span> <span class="pre">/</span> <span class="pre">--no-bi-attn</span></code></dt><dd><p>With <code class="docutils literal notranslate"><span class="pre">--sgl-jev</span></code>, enable bidirectional full attention on CUDA or MLX.
+By default, restore the checkpoint’s attention mode; explicitly disabling
+it for a bidirectional checkpoint is rejected. Label scoring uses only
+the prompt, without appending candidate answers.</p>
+</dd>
 <dt><code class="docutils literal notranslate"><span class="pre">--model-path</span> <span class="pre">TEXT</span></code></dt><dd><p>Local checkpoint/tokenizer path or remote model repo ID. Required.</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">--model-hub</span> <span class="pre">[hf|modelscope]</span></code></dt><dd><p>Remote hub used when <code class="docutils literal notranslate"><span class="pre">--model-path</span></code> is not a local path. Use
