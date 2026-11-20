@@ -221,9 +221,23 @@ weights), <strong>Checkpoint</strong> (produced artifacts), and <strong>Observab
 <code class="docutils literal notranslate"><span class="pre">--algo</span> <span class="pre">label_jev</span></code>. Uses the existing LM head without a scalar decision
 head. See <a class="reference internal" href="../concepts/jev.html"><span class="doc">JEV</span></a>.</p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">--bi-attn</span> <span class="pre">/</span> <span class="pre">--no-bi-attn</span></code></dt><dd><p>With <code class="docutils literal notranslate"><span class="pre">--sgl-jev</span></code> (or <code class="docutils literal notranslate"><span class="pre">--algo</span> <span class="pre">label_jev</span></code>), enable bidirectional full
-attention on CUDA or MLX; linear/recurrent and sliding-window layers stay
-unchanged. The checkpoint records this mode and restores it on resume.
+<dt><code class="docutils literal notranslate"><span class="pre">--algo</span> <span class="pre">sgl-jev-dense</span></code></dt><dd><p>Train CUDA LM-label JEV with teacher cross-entropy and Brier supervision, plus
+a differentiable Capability proxy. Each question supplies
+<code class="docutils literal notranslate"><span class="pre">capability:</span> <span class="pre">{&quot;tier&quot;:</span> <span class="pre">&quot;standard&quot;,</span> <span class="pre">&quot;gold&quot;:</span> <span class="pre">&quot;&lt;candidate</span> <span class="pre">name&gt;&quot;}</span></code>.
+Other tiers are <code class="docutils literal notranslate"><span class="pre">easy</span></code>, <code class="docutils literal notranslate"><span class="pre">hard</span></code> and <code class="docutils literal notranslate"><span class="pre">judge</span></code>. Choice questions may
+also provide a <code class="docutils literal notranslate"><span class="pre">gold_probs</span></code> map. The proxy uses chance-adjusted correct-label
+probability for choice, a smooth 80% decision gate for noul, and normalized
+expected-grade error for score. It also rewards probability quality through
+Brier-style and ranked probability terms. The official score is computed
+separately by the evaluator.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">--dense-reward-weight</span> <span class="pre">FLOAT</span></code></dt><dd><p>For <code class="docutils literal notranslate"><span class="pre">--algo</span> <span class="pre">sgl-jev-dense</span></code>, multiply the proxy reward by this value before
+subtracting it from teacher cross-entropy plus half the teacher Brier loss.
+Defaults to 0.1.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">--bi-attn</span> <span class="pre">/</span> <span class="pre">--no-bi-attn</span></code></dt><dd><p>With <code class="docutils literal notranslate"><span class="pre">--sgl-jev</span></code>, <code class="docutils literal notranslate"><span class="pre">--algo</span> <span class="pre">label_jev</span></code>, or CUDA <code class="docutils literal notranslate"><span class="pre">--algo</span> <span class="pre">sgl-jev-dense</span></code>,
+enable bidirectional full attention. Linear, recurrent, and sliding-window
+layers keep their attention behavior. The checkpoint records this mode and restores it on resume.
 Existing checkpoints default to causal attention.</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">--ckpt</span> <span class="pre">TEXT</span></code></dt><dd><p>Actor model/tokenizer checkpoint path or remote model repo ID.</p>
