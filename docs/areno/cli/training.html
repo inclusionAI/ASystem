@@ -398,12 +398,9 @@ the training row. Defaults to the model context limit.</p>
 memory. By default, Areno keeps reusable rollout state between steps for
 lower setup overhead. Supported by both CUDA and MLX.</p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">--attn-backend</span> <span class="pre">[flash|native]</span></code></dt><dd><p>Attention backend. Default: <code class="docutils literal notranslate"><span class="pre">flash</span></code>. Use <code class="docutils literal notranslate"><span class="pre">native</span></code> to run without
-<code class="docutils literal notranslate"><span class="pre">flash-attn</span></code> on the areno_accel native compatibility path. AReno
-automatically falls back to <code class="docutils literal notranslate"><span class="pre">native</span></code> on flash-attn-unsupported GPUs such
-as Tesla T4 and prints a warning. <code class="docutils literal notranslate"><span class="pre">native</span></code> is slower than <code class="docutils literal notranslate"><span class="pre">flash</span></code> on
-supported GPUs.
-CUDA only; MLX uses its model-native attention implementation.</p>
+<dt><code class="docutils literal notranslate"><span class="pre">--attn-backend</span> <span class="pre">[flash|native]</span></code></dt><dd><p>Training and rollout default to <code class="docutils literal notranslate"><span class="pre">native</span></code>. Select <code class="docutils literal notranslate"><span class="pre">flash</span></code> to use
+FlashAttention on a supported GPU and model. MLX uses its own attention
+implementation.</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">--disable-thinking</span></code></dt><dd><p>Pass <code class="docutils literal notranslate"><span class="pre">enable_thinking=False</span></code> to tokenizer chat templates when supported.
 This is useful for models whose tokenizer template exposes an explicit

@@ -706,11 +706,9 @@ losses train on response positions.</p></li>
 <li><p><strong>optimizer</strong> (<em>dict</em><em> | </em><em>None</em>) – Advanced optimizer config passed to the
 engine.</p></li>
 <li><p><strong>runtime</strong> (<em>dict</em><em> | </em><em>None</em>) – Advanced runtime config passed to the engine.
-Set <code class="docutils literal notranslate"><span class="pre">runtime={&quot;attn_backend&quot;:</span> <span class="pre">&quot;native&quot;}</span></code> to run without
-<code class="docutils literal notranslate"><span class="pre">flash-attn</span></code> on the areno_accel native compatibility path. AReno also
-falls back to native attention on flash-attn-unsupported GPUs such as
-Tesla T4 and prints a warning. The default is <code class="docutils literal notranslate"><span class="pre">&quot;flash&quot;</span></code> for normal
-high-throughput training on supported GPUs.</p></li>
+Training and rollout default to native attention. Set
+<code class="docutils literal notranslate"><span class="pre">runtime={&quot;attn_backend&quot;:</span> <span class="pre">&quot;flash&quot;}</span></code> to request FlashAttention on a
+supported GPU and model.</p></li>
 <li><p><strong>max_running_prompts</strong> (<em>int</em>) – Concurrent rollout prompt limit.</p></li>
 <li><p><strong>decode_progress_interval_s</strong> (<em>float</em>) – Worker decode progress log
 interval. Logs report per-DP scheduled decode throughput for the current

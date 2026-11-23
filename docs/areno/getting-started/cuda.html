@@ -264,8 +264,8 @@ runtime scratch storage rather than a checkpoint. The default
 <code class="docutils literal notranslate"><span class="pre">--optimizer-state-offload-batch-size</span> <span class="pre">1</span></code> groups mmap files and flushes;
 reduce it to lower CPU staging memory or increase it to reduce I/O calls.</p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">--attn-backend</span> <span class="pre">flash</span></code></dt><dd><p>Uses FlashAttention when the model and GPU support it. Use <code class="docutils literal notranslate"><span class="pre">native</span></code> for
-compatibility diagnostics or unsupported GPUs.</p>
+<dt><code class="docutils literal notranslate"><span class="pre">--attn-backend</span> <span class="pre">flash</span></code></dt><dd><p>Selects FlashAttention when the model and GPU support it. Training and
+rollout default to native attention.</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">--eager-decode</span></code></dt><dd><p>Disables CUDA graph replay for rollout decode. Use it to isolate graph
 capture issues; normal serving and training should retain graph replay when
