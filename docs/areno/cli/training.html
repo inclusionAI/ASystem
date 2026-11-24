@@ -394,9 +394,9 @@ the training row. Defaults to the model context limit.</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">--eager-decode</span></code></dt><dd><p>Disable decode CUDA graph and run rollout decode eagerly. CUDA only.</p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">--drop-rollout-state</span></code></dt><dd><p>Drop completed rollout KV/cache state after each step to save device
-memory. By default, Areno keeps reusable rollout state between steps for
-lower setup overhead. Supported by both CUDA and MLX.</p>
+<dt><code class="docutils literal notranslate"><span class="pre">--drop-rollout-state</span></code></dt><dd><p>CUDA reuses KV caches and decode graphs within a rollout session and
+releases them when the session ends. MLX uses this flag to drop its
+reusable rollout state after each step.</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">--attn-backend</span> <span class="pre">[flash|native]</span></code></dt><dd><p>Training and rollout default to <code class="docutils literal notranslate"><span class="pre">native</span></code>. Select <code class="docutils literal notranslate"><span class="pre">flash</span></code> to use
 FlashAttention on a supported GPU and model. MLX uses its own attention
@@ -545,8 +545,9 @@ supported by MLX dense and routed-expert LoRA. CUDA/NPU native LoRA still
 requires zero dropout. MLX scoring disables dropout and restores the
 previous model mode afterwards.</p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">--optimizer-state-offload</span> <span class="pre">[none|cpu|disk]</span></code></dt><dd><p>Select CUDA optimizer-state residency. <code class="docutils literal notranslate"><span class="pre">none</span></code> keeps state on the training
-device. <code class="docutils literal notranslate"><span class="pre">cpu</span></code> moves state to host memory between train calls. <code class="docutils literal notranslate"><span class="pre">disk</span></code>
+<dt><code class="docutils literal notranslate"><span class="pre">--optimizer-state-offload</span> <span class="pre">[none|cpu|disk]</span></code></dt><dd><p>Select CUDA optimizer-state residency during training. <code class="docutils literal notranslate"><span class="pre">none</span></code> loads
+state on the device for the optimizer step and moves it to the host
+at the end of the train call. <code class="docutils literal notranslate"><span class="pre">cpu</span></code> uses host-backed state. <code class="docutils literal notranslate"><span class="pre">disk</span></code>
 stages a bounded bucket group through host memory and stores the state in
 persistent writable raw-mmap files, copying each bucket back only when the
 next optimizer step needs it. Default: <code class="docutils literal notranslate"><span class="pre">none</span></code>. This option is supported

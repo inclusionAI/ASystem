@@ -247,8 +247,8 @@ the logical rollout batch.</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">--max-running-prompts</span> <span class="pre">N</span></code></dt><dd><p>Caps active rollout sequences and their KV-cache demand.</p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">--drop-rollout-state</span></code></dt><dd><p>Releases completed rollout state at the session boundary rather than
-retaining reusable cache and graph state for the next rollout.</p>
+<dt><code class="docutils literal notranslate"><span class="pre">--drop-rollout-state</span></code></dt><dd><p>CUDA training releases rollout caches and decode graphs at every session
+boundary. Requests in the same session reuse these allocations.</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">--activation-checkpointing</span></code></dt><dd><p>Recomputes supported decoder activations during backward. It is enabled by
 default. Ling/Bailing V3 checkpoints attention in every decoder layer and
