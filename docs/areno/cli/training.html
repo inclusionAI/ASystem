@@ -150,6 +150,7 @@ data-aria-dark="Switch to auto color mode">
 <li><a class="reference internal" href="#ppo-with-reward-and-critic-roles">PPO with reward and critic roles</a></li>
 <li><a class="reference internal" href="#agentic-tic-tac-toe">Agentic Tic-Tac-Toe</a></li>
 <li><a class="reference internal" href="#agentic-duelgrid">Agentic DuelGrid</a></li>
+<li><a class="reference internal" href="#opd">OPD</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#help">Help</a></li>
@@ -294,7 +295,7 @@ LoRA initialization; it does not change CUDA model initialization.</p>
 <dt><code class="docutils literal notranslate"><span class="pre">--algo</span> <span class="pre">TEXT</span></code></dt><dd><p>Training algorithm registered in <code class="docutils literal notranslate"><span class="pre">areno.api</span></code>. Default: <code class="docutils literal notranslate"><span class="pre">gspo</span></code>.</p>
 </dd>
 </dl>
-<p>Built-in algorithms: <code class="docutils literal notranslate"><span class="pre">sft</span></code>, <code class="docutils literal notranslate"><span class="pre">dpo</span></code>, <code class="docutils literal notranslate"><span class="pre">gspo</span></code>, <code class="docutils literal notranslate"><span class="pre">grpo</span></code>, <code class="docutils literal notranslate"><span class="pre">ppo</span></code>.</p>
+<p>Built-in algorithms: <code class="docutils literal notranslate"><span class="pre">sft</span></code>, <code class="docutils literal notranslate"><span class="pre">dpo</span></code>, <code class="docutils literal notranslate"><span class="pre">gspo</span></code>, <code class="docutils literal notranslate"><span class="pre">grpo</span></code>, <code class="docutils literal notranslate"><span class="pre">ppo</span></code>, <code class="docutils literal notranslate"><span class="pre">opd</span></code>.</p>
 <dl>
 <dt><code class="docutils literal notranslate"><span class="pre">--epochs</span> <span class="pre">INTEGER</span></code></dt><dd><p>Number of dataset epochs to train. Default: <code class="docutils literal notranslate"><span class="pre">10</span></code>.</p>
 </dd>
@@ -658,6 +659,16 @@ requires MLX; use <code class="docutils literal notranslate"><span class="pre">-
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">--lam</span> <span class="pre">FLOAT</span></code></dt><dd><p>PPO GAE lambda. Default: <code class="docutils literal notranslate"><span class="pre">0.95</span></code>.</p>
 </dd>
+<dt><code class="docutils literal notranslate"><span class="pre">--teacher-ckpt</span> <span class="pre">TEXT</span></code></dt><dd><p>OPD frozen teacher checkpoint. Must share the student tokenizer.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">--opd-coef</span> <span class="pre">FLOAT</span></code></dt><dd><p>OPD distillation loss scale. Default: <code class="docutils literal notranslate"><span class="pre">1.0</span></code>.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">--opd-loss-type</span> <span class="pre">[pg|k3]</span></code></dt><dd><p>OPD objective: clipped dense advantage or low-variance KL. Default: <code class="docutils literal notranslate"><span class="pre">pg</span></code>.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">--opd-clip</span> <span class="pre">FLOAT</span></code></dt><dd><p>OPD dense-advantage clipping range for <code class="docutils literal notranslate"><span class="pre">pg</span></code>. Default: <code class="docutils literal notranslate"><span class="pre">5.0</span></code>.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">--opd-teacher-micro-bs</span> <span class="pre">INTEGER</span></code></dt><dd><p>OPD teacher scoring microbatch size. Defaults to <code class="docutils literal notranslate"><span class="pre">--score-micro-bs</span></code>.</p>
+</dd>
 </dl>
 </section>
 <section id="checkpoint">
@@ -868,6 +879,24 @@ game loop.</p>
 </tr>
 </tbody>
 </table>
+</div>
+</section>
+<section id="opd">
+<h3>OPD<a class="headerlink" href="#opd" title="Link to this heading">#</a></h3>
+<p>On-Policy Distillation samples with the student and scores those exact tokens
+with a frozen teacher. No reward function is required for training:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span data-line="1">areno<span class="w"> </span>train<span class="w"> </span><span class="se">\</span>
+</span><span data-line="2"><span class="w">  </span>--algo<span class="w"> </span>opd<span class="w"> </span><span class="se">\</span>
+</span><span data-line="3"><span class="w">  </span>--ckpt<span class="w"> </span>Qwen/Qwen3-0.6B-Base<span class="w"> </span><span class="se">\</span>
+</span><span data-line="4"><span class="w">  </span>--teacher-ckpt<span class="w"> </span>Qwen/Qwen3-0.6B<span class="w"> </span><span class="se">\</span>
+</span><span data-line="5"><span class="w">  </span>--dataset-path<span class="w"> </span>gsm8k:main<span class="w"> </span><span class="se">\</span>
+</span><span data-line="6"><span class="w">  </span>--dataset-loader-fn<span class="w"> </span>examples/math/dataset_loader.py<span class="w"> </span><span class="se">\</span>
+</span><span data-line="7"><span class="w">  </span>--tp-size<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+</span><span data-line="8"><span class="w">  </span>--world-size<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+</span><span data-line="9"><span class="w">  </span>--batch-size<span class="w"> </span><span class="m">1</span><span class="w"> </span>--n-samples<span class="w"> </span><span class="m">2</span><span class="w"> </span>--mini-bs<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+</span><span data-line="10"><span class="w">  </span>--max-prompt-tokens<span class="w"> </span><span class="m">256</span><span class="w"> </span>--max-new-tokens<span class="w"> </span><span class="m">256</span><span class="w"> </span><span class="se">\</span>
+</span><span data-line="11"><span class="w">  </span>--max-steps<span class="w"> </span><span class="m">20</span>
+</span></pre></div>
 </div>
 </section>
 </section>
