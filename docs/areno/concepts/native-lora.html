@@ -206,9 +206,13 @@ checkpoint names, including <code class="docutils literal notranslate"><span cla
 for multimodal checkpoints. Combining these adapters with an unfrozen vision
 tower or projector is rejected.</p>
 <p>Use <code class="docutils literal notranslate"><span class="pre">--qlora</span> <span class="pre">--lora-rank</span> <span class="pre">8</span></code> for a frozen NF4 base with double quantization.
-QLoRA supports Qwen3 dense, Qwen3.5 dense language backbones, Gemma4 dense
-language backbones, and Bailing-MoE V3.
-Qwen3.5-MoE LoRA and QLoRA are not supported by this adapter path.</p>
+CUDA QLoRA supports the dense and MoE variants of Qwen3 and Qwen3.5,
+the Phi-4 Multimodal and Gemma4 dense language backbones, and Bailing-MoE V3. Qwen3.5-MoE packs both
+routed expert matrices in NF4 and supports adapters on routed and shared
+experts as well as attention projections.</p>
+<p>Phi-4 Multimodal uses its checkpoint projection names <code class="docutils literal notranslate"><span class="pre">qkv_proj</span></code>,
+<code class="docutils literal notranslate"><span class="pre">o_proj</span></code>, <code class="docutils literal notranslate"><span class="pre">gate_up_proj</span></code>, and <code class="docutils literal notranslate"><span class="pre">down_proj</span></code>. Its vision and speech LoRA
+weights remain part of the frozen base during adapter training.</p>
 <p>Gemma4 uses the default attention and MLP target names. Full-attention layers
 with <code class="docutils literal notranslate"><span class="pre">attention_k_eq_v</span></code> share one <code class="docutils literal notranslate"><span class="pre">k_proj</span></code> adapter between the K and V
 paths, matching the checkpoint’s single projection; these layers do not
